@@ -322,6 +322,7 @@ function PureMultimodalInput({
 
     const [input, setInput] = useState('');
     const [uploadQueue, setUploadQueue] = useState([]);
+    const [uploadError, setUploadError] = useState('');
 
     const adjustHeight = () => {
         const textarea = textareaRef.current;
@@ -379,21 +380,23 @@ function PureMultimodalInput({
         async (event) => {
             const files = Array.from(event.target.files || []);
             if (files.length === 0) return;
-
-            setUploadQueue(currentQueue => [...currentQueue, ...files.map((file) => file.name)]);
+            setUploadError('');
 
             if (fileInputRef.current) {
                 fileInputRef.current.value = '';
             }
 
-            const MAX_FILE_SIZE = 25 * 1024 * 1024; // 25 MB
-            const validFiles = files.filter(file => file.size <= MAX_FILE_SIZE);
-            const invalidFiles = files.filter(file => file.size > MAX_FILE_SIZE);
-
-            if (invalidFiles.length > 0) {
-                console.warn(`Skipped ${invalidFiles.length} files larger than ${MAX_FILE_SIZE / 1024 / 1024}MB.`);
-                setUploadQueue(currentQueue => currentQueue.filter(name => !invalidFiles.some(f => f.name === name)));
+            const allowedImages = new Set(['image/jpeg', 'image/png', 'image/webp']);
+            const validFiles = files.filter((file) => {
+                const isPdf = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
+                const isImage = allowedImages.has(file.type);
+                const maxBytes = isPdf ? 10 * 1024 * 1024 : 8 * 1024 * 1024;
+                return (isPdf || isImage) && file.size <= maxBytes;
+            });
+            if (validFiles.length !== files.length) {
+                setUploadError('仅支持 10MB 以内的 PDF，或 8MB 以内的 JPG、PNG、WebP 图片。');
             }
+            setUploadQueue(currentQueue => [...currentQueue, ...validFiles.map((file) => file.name)]);
 
             const uploadPromises = validFiles.map((file) => uploadFile(file));
             const uploadedAttachments = await Promise.all(uploadPromises);
@@ -491,8 +494,10 @@ function PureMultimodalInput({
                 onChange={handleFileChange}
                 tabIndex={-1}
                 disabled={isAttachmentDisabled}
-                accept="image/*,video/*,audio/*,.pdf"
+                accept=".pdf,.jpg,.jpeg,.png,.webp,application/pdf,image/jpeg,image/png,image/webp"
             />
+
+            {uploadError && <p role="alert" className="mt-2 text-sm text-red-700">{uploadError}</p>}
 
             {(attachments.length > 0 || uploadQueue.length > 0) && (
                 <div
@@ -507,7 +512,7 @@ function PureMultimodalInput({
                                 size="icon"
                                 className="absolute top-[-8px] right-[-8px] h-5 w-5 rounded-full p-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-opacity"
                                 onClick={() => handleRemoveAttachment(attachment)}
-                                aria-label={`Remove ${attachment.name}`}
+                                aria-label={`移除附件 ${attachment.name}`}
                             >
                                 <XIcon className="size-3" />
                             </Button>

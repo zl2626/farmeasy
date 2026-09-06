@@ -8,16 +8,16 @@
 
 | Phase | Status | Scope |
 |---|---|---|
-| 1 | in_progress | 基线、忽略规则、测试框架 |
-| 2 | pending | 后端配置与认证安全 |
-| 3 | pending | 迁移、模型、数据导入 |
-| 4 | pending | 行情 provider |
-| 5 | pending | 上传、异常、RAG 安全 |
-| 6 | pending | 前端 API、认证、路由、Lint |
-| 7 | pending | 首页、导航、球形图库 |
-| 8 | pending | 业务页面视觉升级 |
-| 9 | pending | 响应式与无障碍 |
-| 10 | pending | Docker、文档、总回归 |
+| 1 | complete | 基线、忽略规则、测试框架 |
+| 2 | complete | 后端配置与认证安全 |
+| 3 | complete | 迁移、模型、数据导入 |
+| 4 | complete | 行情 provider |
+| 5 | complete | 上传、异常、RAG 安全 |
+| 6 | complete | 前端 API、认证、路由、Lint |
+| 7 | complete | 首页、导航、球形图库 |
+| 8 | complete | 业务页面视觉升级 |
+| 9 | complete | 响应式与无障碍 |
+| 10 | complete | Docker、文档、总回归 |
 
 ## Constraints
 
@@ -36,4 +36,6 @@
 | Django tests = 0 | 1 | Phase 2 起按 TDD 补测试 |
 | education 存在未生成迁移 | 1 | Phase 3 创建并验证迁移 |
 | 作物抓取超时返回 HTML 500 | 1 | Phase 5 统一 JSON 错误与超时处理 |
-
+| 8000 端口同时存在旧、新后端 | 1 | 视觉验收改用独立 8001/5175，未终止用户进程 |
+| Edge 命令行强制最小布局宽度 | 1 | 加入 Playwright Core 精确视口与溢出自动检查 |
+| 本机未安装 Docker | 1 | Compose 通过 PyYAML 结构解析；实际镜像构建标记为未验证 |

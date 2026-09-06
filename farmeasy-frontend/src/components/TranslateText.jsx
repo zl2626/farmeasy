@@ -7,17 +7,13 @@ const { translationEnabled,fromLang,toLang } = useLanguage();
 const [text,setText] = useState(children);
 
 useEffect(() => {
-    if(!translationEnabled){
-        setText(children);
-        return;
-
-    }
+    if(!translationEnabled) return;
 
     translateText(children,fromLang,toLang)
     .then(setText)
     .catch(() => setText(children));
 },[translationEnabled,fromLang,toLang,children]);
 
-return <>{text}</>;
+return <>{translationEnabled ? text : children}</>;
 
 }

@@ -1,5 +1,6 @@
 import re
 from django.contrib.auth.models import User
+from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 from .models import Profile
 
@@ -31,8 +32,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         return value
 
     def validate_password(self,value):
-        if len(value)<6:
-            raise serializers.ValidationError("密码至少 6 位")
+        validate_password(value)
         return value
 
     def create(self,validated_data):

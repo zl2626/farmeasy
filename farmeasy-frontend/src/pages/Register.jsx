@@ -1,5 +1,5 @@
 import { useState } from "react";
-import API_BASE_URL from "../services/api";
+import { api } from "../services/api";
 import TranslateText from "../components/TranslateText";
 import { User, Mail, Lock, Phone, ArrowRight, Loader } from "lucide-react";
 import { Snackbar, Alert } from "@mui/material";
@@ -28,34 +28,15 @@ function Register({ onBackToLogin }) {
     setLoading(true);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/register/`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      const text = await response.text();
-      let data = {};
-
-      try {
-        data = JSON.parse(text);
-      } catch {
-        console.error("Server returned HTML:", text);
-        setErrors({ detail: "服务器响应异常，请确认后端服务已启动。" });
-        return;
-      }
-
-      if (response.ok) {
+      const data = await api.post("/auth/register/", formData);
+      if (data) {
         setSnackbar({ open: true, message: "注册成功！", severity: "success" });
         setTimeout(() => {
           onBackToLogin();
         }, 1500);
-      } else {
-        setErrors(data);
       }
     } catch (err) {
-      console.error("Network error:", err);
-      setErrors({ detail: "无法连接服务器，请确认后端服务已启动（127.0.0.1:8000）。" });
+      setErrors(err.data || { detail: err.message || "暂时无法注册，请稍后重试。" });
     } finally {
       setLoading(false);
     }

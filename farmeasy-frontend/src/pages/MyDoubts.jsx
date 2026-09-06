@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import API_BASE_URL from "../services/api";
+import { api, mediaUrl } from "../services/api";
 import Navbar from "../components/Navbar";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -20,19 +20,7 @@ function MyDoubts() {
             return;
         }
 
-        const token = localStorage.getItem("token");
-
-        fetch(`${API_BASE_URL}/education/doubts/my/`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        })
-            .then((res) => {
-                if (res.status === 401) {
-                    throw new Error("Unauthorized");
-                }
-                return res.json();
-            })
+        api.get("/education/doubts/my/")
             .then((data) => {
                 setDoubts(data);
                 setLoading(false);
@@ -112,7 +100,7 @@ function MyDoubts() {
                                     {doubt.image && (
                                         <div className="mb-4 rounded-xl overflow-hidden border border-gray-100 bg-gray-50 w-full max-w-md">
                                             <img
-                                                src={doubt.image.startsWith('http') ? doubt.image : `http://127.0.0.1:8000${doubt.image}`}
+                                                src={mediaUrl(doubt.image)}
                                                 alt="doubt"
                                                 className="w-full h-auto object-cover max-h-64"
                                             />
@@ -122,7 +110,7 @@ function MyDoubts() {
                                     <div className="flex items-center gap-4 text-xs text-gray-400 border-t border-gray-50 pt-4 mt-2">
                                         <span className="flex items-center gap-1">
                                             <Calendar size={14} />
-                                            {new Date(doubt.created_at || Date.now()).toLocaleDateString()}
+                                            {doubt.created_at ? new Date(doubt.created_at).toLocaleDateString("zh-CN") : "日期未知"}
                                         </span>
                                     </div>
 

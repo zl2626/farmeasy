@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { lazy, Suspense, useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ZhinongLogo from "../assets/Logo.png";
 import { useNavigate } from "react-router-dom";
@@ -6,12 +6,13 @@ import LanguageToggle from "./LanguageToggle";
 import TranslateText from "./TranslateText";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
-import ResetPassword from "../pages/ResetPassword";
-import ForgotPassword from "../pages/ForgotPassword";
 // import ElectricBorder from "./ElectricBorder"; // Removed unused import
 import { useAuth } from "../context/AuthContext"; // Import useAuth
+
+const Login = lazy(() => import("../pages/Login"));
+const Register = lazy(() => import("../pages/Register"));
+const ResetPassword = lazy(() => import("../pages/ResetPassword"));
+const ForgotPassword = lazy(() => import("../pages/ForgotPassword"));
 
 export default function Navbar() {
   const [openLogin, setOpenLogin] = useState(false);
@@ -71,9 +72,7 @@ export default function Navbar() {
           {/* ─── Brand ─── */}
           <motion.div
             style={{ ...brandWrapperStyle, cursor: "pointer" }}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
+            initial={false}
             onClick={() => navigate("/home")}
           >
             <div style={brandLogoCircleStyle}>
@@ -256,7 +255,8 @@ export default function Navbar() {
             className="navbar-hamburger"
             style={hamburgerButtonStyle}
             onClick={() => setMobileMenuOpen((prev) => !prev)}
-            aria-label="Toggle menu"
+            aria-label={mobileMenuOpen ? "关闭导航菜单" : "打开导航菜单"}
+            aria-expanded={mobileMenuOpen}
           >
             <div style={{
               ...hamburgerLineStyle,
@@ -307,7 +307,7 @@ export default function Navbar() {
                 <button
                   onClick={closeMobileMenu}
                   style={sidebarCloseStyle}
-                  aria-label="Close menu"
+                  aria-label="关闭导航菜单"
                 >
                   ✕
                 </button>
@@ -484,11 +484,13 @@ export default function Navbar() {
           <div style={loginCardStyle}>
             <button
               onClick={() => setOpenLogin(false)}
+              aria-label="关闭登录窗口"
               className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
               style={{ zIndex: 10 }}
             >
+              ✕
             </button>
-            <Login
+            <Suspense fallback={<div role="status">正在加载登录表单...</div>}><Login
               OnRegisterClick={() => {
                 setOpenLogin(false);
                 setOpenRegister(true);
@@ -498,7 +500,7 @@ export default function Navbar() {
                 setOpenForgot(true);
               }}
               onLoginSuccess={() => setOpenLogin(false)}
-            />
+            /></Suspense>
           </div>
         </DialogContent>
       </Dialog>
@@ -525,12 +527,12 @@ export default function Navbar() {
       >
         <DialogContent style={{ padding: "0" }}>
           <div style={loginCardStyle}>
-            <Register
+            <Suspense fallback={<div role="status">正在加载注册表单...</div>}><Register
               onBackToLogin={() => {
                 setOpenRegister(false);
                 setOpenLogin(true);
               }}
-            />
+            /></Suspense>
           </div>
         </DialogContent>
       </Dialog>
@@ -557,7 +559,7 @@ export default function Navbar() {
       >
         <DialogContent style={{ padding: "0" }}>
           <div style={loginCardStyle}>
-            <ForgotPassword
+            <Suspense fallback={<div role="status">正在加载找回密码表单...</div>}><ForgotPassword
               onBackToLogin={() => {
                 setOpenForgot(false);
                 setOpenLogin(true);
@@ -566,7 +568,7 @@ export default function Navbar() {
                 setOpenForgot(false);
                 setOpenReset(true);
               }}
-            />
+            /></Suspense>
           </div>
         </DialogContent>
       </Dialog>
@@ -593,12 +595,12 @@ export default function Navbar() {
       >
         <DialogContent style={{ padding: "0" }}>
           <div style={loginCardStyle}>
-            <ResetPassword
+            <Suspense fallback={<div role="status">正在加载重置密码表单...</div>}><ResetPassword
               onBackToLogin={() => {
                 setOpenReset(false);
                 setOpenLogin(true);
               }}
-            />
+            /></Suspense>
           </div>
         </DialogContent>
       </Dialog>
@@ -616,16 +618,17 @@ const navStyle = {
   height: "72px",
   display: "flex",
   alignItems: "center",
-  background: "linear-gradient(90deg, #16a34a, #4ade80)",
+  background: "#276749",
   zIndex: 1000,
-  boxShadow: "0 12px 32px rgba(0,0,0,0.35)",
-  borderRadius: "0 0 18px 18px",
+  boxShadow: "0 4px 16px rgba(24,60,42,0.18)",
+  borderRadius: 0,
   borderBottom: "1px solid rgba(255,255,255,0.08)",
   backdropFilter: "blur(12px)",
 };
 
 const navInnerStyle = {
   width: "100%",
+  boxSizing: "border-box",
   maxWidth: "1400px",
   margin: "0 auto",
   padding: "0 1.2rem",
@@ -646,18 +649,18 @@ const brandWrapperStyle = {
 };
 
 const brandLogoCircleStyle = {
-  padding: "4px 12px",
-  borderRadius: "999px",
-  backgroundColor: "rgba(255,255,255,0.12)",
+  padding: "3px",
+  borderRadius: "6px",
+  backgroundColor: "#ffffff",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  boxShadow: "0 6px 18px rgba(15,23,42,0.35)",
-  border: "1px solid rgba(209,250,229,0.6)",
+  boxShadow: "none",
+  border: "1px solid rgba(255,255,255,0.75)",
 };
 
 const logoStyle = {
-  height: "30px",
+  height: "31px",
   width: "auto",
   cursor: "pointer",
 };
@@ -676,28 +679,10 @@ const brandTitleStyle = {
   whiteSpace: "nowrap",
 };
 
-const brandSubtitleStyle = {
-  color: "rgba(226,232,240,0.9)",
-  fontSize: "0.72rem",
-  fontWeight: 400,
-  whiteSpace: "nowrap",
-  display: "none",   /* hidden on narrow screens to keep one row */
-};
-
-/* Override to show subtitle on wider screens */
-const brandSubtitleVisibleStyle = {
-  ...{
-    color: "rgba(226,232,240,0.9)",
-    fontSize: "0.72rem",
-    fontWeight: 400,
-    whiteSpace: "nowrap",
-  },
-};
-
 const brandLanguageWrapperStyle = {
   marginLeft: "0.6rem",
   padding: "3px 8px",
-  borderRadius: 999,
+  borderRadius: 6,
   backgroundColor: "rgba(255,255,255,0.12)",
   border: "1px solid rgba(209,250,229,0.5)",
   display: "flex",
@@ -722,7 +707,7 @@ const linkStyle = {
   margin: "0",
   transition: "all 0.3s ease",
   cursor: "pointer",
-  borderRadius: 999,
+  borderRadius: 5,
   whiteSpace: "nowrap",
 };
 
@@ -745,13 +730,13 @@ const loginCardStyle = {
 const dropdownItemStyle = {
   padding: "8px 14px",
   cursor: "pointer",
-  color: "rgba(226,232,240,0.96)",
+  color: "#1f2a24",
   fontSize: "0.95rem",
   whiteSpace: "nowrap",
 };
 
 const dropdownHoverAnimation = {
-  backgroundColor: "#1e293b",
+  backgroundColor: "#edf3ee",
   x: 2,
 };
 
@@ -759,9 +744,9 @@ const dropdownStyle = {
   position: "absolute",
   top: "100%",
   left: 0,
-  background: "rgba(15,118,110,0.97)",
-  border: "1px solid rgba(148,163,184,0.45)",
-  borderRadius: "8px",
+  background: "#ffffff",
+  border: "1px solid #dce3dc",
+  borderRadius: "6px",
   padding: "8px 0",
   minWidth: "180px",
   zIndex: 1000,
@@ -808,7 +793,7 @@ const sidebarStyle = {
   bottom: 0,
   width: "280px",
   maxWidth: "85vw",
-  background: "linear-gradient(180deg, #14532d 0%, #166534 100%)",
+  background: "#1d5138",
   zIndex: 1200,
   display: "flex",
   flexDirection: "column",

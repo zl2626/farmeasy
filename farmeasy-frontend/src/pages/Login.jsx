@@ -1,6 +1,6 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import API_BASE_URL from "../services/api";
+import { api } from "../services/api";
 import TranslateText from "../components/TranslateText";
 import { useAuth } from "../context/AuthContext";
 import { User, Lock, ArrowRight, Loader } from "lucide-react";
@@ -12,6 +12,7 @@ function Login({ OnRegisterClick, onForgotClick, onLoginSuccess }) {
     password: "",
   });
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -30,58 +31,26 @@ function Login({ OnRegisterClick, onForgotClick, onLoginSuccess }) {
     setLoading(true);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/login/`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      const text = await response.text();
-      let data = {};
-      try {
-        data = JSON.parse(text);
-      } catch {
-        console.error("Server returned HTML:", text);
-        setErrors({ detail: "服务器错误，请重试。" });
-        setLoading(false);
-        return;
-      }
-
-      if (response.ok) {
+      const data = await api.post("/auth/login/", formData);
+      if (data.access) {
         const accessToken = data.access;
         const refreshToken = data.refresh;
-
-        const profileResp = await fetch(`${API_BASE_URL}/education/profile/`, {
+        const userData = await api.get("/education/profile/", {
           headers: { "Authorization": `Bearer ${accessToken}` }
         });
-
-        if (profileResp.ok) {
-          const userData = await profileResp.json();
-          login(userData, accessToken);
-          localStorage.setItem("refresh", refreshToken);
+          login(userData, accessToken, refreshToken);
           setSnackbar({ open: true, message: "登录成功！", severity: "success" });
 
           setTimeout(() => {
             if (onLoginSuccess) onLoginSuccess();
 
-            // Redirect admin to admin dashboard, regular users to home
-            if (userData.is_staff) {
-              navigate("/admin-dashboard");
-            } else {
-              navigate("/home");
-            }
+            const target = location.state?.from;
+            navigate(target ? `${target.pathname}${target.search || ""}` : userData.is_staff ? "/admin-dashboard" : "/home");
             setFormData({ username: "", password: "" });
           }, 1500);
-        } else {
-          setErrors({ detail: "加载用户信息失败。" });
-        }
-
-      } else {
-        setErrors(data);
       }
     } catch (err) {
-      console.error("Network error:", err);
-      setErrors({ detail: "网络错误，请检查您的网络连接。" });
+      setErrors(err.data || { detail: err.message || "暂时无法登录，请稍后重试。" });
     } finally {
       setLoading(false);
     }

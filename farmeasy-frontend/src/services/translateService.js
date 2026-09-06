@@ -1,3 +1,5 @@
+import { api } from "./api";
+
 // Translation cache: key = "from|to|text" → translated string
 const cache = new Map();
 
@@ -32,16 +34,11 @@ function flushBatch() {
         const { from, to } = items[0];
         const texts = items.map((i) => i.text);
 
-        const promise = fetch("http://localhost:8000/api/translate/", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
+        const promise = api.post("/translate/", {
                 text: texts.join("\n||||\n"),
                 source_lang: from,
                 target_lang: to,
-            }),
         })
-            .then((r) => r.json())
             .then((data) => {
                 const results = data.translatedText.split("\n||||\n");
                 items.forEach((item, idx) => {

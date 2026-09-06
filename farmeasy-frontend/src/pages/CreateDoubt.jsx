@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import API_BASE_URL from "../services/api";
+import { api } from "../services/api";
 import Navbar from "../components/Navbar";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -28,6 +28,13 @@ function CreateDoubt() {
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
+            const allowed = ["image/jpeg", "image/png", "image/webp"];
+            if (!allowed.includes(file.type) || file.size > 8 * 1024 * 1024) {
+                setError("仅支持 8MB 以内的 JPG、PNG 或 WebP 图片。");
+                e.target.value = "";
+                return;
+            }
+            setError("");
             setImage(file);
             const reader = new FileReader();
             reader.onloadend = () => {
@@ -65,20 +72,9 @@ function CreateDoubt() {
         if (image) formData.append("image", image);
 
         try {
-            const response = await fetch(
-                `${API_BASE_URL}/education/doubts/create/`,
-                {
-                    method: "POST",
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                    body: formData,
-                }
-            );
+            const data = await api.post("/education/doubts/create/", formData);
 
-            const data = await response.json();
-
-            if (response.ok) {
+            if (data) {
                 setMessage("疑问提交成功！");
                 setTitle("");
                 setDescription("");
@@ -86,16 +82,9 @@ function CreateDoubt() {
                 setPreview(null);
                 // Optional: navigate to My Doubts after delay
                 setTimeout(() => navigate("/doubts"), 1500);
-            } else {
-                if (response.status === 401) {
-                    setError("登录已过期，请重新登录。");
-                } else {
-                    setError(data.detail || "出错了，请稍后再试。");
-                }
             }
         } catch (err) {
-            console.error(err);
-            setError("网络错误，请检查您的网络连接。");
+            setError(err.status === 401 ? "登录已过期，请重新登录。" : err.message || "提交失败，请稍后重试。");
         } finally {
             setLoading(false);
         }
@@ -172,10 +161,10 @@ function CreateDoubt() {
                                                 <span className="relative cursor-pointer rounded-md font-medium text-green-600 hover:text-green-500 focus-within:outline-none">
                                                     <TranslateText>选择文件</TranslateText>
                                                 </span>
-                                                <input id="file-upload" name="file-upload" type="file" className="sr-only" onChange={handleImageChange} accept="image/*" />
+                                                <input id="file-upload" name="file-upload" type="file" className="sr-only" onChange={handleImageChange} accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" />
                                                 <p className="pl-1"><TranslateText>或拖拽到此处</TranslateText></p>
                                             </div>
-                                            <p className="text-xs text-gray-500"><TranslateText>支持 PNG、JPG、GIF，最大 5MB</TranslateText></p>
+                                            <p className="text-xs text-gray-500"><TranslateText>支持 JPG、PNG、WebP，最大 8MB</TranslateText></p>
                                         </div>
                                     </label>
                                 ) : (

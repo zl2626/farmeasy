@@ -118,7 +118,8 @@ main.sphere-main {
 }
 
 .item__image:focus {
-  outline: none;
+  outline: 3px solid #d5a227;
+  outline-offset: 3px;
 }
 
 .item__image img {
@@ -213,3 +214,8 @@ main.sphere-main {
   bottom: 0;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .sphere, .item, .item__image, .viewer .enlarge, .viewer .scrim {
+    transition-duration: 0.01ms !important;
+  }
+}

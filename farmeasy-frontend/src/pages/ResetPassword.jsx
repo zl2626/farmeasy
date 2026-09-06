@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import API_BASE_URL from "../services/api";
+import { api } from "../services/api";
 import TranslateText from "../components/TranslateText";
 import { Lock, ArrowRight, Loader, AlertCircle } from "lucide-react";
 import { Snackbar, Alert } from "@mui/material";
@@ -28,29 +28,12 @@ function ResetPassword({ onBackToLogin }) {
     }
 
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/reset-password/`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+      const data = await api.post("/auth/reset-password/", {
           uid,
           token,
           new_password: password,
-        }),
       });
-
-      const text = await response.text();
-      let data = {};
-
-      try {
-        data = JSON.parse(text);
-      } catch {
-        console.error("Server returned HTML:", text);
-        setError("服务器错误，请稍后再试。");
-        setLoading(false);
-        return;
-      }
-
-      if (response.ok) {
+      if (data) {
         setSnackbar({ open: true, message: "密码重置成功，现在可以登录了。", severity: "success" });
         setPassword("");
         setConfirm("");
@@ -58,12 +41,9 @@ function ResetPassword({ onBackToLogin }) {
         setTimeout(() => {
           onBackToLogin();
         }, 2000);
-      } else {
-        setError(data.error || "重置链接无效或已过期");
       }
     } catch (err) {
-      console.error(err);
-      setError("网络错误，请重试。");
+      setError(err.data?.details?.[0] || err.message || "重置链接无效或已过期");
     } finally {
       setLoading(false);
     }

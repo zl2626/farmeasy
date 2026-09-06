@@ -8,22 +8,18 @@ Uses Google search to find relevant pages, then extracts clean text.
 import requests
 from bs4 import BeautifulSoup
 import logging
+from urllib.parse import urlparse
 
 logger = logging.getLogger(__name__)
 
 # Trusted agricultural domains to prioritize
 AGRI_DOMAINS = [
-    "en.wikipedia.org",
-    "simple.wikipedia.org",
-    "plantvillage.psu.edu",
-    "extension.org",
-    "icar.org.in",
-    "agrifarming.in",
-    "krishisewa.com",
-    "farmer.gov.in",
-    "vikaspedia.in",
-    "agriculture.com",
-    "gardeningknowhow.com",
+    "moa.gov.cn",
+    "agri.cn",
+    "caas.cn",
+    "natesc.org.cn",
+    "gov.cn",
+    "cma.gov.cn",
 ]
 
 HEADERS = {
@@ -38,6 +34,17 @@ HEADERS = {
 MAX_CONTEXT_CHARS = 3000
 # Request timeout in seconds
 TIMEOUT = 8
+
+
+def _is_allowed_url(url):
+    try:
+        parsed = urlparse(url)
+        hostname = (parsed.hostname or "").lower().rstrip(".")
+    except ValueError:
+        return False
+    if parsed.scheme != "https" or not hostname:
+        return False
+    return any(hostname == domain or hostname.endswith(f".{domain}") for domain in AGRI_DOMAINS)
 
 
 def _extract_text(html):
@@ -89,7 +96,7 @@ def _google_search_urls(query, num_results=3):
         if href.startswith("/url?q="):
             url = href.split("/url?q=")[1].split("&")[0]
             # Skip Google's own pages and non-http URLs
-            if url.startswith("http") and "google.com" not in url:
+            if _is_allowed_url(url):
                 urls.append(url)
                 if len(urls) >= num_results:
                     break
@@ -99,6 +106,9 @@ def _google_search_urls(query, num_results=3):
 
 def _scrape_page(url):
     """Scrape a single page and return extracted text (truncated)."""
+    if not _is_allowed_url(url):
+        logger.warning("Blocked non-allowlisted web source")
+        return ""
     try:
         resp = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
         resp.raise_for_status()

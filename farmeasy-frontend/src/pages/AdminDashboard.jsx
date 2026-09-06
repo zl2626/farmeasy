@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Navbar from "../components/Navbar.jsx";
-import API_BASE_URL from "../services/api";
+import { api, API_BASE_URL, mediaUrl } from "../services/api";
 import TranslateText from "../components/TranslateText";
 import {
     Users, MessageSquare, Leaf, Wheat, LogOut, Send, CheckCircle,
@@ -14,15 +14,24 @@ import {
 /* ─────────────────────────── helper ─────────────────────────── */
 const tok = () => localStorage.getItem("token");
 
-const authFetch = (url, opts = {}) =>
-    fetch(url, {
-        ...opts,
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${tok()}`,
-            ...(opts.headers || {}),
-        },
-    });
+const authFetch = async (url, opts = {}) => {
+    try {
+        const data = await api.request(url, opts);
+        return {
+            ok: true,
+            status: 200,
+            json: async () => data,
+            text: async () => JSON.stringify(data),
+        };
+    } catch (error) {
+        return {
+            ok: false,
+            status: error.status || 500,
+            json: async () => error.data || { error: error.message },
+            text: async () => error.message,
+        };
+    }
+};
 
 /* ─────────────────────────── component ─────────────────────────── */
 export default function AdminDashboard() {
@@ -65,8 +74,8 @@ export default function AdminDashboard() {
             const [dR, uR, cR, sR, fR] = await Promise.all([
                 authFetch(`${API_BASE_URL}/education/admin/doubts/`),
                 authFetch(`${API_BASE_URL}/education/admin/users/`),
-                fetch(`${API_BASE_URL}/education/crops/`),
-                fetch(`${API_BASE_URL}/education/agri-schemes/`),
+                authFetch(`${API_BASE_URL}/education/crops/`),
+                authFetch(`${API_BASE_URL}/education/agri-schemes/`),
                 authFetch(`${API_BASE_URL}/education/admin/feedbacks/`),
             ]);
 
@@ -463,7 +472,7 @@ export default function AdminDashboard() {
                                     ? <Empty icon={<Wheat size={40} />} text="暂无作物" />
                                     : fCrops.map(c => (
                                         <div key={c.id} className="ad-grid-card">
-                                            {c.image && <img src={c.image.startsWith("http") ? c.image : `http://127.0.0.1:8000${c.image}`} alt={c.name} className="ad-grid-img" />}
+                                            {c.image && c.image_status === "verified" && <img src={mediaUrl(c.image)} alt={c.name} className="ad-grid-img" />}
                                             <div className="ad-grid-body">
                                                 <h3 className="ad-grid-title">{c.name}</h3>
                                                 <p className="ad-grid-sub">{c.season} · {c.duration}</p>

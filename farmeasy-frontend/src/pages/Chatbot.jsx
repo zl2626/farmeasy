@@ -9,47 +9,7 @@ import {
     ChevronDown, Loader2, Pencil, FileText, Image
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
-import axios from 'axios';
-
-const API = 'http://localhost:8000/api';
-
-// 带 401 自动刷新 token 重试的 axios 实例：
-// access token 有效期 60 分钟，过期后用 refresh token 换新并重放原请求
-const apiAxios = axios.create();
-
-apiAxios.interceptors.response.use(
-    (res) => res,
-    async (error) => {
-        const original = error.config;
-        const refreshToken = localStorage.getItem('refresh');
-        if (
-            error.response?.status === 401 &&
-            refreshToken &&
-            original &&
-            !original._retried &&
-            !original.url.includes('/auth/')
-        ) {
-            original._retried = true;
-            try {
-                const r = await axios.post(`${API}/auth/refresh/`, { refresh: refreshToken });
-                const newAccess = r.data.access;
-                localStorage.setItem('token', newAccess);
-                original.headers.Authorization = `Bearer ${newAccess}`;
-                return apiAxios(original);
-            } catch {
-                // refresh token 也过期了，清除凭证让用户重新登录
-                localStorage.removeItem('token');
-                localStorage.removeItem('refresh');
-            }
-        }
-        return Promise.reject(error);
-    }
-);
-
-function authHeaders() {
-    const token = localStorage.getItem('token');
-    return token ? { Authorization: `Bearer ${token}` } : {};
-}
+import { api, mediaUrl } from '../services/api';
 
 export default function Chatbot() {
     const navigate = useNavigate();
@@ -64,7 +24,6 @@ export default function Chatbot() {
     const [loadingHistory, setLoadingHistory] = useState(false);
     const [sidebarOpen, setSidebarOpen] = useState(true);
     const [copiedMessageId, setCopiedMessageId] = useState(null);
-    const [expandedSources, setExpandedSources] = useState({});
     // Edit state
     const [editingMessageId, setEditingMessageId] = useState(null);
     const [editText, setEditText] = useState('');
@@ -76,10 +35,10 @@ export default function Chatbot() {
     // Load sessions on mount
     useEffect(() => {
         if (!isAuthenticated) return;
-        axios.get(`${API}/chat/sessions/`, { headers: authHeaders() })
-            .then(res => {
-                setChatSessions(res.data);
-                if (res.data.length > 0) loadSession(res.data[0].session_id);
+        api.get('/chat/sessions/')
+            .then(data => {
+                setChatSessions(data);
+                if (data.length > 0) loadSession(data[0].session_id);
             })
             .catch(() => { });
     }, [isAuthenticated]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -99,21 +58,17 @@ export default function Chatbot() {
         setEditingMessageId(null);
         setLoadingHistory(true);
         try {
-            const res = await apiAxios.get(`${API}/chat/sessions/${sessionId}/`, {
-                headers: authHeaders(),
-            });
+            const data = await api.get(`/chat/sessions/${sessionId}/`);
             // Map backend structured fields onto message objects so visual
             // indicators (image thumbnail, PDF badge) survive session reloads.
-            const mapped = res.data.messages.map(msg => {
+            const mapped = data.messages.map(msg => {
                 const m = { ...msg };
                 if (msg.isImageUpload) {
                     m.isImageUpload = true;
                     m.imageName = msg.imageName || '';
                     if (msg.imagePreviewUrl) {
                         // Convert relative media path to absolute URL
-                        m.imagePreviewUrl = msg.imagePreviewUrl.startsWith('http')
-                            ? msg.imagePreviewUrl
-                            : `http://localhost:8000${msg.imagePreviewUrl}`;
+                        m.imagePreviewUrl = mediaUrl(msg.imagePreviewUrl);
                     }
                 }
                 if (msg.isPdfUpload) {
@@ -144,15 +99,15 @@ export default function Chatbot() {
     const handleDeleteChat = useCallback(async (sessionId, e) => {
         e.stopPropagation();
         try {
-            await apiAxios.delete(`${API}/chat/sessions/${sessionId}/`, {
-                headers: authHeaders(),
-            });
+            await api.delete(`/chat/sessions/${sessionId}/`);
             setChatSessions(prev => prev.filter(s => s.session_id !== sessionId));
             if (sessionId === currentSessionId) {
                 setCurrentSessionId(null);
                 setMessages([]);
             }
-        } catch { }
+        } catch {
+            // Keep the current conversation visible when deletion fails.
+        }
     }, [currentSessionId]);
 
     const handleCopyMessage = useCallback((content, messageId) => {
@@ -191,12 +146,12 @@ export default function Chatbot() {
         setIsGenerating(true);
 
         try {
-            const res = await apiAxios.post(`${API}/chat/`, {
+            const data = await api.post('/chat/', {
                 question: editText,
                 session_id: currentSessionId,
-            }, { headers: { 'Content-Type': 'application/json', ...authHeaders() } });
+            });
 
-            const { answer, retrieved, confidence } = res.data;
+            const { answer, retrieved, confidence } = data;
             setMessages(prev => [...prev, {
                 id: `msg-${Date.now()}-ai`,
                 role: 'assistant',
@@ -206,7 +161,7 @@ export default function Chatbot() {
                 timestamp: new Date().toISOString(),
             }]);
         } catch (err) {
-            const expired = err.response?.status === 401;
+            const expired = err.status === 401;
             setMessages(prev => [...prev, {
                 id: `msg-${Date.now()}-error`,
                 role: 'assistant',
@@ -261,11 +216,9 @@ export default function Chatbot() {
                     if (input.trim()) formData.append('prompt', input.trim());
                     if (currentSessionId) formData.append('session_id', currentSessionId);
 
-                    const res = await apiAxios.post(`${API}/chat/analyze-pdf/`, formData, {
-                        headers: { ...authHeaders() },
-                    });
+                    const data = await api.post('/chat/analyze-pdf/', formData);
 
-                    const { summary, filename, pages, truncated, used_ocr, session_id, title } = res.data;
+                    const { summary, filename, pages, truncated, used_ocr, session_id, title } = data;
 
                     if (!currentSessionId) {
                         setCurrentSessionId(session_id);
@@ -289,7 +242,7 @@ export default function Chatbot() {
                         timestamp: new Date().toISOString(),
                     }]);
                 } catch (err) {
-                    const errMsg = err.response?.data?.error || '无法分析 PDF，请重试。';
+                    const errMsg = err.data?.error || err.message || '无法分析 PDF，请重试。';
                     setMessages(prev => [...prev, {
                         id: `msg-${Date.now()}-pdf-error`,
                         role: 'assistant',
@@ -330,11 +283,9 @@ export default function Chatbot() {
                     if (input.trim()) formData.append('prompt', input.trim());
                     if (currentSessionId) formData.append('session_id', currentSessionId);
 
-                    const res = await apiAxios.post(`${API}/chat/analyze-image/`, formData, {
-                        headers: { ...authHeaders() },
-                    });
+                    const data = await api.post('/chat/analyze-image/', formData);
 
-                    const { summary, filename, session_id, title } = res.data;
+                    const { summary, filename, session_id, title } = data;
 
                     if (!currentSessionId) {
                         setCurrentSessionId(session_id);
@@ -361,7 +312,7 @@ export default function Chatbot() {
                         timestamp: new Date().toISOString(),
                     }]);
                 } catch (err) {
-                    const errMsg = err.response?.data?.error || '无法分析图片，请重试。';
+                    const errMsg = err.data?.error || err.message || '无法分析图片，请重试。';
                     setMessages(prev => [...prev, {
                         id: `msg-${Date.now()}-img-error`,
                         role: 'assistant',
@@ -389,12 +340,12 @@ export default function Chatbot() {
             setIsGenerating(true);
 
             try {
-                const res = await apiAxios.post(`${API}/chat/`, {
+                const data = await api.post('/chat/', {
                     question: input,
                     session_id: currentSessionId,
-                }, { headers: { 'Content-Type': 'application/json', ...authHeaders() } });
+                });
 
-                const { answer, retrieved, confidence, session_id, title } = res.data;
+                const { answer, retrieved, confidence, session_id, title } = data;
 
                 if (!currentSessionId) {
                     setCurrentSessionId(session_id);
@@ -421,7 +372,7 @@ export default function Chatbot() {
                     timestamp: new Date().toISOString(),
                 }]);
             } catch (err) {
-                const expired = err.response?.status === 401;
+                const expired = err.status === 401;
                 setMessages(prev => [...prev, {
                     id: `msg-${Date.now()}-error`,
                     role: 'assistant',

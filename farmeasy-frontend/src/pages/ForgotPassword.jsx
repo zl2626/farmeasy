@@ -1,5 +1,5 @@
 import { useState } from "react";
-import API_BASE_URL from "../services/api";
+import { api } from "../services/api";
 import TranslateText from "../components/TranslateText";
 import { Mail, ArrowRight, Loader, AlertCircle } from "lucide-react";
 import { Snackbar, Alert } from "@mui/material";
@@ -18,35 +18,13 @@ function ForgotPassword({ onBackToLogin }) {
     setLoading(true);
 
     try {
-      const response = await fetch(
-        `${API_BASE_URL}/auth/forgot-password/`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email }),
-        }
-      );
-
-      const text = await response.text();
-      let data = {};
-
-      try {
-        data = JSON.parse(text);
-      } catch {
-        setError("服务器错误，请稍后再试。");
-        setLoading(false);
-        return;
-      }
-
-      if (response.ok) {
-        setSnackbar({ open: true, message: "重置链接已发送到您的邮箱。", severity: "success" });
+      const data = await api.post("/auth/forgot-password/", { email });
+      if (data) {
+        setSnackbar({ open: true, message: data.message, severity: "success" });
         setEmail("");
-      } else {
-        setError(data.error || "出错了，请稍后再试。");
       }
     } catch (err) {
-      console.error(err);
-      setError("网络错误，请重试。");
+      setError(err.message || "暂时无法提交，请稍后重试。");
     } finally {
       setLoading(false);
     }

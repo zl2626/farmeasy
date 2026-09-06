@@ -1,4 +1,4 @@
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, throttle_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
@@ -7,14 +7,17 @@ from rag.rag_pipeline import get_answer, _get_vector_store
 from rag.web_search import web_search
 from rag.llm import get_client, DEEPSEEK_TEXT_MODEL, DEEPSEEK_VISION_MODEL
 from django.conf import settings
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 import pdfplumber
 import uuid
 import io
-import os
 import base64
 import logging
 import fitz  # pymupdf
 from rag.rag_pipeline import _strip_markdown
+from rag.upload_validation import UploadValidationError, validate_image, validate_pdf
+from farm_app.throttles import AiRateThrottle
 
 logger = logging.getLogger(__name__)
 
@@ -23,6 +26,7 @@ logger = logging.getLogger(__name__)
 # ─────────────────────────────────────────────
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
+@throttle_classes([AiRateThrottle])
 def farmer_chat(request):
     question = request.data.get("question", "").strip()
     if not question:
@@ -66,7 +70,16 @@ def farmer_chat(request):
         elif msg.role == "assistant" and msg.output_text:
             chat_history.append({"role": "assistant", "content": msg.output_text})
 
-    answer, retrieved, confidence, web_supplemented = get_answer(question, chat_history=chat_history)
+    try:
+        answer, retrieved, confidence, web_supplemented = get_answer(
+            question, chat_history=chat_history
+        )
+    except Exception:
+        logger.exception("AI chat request failed for user_id=%s", request.user.pk)
+        return Response(
+            {"code": "ai_service_unavailable", "error": "智能服务暂时不可用，请稍后重试。"},
+            status=status.HTTP_503_SERVICE_UNAVAILABLE,
+        )
 
     ChatMessage.objects.create(
         session=session,
@@ -171,14 +184,20 @@ def _summarize_images(llm_client, filename, page_images, user_prompt=None):
 # ─────────────────────────────────────────────
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
+@throttle_classes([AiRateThrottle])
 def analyze_pdf(request):
     pdf_file = request.FILES.get("file")
     if not pdf_file:
         return Response({"error": "没有上传文件"}, status=400)
-    if not pdf_file.name.lower().endswith(".pdf"):
-        return Response({"error": "仅支持 PDF 文件"}, status=400)
+    try:
+        validated = validate_pdf(pdf_file)
+    except UploadValidationError as exc:
+        return Response(
+            {"code": exc.code, "error": exc.message},
+            status=exc.status_code,
+        )
 
-    pdf_bytes = pdf_file.read()
+    pdf_bytes = validated.content
     user_prompt = request.data.get("prompt", "").strip()
 
     used_ocr = False
@@ -223,8 +242,12 @@ def analyze_pdf(request):
                 page_images.append((i + 1, b64))
             doc.close()
             pages_processed = len(page_images)
-        except Exception as e:
-            return Response({"error": f"无法渲染 PDF 页面：{str(e)}"}, status=400)
+        except Exception:
+            logger.exception("Validated PDF could not be rendered")
+            return Response(
+                {"code": "pdf_render_failed", "error": "PDF 页面无法读取。"},
+                status=422,
+            )
 
         if not page_images:
             return Response({"error": "PDF 为空或无法读取。"}, status=422)
@@ -278,13 +301,21 @@ def analyze_pdf(request):
     if not used_ocr:
         try:
             summary = _summarize_text(get_client(), pdf_file.name, truncated_text, was_truncated, user_prompt)
-        except Exception as e:
-            return Response({"error": f"AI 调用出错：{str(e)}"}, status=500)
+        except Exception:
+            logger.exception("PDF text analysis provider failed")
+            return Response(
+                {"code": "ai_service_unavailable", "error": "文档分析服务暂时不可用，请稍后重试。"},
+                status=503,
+            )
     else:
         try:
             summary = _summarize_images(get_client(), pdf_file.name, page_images, user_prompt)
-        except Exception as e:
-            return Response({"error": f"图像识别调用出错：{str(e)}"}, status=500)
+        except Exception:
+            logger.exception("PDF vision analysis provider failed")
+            return Response(
+                {"code": "ai_service_unavailable", "error": "文档分析服务暂时不可用，请稍后重试。"},
+                status=503,
+            )
 
     # ── Save to session ──────────────────────────────────────────────────────
     session_id = request.data.get("session_id")
@@ -378,44 +409,37 @@ IMAGE_ANALYSIS_SYSTEM_PROMPT = (
     "- 如有网络补充资料，结合它给出更完整的分析。"
 )
 
-ALLOWED_IMAGE_TYPES = {
-    "image/jpeg", "image/png", "image/webp", "image/gif", "image/bmp",
-}
-
-
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
+@throttle_classes([AiRateThrottle])
 def analyze_image(request):
     image_file = request.FILES.get("image")
     if not image_file:
         return Response({"error": "没有上传图片"}, status=400)
 
-    content_type = image_file.content_type or ""
-    if content_type not in ALLOWED_IMAGE_TYPES:
+    try:
+        validated = validate_image(image_file)
+    except UploadValidationError as exc:
         return Response(
-            {"error": f"不支持的文件类型“{content_type}”，请上传 JPG、PNG 或 WebP 图片。"},
-            status=400,
+            {"code": exc.code, "error": exc.message},
+            status=exc.status_code,
         )
 
     user_prompt = request.data.get("prompt", "").strip()
     session_id = request.data.get("session_id", "").strip() or None
 
     # ── Read and encode image ────────────────────────────────────────────────
-    image_bytes = image_file.read()
+    image_bytes = validated.content
     b64_image = base64.b64encode(image_bytes).decode("utf-8")
-    mime = content_type if content_type else "image/jpeg"
+    mime = validated.content_type
 
     # ── Save image to media/chat_images/ for persistent display ─────────────
-    chat_images_dir = os.path.join(settings.MEDIA_ROOT, "chat_images")
-    os.makedirs(chat_images_dir, exist_ok=True)
-    ext = mime.split("/")[-1]  # e.g. jpeg, png, webp
-    if ext == "jpeg":
-        ext = "jpg"
-    saved_filename = f"{uuid.uuid4().hex[:12]}.{ext}"
-    saved_path = os.path.join(chat_images_dir, saved_filename)
-    with open(saved_path, "wb") as f:
-        f.write(image_bytes)
-    image_url = f"{settings.MEDIA_URL}chat_images/{saved_filename}"
+    saved_filename = f"{uuid.uuid4().hex[:12]}.{validated.extension}"
+    stored_name = default_storage.save(
+        f"chat_images/{saved_filename}", ContentFile(image_bytes)
+    )
+    stored_url_path = stored_name.replace("\\", "/")
+    image_url = f"{settings.MEDIA_URL}{stored_url_path}"
 
     # ── Vector relevance check ───────────────────────────────────────────────
     check_text = user_prompt
@@ -515,8 +539,12 @@ def analyze_image(request):
         )
         summary = resp.choices[0].message.content.strip()
         summary = _strip_markdown(summary)
-    except Exception as e:
-        return Response({"error": f"图像识别调用出错：{str(e)}"}, status=500)
+    except Exception:
+        logger.exception("Image analysis provider failed")
+        return Response(
+            {"code": "ai_service_unavailable", "error": "图片诊断服务暂时不可用，请稍后重试。"},
+            status=503,
+        )
 
     # ── Save to session ──────────────────────────────────────────────────────
     session = _get_or_create_session(

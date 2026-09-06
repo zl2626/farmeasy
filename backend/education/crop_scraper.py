@@ -1,10 +1,11 @@
 from ddgs import DDGS
 import requests
 from bs4 import BeautifulSoup
-import urllib3
-from urllib.parse import urljoin, quote
+import logging
 
-urllib3.disable_warnings()
+from rag.web_search import _is_allowed_url
+
+logger = logging.getLogger(__name__)
 
 session = requests.Session()
 session.headers.update({
@@ -13,26 +14,14 @@ session.headers.update({
 
 
 def find_crop_url(crop_name):
-    query = f"{crop_name} crop cultivation farming information"
+    query = f"{crop_name} 栽培技术 农业农村部 农科院"
 
     with DDGS() as ddgs:
         results = list(ddgs.text(query, max_results=10))
 
         for result in results:
             url = result.get("href", "")
-            # Prefer agricultural / educational sites
-            if any(domain in url for domain in [
-                "agri", "farm", "crop", "krishna", "gov.in",
-                "edu", "agropedia", "ikisan", "vikaspedia"
-            ]):
-                print("[FarmEasy] Found preferred URL:", url)
-                return url
-
-        # Fallback: first result
-        for result in results:
-            url = result.get("href")
-            if url:
-                print("[FarmEasy] Fallback URL:", url)
+            if _is_allowed_url(url):
                 return url
 
     return None
@@ -57,16 +46,6 @@ def extract_section(text_list, keyword):
     return None
 
 
-def get_crop_image_url(crop_name):
-    """
-    Returns a reliable, crop-specific image URL using the Unsplash Source API.
-    No API key required. Always returns a real, relevant photo.
-    The URL redirects to a featured Unsplash photo matching the search query.
-    """
-    encoded = quote(f"{crop_name} crop farm agriculture field")
-    return f"https://source.unsplash.com/featured/600x400/?{encoded}"
-
-
 def scrape_crop_info(crop_name):
     url = find_crop_url(crop_name)
 
@@ -74,10 +53,10 @@ def scrape_crop_info(crop_name):
         return None
 
     try:
-        response = session.get(url, verify=False, timeout=15)
+        response = session.get(url, timeout=8)
         response.raise_for_status()
-    except Exception as e:
-        print("[FarmEasy] Request failed:", e)
+    except Exception:
+        logger.exception("Crop source request failed")
         return None
 
     soup = BeautifulSoup(response.text, "html.parser")
@@ -94,11 +73,6 @@ def scrape_crop_info(crop_name):
         if len(p.get_text(strip=True)) > 40
     ]
 
-    # Use Unsplash for a guaranteed, crop-specific image.
-    # Scraping random websites yields icons, logos, or broken URLs —
-    # Unsplash always returns a proper high-quality relevant photo.
-    image_url = get_crop_image_url(crop_name)
-
     result = {
         "name": crop_name,
         "scientific_name": extract_section(text_list, "scientific"),
@@ -106,8 +80,9 @@ def scrape_crop_info(crop_name):
         "climate":         extract_section(text_list, "climate"),
         "season":          extract_section(text_list, "season"),
         "water":           extract_section(text_list, "water"),
-        "image":           image_url,
         "source":          url,
+        "source_status":   "WEB_SUPPLEMENTED",
+        "image_status":    "unverified",
         "scraped":         True,
     }
 
@@ -116,7 +91,8 @@ def scrape_crop_info(crop_name):
     # Always keep these regardless
     result["name"]   = crop_name
     result["source"] = url
-    result["image"]  = image_url
+    result["image"] = None
+    result["image_status"] = "unverified"
     result["scraped"] = True
 
     return result

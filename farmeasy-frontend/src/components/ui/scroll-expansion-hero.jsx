@@ -25,12 +25,6 @@ export default function ScrollExpandMedia({
   const sectionRef = useRef(null);
 
   useEffect(() => {
-    setScrollProgress(0);
-    setShowContent(false);
-    setMediaFullyExpanded(false);
-  }, [mediaType]);
-
-  useEffect(() => {
     const handleWheel = (e) => {
       if (mediaFullyExpanded && e.deltaY < 0 && window.scrollY <= 5) {
         setMediaFullyExpanded(false);
@@ -271,4 +265,3 @@ export default function ScrollExpandMedia({
     </div>
   );
 }
-

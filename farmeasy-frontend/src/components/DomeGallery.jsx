@@ -7,7 +7,7 @@ import React, {
 import { useGesture } from "@use-gesture/react";
 import "./DomeGallery.css";
 
-// 中国特色农业图片（本地资源）
+// 已核验地点与许可的中国农业图片，完整清单见 data/imageManifest.js。
 import imgTerrace from "../assets/gallery/terrace.jpg";
 import imgPaddy from "../assets/gallery/paddy.jpg";
 import imgTea from "../assets/gallery/tea.jpg";
@@ -20,40 +20,39 @@ import imgMarket from "../assets/gallery/market.jpg";
 const DEFAULT_IMAGES = [
   {
     src: imgTerrace,
-    alt: "南方水稻梯田",
+    alt: "广西龙胜龙脊水稻梯田",
   },
   {
     src: imgPaddy,
-    alt: "烟雨中的江南稻田",
+    alt: "广西桂林阳朔稻田",
   },
   {
     src: imgTea,
-    alt: "绿意盎然的茶园",
+    alt: "浙江杭州梅家坞龙井茶园",
   },
   {
     src: imgWheat,
-    alt: "金色麦浪与落日",
+    alt: "河南尉氏小麦机械收获",
   },
   {
     src: imgLotus,
-    alt: "夏日荷塘",
+    alt: "上海荷塘中的莲花",
   },
   {
     src: imgBamboo,
-    alt: "青翠竹林",
+    alt: "浙江安吉竹林",
   },
   {
     src: imgRapeseed,
-    alt: "油菜花开满田野",
+    alt: "云南罗平油菜花田",
   },
   {
     src: imgMarket,
-    alt: "热闹的农贸市场",
+    alt: "四川成都菜市场",
   },
 ];
 
 const DEFAULTS = {
-  maxVerticalRotationDeg: 5,
   dragSensitivity: 20,
   enlargeTransitionMs: 300,
   segments: 35,
@@ -120,6 +119,7 @@ function buildItems(pool, seg) {
     ...c,
     src: usedImages[i].src,
     alt: usedImages[i].alt,
+    isAccessibleCopy: i < normalizedImages.length,
   }));
 }
 
@@ -138,7 +138,6 @@ export default function DomeGallery({
   maxRadius = Infinity,
   padFactor = 0.25,
   overlayBlurColor = "#060010",
-  maxVerticalRotationDeg = DEFAULTS.maxVerticalRotationDeg,
   dragSensitivity = DEFAULTS.dragSensitivity,
   enlargeTransitionMs = DEFAULTS.enlargeTransitionMs,
   segments = DEFAULTS.segments,
@@ -298,7 +297,7 @@ export default function DomeGallery({
 
   // Continuous auto-rotation effect
   useEffect(() => {
-    if (!autoRotate) return;
+    if (!autoRotate || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     let lastTime = performance.now();
 
@@ -368,7 +367,7 @@ export default function DomeGallery({
       stopInertia();
       inertiaRAF.current = requestAnimationFrame(step);
     },
-    [dragDampening, maxVerticalRotationDeg, stopInertia]
+    [dragDampening, stopInertia]
   );
 
   useGesture(
@@ -717,6 +716,15 @@ export default function DomeGallery({
     [openItemFromElement]
   );
 
+  const onTileKeyDown = useCallback(
+    (e) => {
+      if (e.key !== "Enter" && e.key !== " ") return;
+      e.preventDefault();
+      openItemFromElement(e.currentTarget);
+    },
+    [openItemFromElement]
+  );
+
   useEffect(() => {
     return () => {
       document.body.classList.remove("dg-scroll-lock");
@@ -757,13 +765,15 @@ export default function DomeGallery({
               >
                 <div
                   className="item__image"
-                  role="button"
-                  tabIndex={0}
-                  aria-label={it.alt || "Open image"}
+                  role={it.isAccessibleCopy ? "button" : undefined}
+                  tabIndex={it.isAccessibleCopy ? 0 : -1}
+                  aria-hidden={it.isAccessibleCopy ? undefined : true}
+                  aria-label={it.isAccessibleCopy ? (it.alt || "查看农业图片") : undefined}
                   onClick={onTileClick}
                   onPointerUp={onTilePointerUp}
+                  onKeyDown={it.isAccessibleCopy ? onTileKeyDown : undefined}
                 >
-                  <img src={it.src} draggable={false} alt={it.alt} />
+                  <img src={it.src} draggable={false} alt={it.isAccessibleCopy ? it.alt : ""} />
                 </div>
               </div>
             ))}
@@ -783,4 +793,3 @@ export default function DomeGallery({
     </div>
   );
 }
-

@@ -1,76 +1,43 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowRight, BookOpen, Bot, Landmark, LineChart } from "lucide-react";
+import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import TranslateText from "../components/TranslateText";
 import DomeGallery from "../components/DomeGallery";
-import ServicesSection from "../components/ServicesSection";
-import SolutionsSection from "../components/SolutionsSection";
-import TestimonialsSection from "../components/TestimonialsSection";
-import BlogSection from "../components/BlogSection";
+import { galleryImageManifest } from "../data/imageManifest";
+import "./Homepage.css";
+
+const services = [
+  { to: "/crops", title: "查作物", description: "查看生长条件、适宜季节与水肥管理资料。", icon: <BookOpen aria-hidden="true" /> },
+  { to: "/market-prices", title: "看行情", description: "筛选演示行情快照，清楚区分非实时数据。", icon: <LineChart aria-hidden="true" /> },
+  { to: "/agri-schemes", title: "找政策", description: "查询申请条件、支持内容和办理材料。", icon: <Landmark aria-hidden="true" /> },
+  { to: "/chatbot", title: "问农事", description: "结合本地知识库咨询种植与病虫害问题。", icon: <Bot aria-hidden="true" /> },
+];
 
 export default function HomePage() {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 768);
   const timerRef = useRef(null);
-
   useEffect(() => {
     const handleResize = () => {
       clearTimeout(timerRef.current);
-      timerRef.current = setTimeout(() => {
-        setIsMobile(window.innerWidth <= 768);
-      }, 150);
+      timerRef.current = setTimeout(() => setIsMobile(window.innerWidth <= 768), 150);
     };
     window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      clearTimeout(timerRef.current);
-    };
+    return () => { window.removeEventListener("resize", handleResize); clearTimeout(timerRef.current); };
   }, []);
 
-  return (
-    <>
-      <Navbar />
-
-      {/* Hero — DomeGallery */}
-      <section
-        style={{
-          marginTop: "72px",
-          padding: 0,
-          height: "calc(100dvh - 72px)",
-          width: "100%",
-        }}
-      >
-        <DomeGallery
-          fit={isMobile ? 0.95 : 0.8}
-          minRadius={isMobile ? 320 : 600}
-          maxVerticalRotationDeg={0}
-          segments={isMobile ? 20 : 34}
-          dragDampening={2}
-          grayscale={false}
-          overlayBlurColor="#14532d"
-        />
+  return <div className="home-page"><Navbar />
+    <section className="home-gallery" aria-label="中国农业影像">
+      <DomeGallery fit={isMobile ? 0.95 : 0.8} minRadius={isMobile ? 320 : 600} segments={isMobile ? 20 : 34} dragDampening={2} grayscale={false} overlayBlurColor="#1d5138" />
+    </section>
+    <main>
+      <section className="home-intro">
+        <div><p className="home-kicker">智农农业服务平台</p><h1>把农事资料放到手边</h1></div>
+        <p>从作物知识、惠农政策到行情快照与智能问答，所有入口按实际农事任务组织。涉及生产经营决策时，请结合当地农技人员意见和主管部门最新文件。</p>
       </section>
-
-      {/* Welcome Banner */}
-      <section
-        className="w-full py-20 md:py-28 px-4 text-center"
-        style={{ background: "#ffffc5" }}
-      >
-        <h1
-          className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4"
-          style={{ color: "#15803d" }}
-        >
-          <TranslateText>欢迎来到</TranslateText> <span style={{ color: "#4caf50" }}>智农</span> 🌱
-        </h1>
-        <p className="text-base md:text-lg max-w-2xl mx-auto text-gray-600 leading-relaxed">
-          <TranslateText>您的 AI 智慧农业伙伴——咨询作物问题、查看实时市场价格、了解政府惠农政策，安心增产增收。</TranslateText>
-        </p>
+      <section className="home-services" aria-label="主要服务">
+        {services.map(({ to, title, description, icon }) => <Link className="home-service" to={to} key={to}>{icon}<div><h2>{title}</h2><p>{description}</p></div><ArrowRight className="home-service__arrow" aria-hidden="true" /></Link>)}
       </section>
-
-      {/* New Sections */}
-      <ServicesSection />
-      <SolutionsSection />
-      <TestimonialsSection />
-      <BlogSection />
-    </>
-  );
+      <footer className="home-attribution"><details><summary>首页图片来源与许可</summary><ul>{galleryImageManifest.map((image) => <li key={image.file}><a href={image.source} target="_blank" rel="noreferrer">{image.title}</a>，{image.location}，摄影：{image.author}，{image.license}</li>)}</ul></details></footer>
+    </main>
+  </div>;
 }
-

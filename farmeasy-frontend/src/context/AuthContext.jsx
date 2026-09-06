@@ -1,4 +1,5 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { clearAuthStorage } from "../services/api";
 
 const AuthContext = createContext();
 
@@ -6,21 +7,37 @@ export const AuthProvider = ({ children }) => {
     // Synchronously initialize state so we don't flash 'unauthenticated' on refresh
     const [user, setUser] = useState(() => {
         const storedUser = localStorage.getItem("user");
-        return storedUser ? JSON.parse(storedUser) : null;
+        if (!storedUser) return null;
+        try {
+            return JSON.parse(storedUser);
+        } catch {
+            localStorage.removeItem("user");
+            return null;
+        }
     });
     const [isAuthenticated, setIsAuthenticated] = useState(() => {
         return !!localStorage.getItem("token");
     });
 
-    const login = (userData, token) => {
+    useEffect(() => {
+        const handleExpiredSession = () => {
+            setUser(null);
+            setIsAuthenticated(false);
+        };
+        window.addEventListener("auth:logout", handleExpiredSession);
+        return () => window.removeEventListener("auth:logout", handleExpiredSession);
+    }, []);
+
+    const login = (userData, token, refreshToken) => {
         localStorage.setItem("user", JSON.stringify(userData));
         localStorage.setItem("token", token);
+        if (refreshToken) localStorage.setItem("refresh", refreshToken);
         setUser(userData);
         setIsAuthenticated(true);
     };
 
     const logout = () => {
-        localStorage.clear();
+        clearAuthStorage();
         setUser(null);
         setIsAuthenticated(false);
     };

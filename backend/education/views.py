@@ -1,70 +1,30 @@
-import requests
 from rest_framework.response import Response
 from .models import Scheme,Crop,Doubt,Feedback
 from .serializers import SchemeSerializer,CropSerializer,DoubtSerializer,FeedbackSerializer
-from rest_framework.decorators import api_view,permission_classes
+from rest_framework.decorators import api_view, permission_classes, throttle_classes
 from rest_framework.permissions import IsAuthenticated
-from django.http import JsonResponse
-from django.conf import settings
-from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry
 from .utils import load_crops_data
-import urllib.parse
-import pandas as pd
-from pathlib import Path
 from .crop_scraper import scrape_crop_info
-from .scheme_scraper import scrape_scheme_info as _scrape_scheme
+import logging
 
+logger = logging.getLogger(__name__)
+from .market.providers import get_market_snapshot
+from farm_app.throttles import (
+    FeedbackAnonRateThrottle,
+    FeedbackUserRateThrottle,
+    ScrapeAnonRateThrottle,
+    ScrapeUserRateThrottle,
+)
+
+@api_view(["GET"])
 def market_prices(request):
-    url = "https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070"
-
-    params = {
-        "api-key": settings.DATA_GOV_API_KEY,
-        "format": "json",
-        "limit": request.GET.get("limit", 20),
+    filters = {
+        key: request.GET.get(key, "")
+        for key in ("province", "city", "commodity", "category", "keyword", "limit")
     }
-
-    if request.GET.get("state"):
-        params["filters[state]"] = request.GET["state"]
-
-    if request.GET.get("commodity"):
-        params["filters[commodity]"] = request.GET["commodity"]
-
-    try:
-        response = requests.get(url, params=params, timeout=20)
-
-        if response.status_code == 200:
-            data = response.json()
-
-            if data.get("records"):
-                print("Live API used")
-                data["source"] = "live"
-                return JsonResponse(data, safe=False)
-
-    except requests.exceptions.RequestException as e:
-        print("API failed:", e)
-
-    # Fallback only if API truly failed
-    print("Using CSV fallback")
-
-    csv_path = Path(settings.BASE_DIR) / "farmeasy" / "data" / "market_price.csv"
-    df = pd.read_csv(csv_path)
-
-    df.columns = df.columns.str.strip()
-    df.columns = df.columns.str.lower().str.replace(" ", "_")
-
-    if request.GET.get("state"):
-        df = df[df["state"] == request.GET["state"]]
-
-    limit = int(request.GET.get("limit", 200))
-    df = df.head(limit)
-
-    data = {
-        "records": df.to_dict(orient="records"),
-        "source": "csv"
-    }
-
-    return JsonResponse(data, safe=False)
+    if not filters["province"]:
+        filters["province"] = request.GET.get("state", "")
+    return Response(get_market_snapshot(filters))
 
 
 @api_view(['GET'])
@@ -85,6 +45,7 @@ def get_all_crops(request):
     return Response(serializer.data)
 
 @api_view(["GET"])
+@throttle_classes([ScrapeAnonRateThrottle, ScrapeUserRateThrottle])
 def crop_details(request, crop_name):
 
     try:
@@ -99,21 +60,32 @@ def crop_details(request, crop_name):
             "season": crop.season,
             "water": crop.water,
             "description": crop.description,
-            "source": "database"
+            "source": crop.source,
+            "source_url": crop.source_url,
+            "image": request.build_absolute_uri(crop.image.url)
+            if crop.image and crop.image_status == Crop.ImageStatus.VERIFIED
+            else None,
+            "image_status": crop.image_status,
         })
 
     except Crop.DoesNotExist:
 
-        print("[FarmEasy] Crop not in database. Scraping...")
-
-        scraped = scrape_crop_info(crop_name)
+        try:
+            scraped = scrape_crop_info(crop_name)
+        except Exception:
+            logger.exception("Crop lookup failed for %r", crop_name)
+            return Response(
+                {"code": "source_unavailable", "error": "作物资料服务暂时不可用。"},
+                status=503,
+            )
 
         if scraped:
 
             return Response(scraped)
 
         return Response({
-            "error": "Crop not found"
+            "code": "crop_not_found",
+            "error": "暂未找到该作物资料"
         }, status=404)
 
 @api_view(["POST"])
@@ -358,6 +330,7 @@ def scheme_details(request, scheme_id):
 
 
 @api_view(["GET"])
+@throttle_classes([ScrapeAnonRateThrottle, ScrapeUserRateThrottle])
 def scrape_scheme_details(request, scheme_id):
     """
     Live-scrape deadline, documents, how-to-apply and status for a scheme.
@@ -368,21 +341,21 @@ def scrape_scheme_details(request, scheme_id):
     except Scheme.DoesNotExist:
         return Response({"error": "Scheme not found"}, status=404)
 
-    try:
-        scraped = _scrape_scheme(
-            scheme_name=scheme.name,
-            official_link=scheme.official_link or None,
-        )
-        return Response(scraped)
-    except Exception as e:
-        return Response(
-            {"status": "unknown", "deadline": None,
-             "documents": None, "how_to_apply": None},
-            status=200,
-        )
+    return Response(
+        {
+            "status": "local_snapshot",
+            "deadline": scheme.deadline or None,
+            "documents": scheme.documents,
+            "how_to_apply": scheme.how_to_apply,
+            "source": scheme.source,
+            "source_url": scheme.source_url or scheme.official_link or None,
+            "notice": "政策信息可能因地区和年度调整，请以当地主管部门最新通知为准。",
+        }
+    )
 
 
 @api_view(["POST"])
+@throttle_classes([FeedbackAnonRateThrottle, FeedbackUserRateThrottle])
 def create_feedback(request):
     serializer = FeedbackSerializer(data=request.data)
     if serializer.is_valid():
