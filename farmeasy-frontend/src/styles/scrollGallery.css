@@ -1,0 +1,42 @@
+.scroll-wrapper {
+  min-height: 240vh;   /* CREATES SCROLL */
+  position: relative;
+}
+
+.sticky-content {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.grid {
+  width: min(1600px, 90vw);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: clamp(10px, 6vw, 80px);
+  position: relative;  /* 🔥 NOT absolute */
+}
+
+.layer {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(5, 1fr);
+  gap: inherit;
+}
+
+.grid img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+.scaler {
+  grid-column: 3;
+  grid-row: 2;
+  z-index: 3;
+}

@@ -1,0 +1,487 @@
+{
+    "crops": [
+        {
+        "id": "wheat",
+        "name": "Wheat",
+        "season": "Rabi",
+        "soil": ["Alluvial", "Black"],
+        "duration": "120–150 days",
+        "sowing_time": "October–November",
+        "climate": "Cool climate; 10–15°C at sowing and 21–26°C during ripening",
+        "rainfall": "50–75 cm",
+        "fertilizer": "NPK 120:60:40 kg/ha",
+        "irrigation": "4–6 irrigations at critical growth stages",
+        "yield": "40–50 quintals/ha",
+        "steps": [
+            "Prepare land with deep ploughing",
+            "Use certified seeds",
+            "Sow seeds at proper spacing",
+            "Apply fertilizers in split doses",
+            "Control weeds and pests regularly"
+        ],
+        "common_mistakes": [
+            "Delayed sowing",
+            "Excess irrigation",
+            "Using poor quality seeds"
+        ],
+        "images": [
+            "/static/images/crops/wheat_1.jpg",
+            "/static/images/crops/wheat_2.jpg"
+        ]
+        },
+
+        {
+            "id": "rice",
+            "name": "Rice",
+            "season": "Kharif",
+            "soil": [
+                "Alluvial",
+                "Clayey",
+                "Loamy"
+            ],
+            "duration": "90–150 days",
+            "sowing_time": "June–July",
+            "climate": "Warm and humid climate, 20–35°C",
+            "rainfall": "100–200 cm",
+            "fertilizer": "NPK 100:50:50 kg/ha",
+            "irrigation": "Requires standing water during early growth",
+            "yield": "40–60 quintals/ha",
+            "steps": [
+                "Prepare nursery beds",
+                "Transplant seedlings after 20–25 days",
+                "Maintain water level in fields",
+                "Control weeds and pests regularly"
+            ],
+            "common_mistakes": [
+                "Late transplanting",
+                "Poor water management",
+                "Overuse of nitrogen"
+            ],
+            "images": [
+                "/static/images/crops/rice_1.jpg",
+                "/static/images/crops/rice_2.jpg"
+            ]
+        },
+        {
+            "id": "maize",
+            "name": "Maize",
+            "season": "Kharif",
+            "soil": [
+                "Loamy",
+                "Sandy loam"
+            ],
+            "duration": "90–120 days",
+            "sowing_time": "June–July",
+            "climate": "Moderate temperature, 18–27°C",
+            "rainfall": "50–100 cm",
+            "fertilizer": "NPK 120:60:40 kg/ha",
+            "irrigation": "Moderate irrigation at critical stages",
+            "yield": "30–50 quintals/ha",
+            "steps": [
+                "Prepare fine seedbed",
+                "Sow seeds 3–5 cm deep",
+                "Apply fertilizers in split doses",
+                "Harvest after cobs mature"
+            ],
+            "common_mistakes": [
+                "Waterlogging",
+                "Improper spacing"
+            ],
+            "images": [
+                "/static/images/crops/maize_1.jpg"
+            ]
+        },
+        {
+            "id": "cotton",
+            "name": "Cotton",
+            "season": "Kharif",
+            "soil": [
+                "Black",
+                "Alluvial"
+            ],
+            "duration": "150–180 days",
+            "sowing_time": "June",
+            "climate": "Warm climate, 21–30°C",
+            "rainfall": "50–100 cm",
+            "fertilizer": "NPK 100:50:50 kg/ha",
+            "irrigation": "Moderate, avoid waterlogging",
+            "yield": "15–25 quintals/ha",
+            "steps": [
+                "Deep ploughing before sowing",
+                "Use certified Bt cotton seeds",
+                "Control pests like bollworm",
+                "Pick cotton in multiple rounds"
+            ],
+            "common_mistakes": [
+                "Excess irrigation",
+                "Ignoring pest management"
+            ],
+            "images": [
+                "/static/images/crops/cotton_1.jpg"
+            ]
+        },
+        {
+            "id": "sugarcane",
+            "name": "Sugarcane",
+            "season": "Annual",
+            "soil": [
+                "Alluvial",
+                "Loamy"
+            ],
+            "duration": "10–12 months",
+            "sowing_time": "February–March",
+            "climate": "Hot and humid, 20–35°C",
+            "rainfall": "75–150 cm",
+            "fertilizer": "NPK 150:60:60 kg/ha",
+            "irrigation": "Regular irrigation required",
+            "yield": "600–1000 quintals/ha",
+            "steps": [
+                "Prepare trenches",
+                "Plant healthy cane setts",
+                "Apply fertilizers in stages",
+                "Harvest after maturity"
+            ],
+            "common_mistakes": [
+                "Poor sett selection",
+                "Water stress"
+            ],
+            "images": [
+                "/static/images/crops/sugarcane_1.jpg"
+            ]
+        },
+        {
+            "id": "soybean",
+            "name": "Soybean",
+            "season": "Kharif",
+            "soil": [
+                "Black",
+                "Loamy"
+            ],
+            "duration": "90–110 days",
+            "sowing_time": "June–July",
+            "climate": "Warm climate, 20–30°C",
+            "rainfall": "60–100 cm",
+            "fertilizer": "NPK 20:60:40 kg/ha",
+            "irrigation": "Mostly rainfed",
+            "yield": "20–30 quintals/ha",
+            "steps": [
+                "Prepare well-drained soil",
+                "Sow seeds 3–4 cm deep",
+                "Avoid water stagnation",
+                "Harvest when pods turn brown"
+            ],
+            "common_mistakes": [
+                "Late sowing",
+                "Excess water"
+            ],
+            "images": [
+                "/static/images/crops/soybean_1.jpg"
+            ]
+        },
+        {
+            "id": "groundnut",
+            "name": "Groundnut",
+            "season": "Kharif",
+            "soil": [
+                "Sandy loam",
+                "Loamy"
+            ],
+            "duration": "100–130 days",
+            "sowing_time": "June",
+            "climate": "Warm climate, 25–30°C",
+            "rainfall": "50–75 cm",
+            "fertilizer": "NPK 20:40:40 kg/ha",
+            "irrigation": "Light but frequent",
+            "yield": "20–30 quintals/ha",
+            "steps": [
+                "Use healthy kernels",
+                "Maintain proper spacing",
+                "Earth up during flowering",
+                "Harvest when leaves turn yellow"
+            ],
+            "common_mistakes": [
+                "Poor seed quality",
+                "Water stress during flowering"
+            ],
+            "images": [
+                "/static/images/crops/groundnut_1.jpg"
+            ]
+        },
+        {
+            "id": "chickpea",
+            "name": "Chickpea (Gram)",
+            "season": "Rabi",
+            "soil": [
+                "Loamy",
+                "Sandy loam"
+            ],
+            "duration": "90–120 days",
+            "sowing_time": "October–November",
+            "climate": "Cool and dry climate",
+            "rainfall": "30–50 cm",
+            "fertilizer": "DAP 100 kg/ha",
+            "irrigation": "Minimal irrigation",
+            "yield": "15–25 quintals/ha",
+            "steps": [
+                "Prepare fine seedbed",
+                "Use treated seeds",
+                "Avoid excess irrigation",
+                "Harvest when pods dry"
+            ],
+            "common_mistakes": [
+                "Late sowing",
+                "Waterlogging"
+            ],
+            "images": [
+                "/static/images/crops/chickpea_1.jpg"
+            ]
+        },
+        {
+            "id": "mustard",
+            "name": "Mustard",
+            "season": "Rabi",
+            "soil": [
+                "Loamy",
+                "Alluvial"
+            ],
+            "duration": "110–140 days",
+            "sowing_time": "October",
+            "climate": "Cool climate",
+            "rainfall": "30–40 cm",
+            "fertilizer": "NPK 60:40:40 kg/ha",
+            "irrigation": "2–3 irrigations",
+            "yield": "15–20 quintals/ha",
+            "steps": [
+                "Prepare well-drained soil",
+                "Maintain spacing",
+                "Control aphids",
+                "Harvest when pods turn yellow"
+            ],
+            "common_mistakes": [
+                "Delayed sowing",
+                "Ignoring pests"
+            ],
+            "images": [
+                "/static/images/crops/mustard_1.jpg"
+            ]
+        },
+        {
+            "id": "jowar",
+            "name": "Jowar (Sorghum)",
+            "season": "Kharif",
+            "soil": [
+                "Black",
+                "Loamy"
+            ],
+            "duration": "100–120 days",
+            "sowing_time": "June–July",
+            "climate": "Warm and dry climate",
+            "rainfall": "40–75 cm",
+            "fertilizer": "NPK 80:40:40 kg/ha",
+            "irrigation": "Low water requirement",
+            "yield": "20–30 quintals/ha",
+            "steps": [
+                "Prepare land with minimum tillage",
+                "Sow seeds at proper spacing",
+                "Control weeds early",
+                "Harvest when grains harden"
+            ],
+            "common_mistakes": [
+                "Excess irrigation",
+                "Late sowing"
+            ],
+            "images": [
+                "/static/images/crops/jowar_1.jpg"
+            ]
+        },
+        {
+            "id": "bajra",
+            "name": "Bajra (Pearl Millet)",
+            "season": "Kharif",
+            "soil": [
+                "Sandy",
+                "Loamy"
+            ],
+            "duration": "80–100 days",
+            "sowing_time": "June–July",
+            "climate": "Hot and dry climate",
+            "rainfall": "30–60 cm",
+            "fertilizer": "NPK 60:30:30 kg/ha",
+            "irrigation": "Rainfed crop",
+            "yield": "15–25 quintals/ha",
+            "steps": [
+                "Use drought-resistant varieties",
+                "Maintain row spacing",
+                "Minimal irrigation needed"
+            ],
+            "common_mistakes": [
+                "Over-fertilization",
+                "Poor weed control"
+            ],
+            "images": [
+                "/static/images/crops/bajra_1.jpg"
+            ]
+        },
+        {
+            "id": "ragi",
+            "name": "Ragi (Finger Millet)",
+            "season": "Kharif",
+            "soil": [
+                "Red",
+                "Loamy"
+            ],
+            "duration": "100–120 days",
+            "sowing_time": "June–July",
+            "climate": "Moderate temperature",
+            "rainfall": "50–100 cm",
+            "fertilizer": "NPK 40:20:20 kg/ha",
+            "irrigation": "Moderate",
+            "yield": "15–20 quintals/ha",
+            "steps": [
+                "Prepare fine seedbed",
+                "Transplant seedlings",
+                "Weed regularly"
+            ],
+            "common_mistakes": [
+                "Delayed transplanting"
+            ],
+            "images": [
+                "/static/images/crops/ragi_1.jpg"
+            ]
+        },
+        {
+            "id": "pigeon_pea",
+            "name": "Pigeon Pea (Tur)",
+            "season": "Kharif",
+            "soil": [
+                "Loamy",
+                "Black"
+            ],
+            "duration": "160–180 days",
+            "sowing_time": "June",
+            "climate": "Warm climate",
+            "rainfall": "60–100 cm",
+            "fertilizer": "NPK 20:50:0 kg/ha",
+            "irrigation": "Rainfed",
+            "yield": "12–18 quintals/ha",
+            "steps": [
+                "Use resistant varieties",
+                "Ensure good drainage",
+                "Harvest when pods dry"
+            ],
+            "common_mistakes": [
+                "Waterlogging"
+            ],
+            "images": [
+                "/static/images/crops/tur_1.jpg"
+            ]
+        },
+        {
+            "id": "mung_bean",
+            "name": "Green Gram (Moong)",
+            "season": "Zaid",
+            "soil": [
+                "Loamy",
+                "Sandy loam"
+            ],
+            "duration": "60–70 days",
+            "sowing_time": "March–April",
+            "climate": "Warm climate",
+            "rainfall": "30–40 cm",
+            "fertilizer": "DAP 100 kg/ha",
+            "irrigation": "Light irrigation",
+            "yield": "8–12 quintals/ha",
+            "steps": [
+                "Use disease-free seeds",
+                "Avoid excess irrigation"
+            ],
+            "common_mistakes": [
+                "Late sowing"
+            ],
+            "images": [
+                "/static/images/crops/moong_1.jpg"
+            ]
+        },
+        {
+            "id": "potato",
+            "name": "Potato",
+            "season": "Rabi",
+            "soil": [
+                "Sandy loam",
+                "Loamy"
+            ],
+            "duration": "90–120 days",
+            "sowing_time": "October",
+            "climate": "Cool climate",
+            "rainfall": "50–75 cm",
+            "fertilizer": "NPK 120:80:100 kg/ha",
+            "irrigation": "Frequent light irrigation",
+            "yield": "200–300 quintals/ha",
+            "steps": [
+                "Plant healthy seed tubers",
+                "Earth up during growth",
+                "Harvest when leaves dry"
+            ],
+            "common_mistakes": [
+                "Using infected tubers"
+            ],
+            "images": [
+                "/static/images/crops/potato_1.jpg"
+            ]
+        },
+        {
+            "id": "onion",
+            "name": "Onion",
+            "season": "Rabi",
+            "soil": [
+                "Loamy",
+                "Alluvial"
+            ],
+            "duration": "90–150 days",
+            "sowing_time": "November",
+            "climate": "Moderate climate",
+            "rainfall": "60–80 cm",
+            "fertilizer": "NPK 100:50:50 kg/ha",
+            "irrigation": "Light but frequent",
+            "yield": "150–250 quintals/ha",
+            "steps": [
+                "Raise healthy nursery",
+                "Transplant seedlings",
+                "Stop irrigation before harvest"
+            ],
+            "common_mistakes": [
+                "Over-irrigation"
+            ],
+            "images": [
+                "/static/images/crops/onion_1.jpg"
+            ]
+        },
+        {
+            "id": "banana",
+            "name": "Banana",
+            "season": "Annual",
+            "soil": [
+                "Loamy",
+                "Alluvial"
+            ],
+            "duration": "10–12 months",
+            "sowing_time": "Throughout year",
+            "climate": "Warm and humid",
+            "rainfall": "100–200 cm",
+            "fertilizer": "NPK 200:60:200 g/plant",
+            "irrigation": "Regular irrigation",
+            "yield": "30–40 tons/ha",
+            "steps": [
+                "Use tissue culture plants",
+                "Maintain spacing",
+                "Support plants during fruiting"
+            ],
+            "common_mistakes": [
+                "Poor drainage"
+            ],
+            "images": [
+                "/static/images/crops/banana_1.jpg"
+            ]
+        }
+    ]
+}
