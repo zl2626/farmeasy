@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import API_BASE_URL from "../services/api";
 import TranslateText from "../components/TranslateText";
@@ -5,6 +6,7 @@ import { Mail, ArrowRight, Loader, AlertCircle } from "lucide-react";
 import { Snackbar, Alert } from "@mui/material";
 
 function ForgotPassword({ onBackToLogin }) {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -107,7 +109,7 @@ function ForgotPassword({ onBackToLogin }) {
 
       <div className="mt-6 text-center pt-4 border-t border-gray-100">
         <span
-          onClick={onBackToLogin}
+          onClick={() => (typeof onBackToLogin === "function" ? onBackToLogin() : navigate("/login"))}
           className="text-sm text-green-600 hover:text-green-700 font-bold cursor-pointer transition-colors"
         >
           <TranslateText>返回登录</TranslateText>
@@ -123,3 +125,4 @@ function ForgotPassword({ onBackToLogin }) {
 }
 
 export default ForgotPassword;
+

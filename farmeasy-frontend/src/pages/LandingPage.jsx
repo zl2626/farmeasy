@@ -1,11 +1,10 @@
-import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import FallingLeaves from "../components/FallingLeaves";
 import ZhinongLogo from "../assets/Logo.png";
 import { useState, useEffect } from "react";
 import TranslateText from "../components/TranslateText";
 import { Boxes } from "../components/ui/background-boxes";
-import axios from "axios";
 const FINAL_SEQUENCE = [
   { id: 1, text: "智", color: "#2e7d32" },
   { id: 2, text: "农", color: "#4caf50" },
@@ -17,14 +16,7 @@ export default function LandingPage() {
   const [blocks, setBlocks] = useState(FINAL_SEQUENCE);
   const [isShuffling, setIsShuffling] = useState(true);
 
-  const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    axios
-      .get("http://127.0.0.1:8000/test/")
-      .then((res) => setMessage(res.data.message))
-      .catch((err) => console.error(err));
-  }, []);
 
   useEffect(() => {
     if (!isShuffling) return;
@@ -207,6 +199,3 @@ const taglineStyle = {
   color: "#4b5563",
   textAlign: "center",
 };
-
-
-

@@ -9,6 +9,8 @@ from rest_framework.permissions import AllowAny
 from rest_framework import status
 from .serializers import RegisterSerializer
 from django.contrib.auth.models import User
+from django.db import transaction
+from rest_framework.exceptions import ValidationError
 
 @api_view(["POST"])
 def register_user(request):
@@ -49,7 +51,6 @@ def forgot_password(request):
     token=default_token_generator.make_token(user)
 
     reset_link=f"http://localhost:5173/reset-password/{uid}/{token}"
-    print(reset_link)
 
     html_content = f"""
     <html>
@@ -87,33 +88,39 @@ def forgot_password(request):
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def reset_password(request):
-    print("RAW DATA:", request.data)
     uidb64=request.data.get("uid")
     token=request.data.get("token")
     new_password=request.data.get("new_password")
 
-    if not uidb64 or not token or not new_password:
+    if not all(isinstance(value, str) and value for value in (uidb64, token, new_password)):
         return Response(
             {"error":"All fields are required"},
             status=status.HTTP_400_BAD_REQUEST
         )
     
     try:
-        uid=force_str(urlsafe_base64_decode(uidb64))
-        print("done")
-        user=User.objects.get(pk=uid)
-        print("UID:", uid)
-        print("TOKEN:", token)
-        print("VALID:", default_token_generator.check_token(user, token))
-
-    except Exception:
+        uid = int(force_str(urlsafe_base64_decode(uidb64)))
+        if not 0 < uid <= 9223372036854775807:
+            raise ValueError("Invalid user ID")
+    except (ValueError, TypeError, UnicodeDecodeError, OverflowError):
         return Response(
             {"error":"Invalid reset link"},
             status=status.HTTP_400_BAD_REQUEST
         )
     
-    user.set_password(new_password)
-    user.save()
+    with transaction.atomic():
+        try:
+            user = User.objects.select_for_update().get(pk=uid)
+        except User.DoesNotExist:
+            return Response({"error": "Invalid reset link"}, status=400)
+        if not default_token_generator.check_token(user, token):
+            return Response({"error": "Invalid or expired reset link"}, status=400)
+        try:
+            RegisterSerializer().validate_password(new_password)
+        except ValidationError as exc:
+            return Response({"error": exc.detail}, status=400)
+        user.set_password(new_password)
+        user.save(update_fields=["password"])
 
     return Response(
         {"message":"Password reset successful"},

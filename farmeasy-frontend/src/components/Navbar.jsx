@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect, useCallback } from "react";
 import ZhinongLogo from "../assets/Logo.png";
 import { useNavigate } from "react-router-dom";
 import LanguageToggle from "./LanguageToggle";
@@ -11,7 +11,7 @@ import Register from "../pages/Register";
 import ResetPassword from "../pages/ResetPassword";
 import ForgotPassword from "../pages/ForgotPassword";
 // import ElectricBorder from "./ElectricBorder"; // Removed unused import
-import { useAuth } from "../context/AuthContext"; // Import useAuth
+import { useAuth } from "../context/useAuth"; // Import useAuth
 
 export default function Navbar() {
   const [openLogin, setOpenLogin] = useState(false);
@@ -676,23 +676,6 @@ const brandTitleStyle = {
   whiteSpace: "nowrap",
 };
 
-const brandSubtitleStyle = {
-  color: "rgba(226,232,240,0.9)",
-  fontSize: "0.72rem",
-  fontWeight: 400,
-  whiteSpace: "nowrap",
-  display: "none",   /* hidden on narrow screens to keep one row */
-};
-
-/* Override to show subtitle on wider screens */
-const brandSubtitleVisibleStyle = {
-  ...{
-    color: "rgba(226,232,240,0.9)",
-    fontSize: "0.72rem",
-    fontWeight: 400,
-    whiteSpace: "nowrap",
-  },
-};
 
 const brandLanguageWrapperStyle = {
   marginLeft: "0.6rem",

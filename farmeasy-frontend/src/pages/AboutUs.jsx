@@ -161,4 +161,3 @@ const footerTextStyle = {
   fontSize: "0.9rem",
   color: "#166534",
 };
-

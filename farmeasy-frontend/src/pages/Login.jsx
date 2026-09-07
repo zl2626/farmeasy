@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import API_BASE_URL from "../services/api";
 import TranslateText from "../components/TranslateText";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/useAuth";
 import { User, Lock, ArrowRight, Loader } from "lucide-react";
 import { Snackbar, Alert } from "@mui/material";
 
@@ -166,7 +166,7 @@ function Login({ OnRegisterClick, onForgotClick, onLoginSuccess }) {
 
       <div className="mt-6 text-center space-y-3">
         <p
-          onClick={onForgotClick}
+          onClick={() => (typeof onForgotClick === "function" ? onForgotClick() : navigate("/forgot-password"))}
           className="text-sm text-green-600 hover:text-green-700 cursor-pointer transition-colors font-medium"
         >
           <TranslateText>忘记密码？</TranslateText>
@@ -176,7 +176,7 @@ function Login({ OnRegisterClick, onForgotClick, onLoginSuccess }) {
           <p className="text-sm text-gray-500">
             <TranslateText>还没有账号？</TranslateText>{" "}
             <span
-              onClick={OnRegisterClick}
+              onClick={() => (typeof OnRegisterClick === "function" ? OnRegisterClick() : navigate("/register"))}
               className="text-green-600 hover:text-green-700 font-bold cursor-pointer transition-colors ml-1"
             >
               <TranslateText>注册</TranslateText>
@@ -195,3 +195,4 @@ function Login({ OnRegisterClick, onForgotClick, onLoginSuccess }) {
 }
 
 export default Login;
+

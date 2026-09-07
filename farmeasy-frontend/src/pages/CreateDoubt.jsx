@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import API_BASE_URL from "../services/api";
 import Navbar from "../components/Navbar";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/useAuth";
 import { useNavigate } from "react-router-dom";
 import { Upload, X, AlertCircle, CheckCircle } from "lucide-react";
 import TranslateText from "../components/TranslateText";

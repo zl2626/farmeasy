@@ -1,5 +1,5 @@
-import {useState,useRef } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useState } from "react";
+import { useAuth } from "../context/useAuth";
 import ProfileDropdown from "./ProfileDropdown";
 
 export default function ProfileAvatar() {

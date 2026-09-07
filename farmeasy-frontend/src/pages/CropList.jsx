@@ -1,19 +1,37 @@
 import { useEffect, useState } from "react";
-import API_BASE_URL from "../services/api";
+import { API_BASE_URL, mediaUrl } from "../services/api";
 import TranslateText from "../components/TranslateText";
 import Navbar from "../components/Navbar";
 import { searchLocalCrops } from "../data/cropKnowledge";
 import { getCropEmoji, getCategoryGradient } from "../data/cropEmoji";
+import cropImages from "../data/cropImages.json";
 
-const API_IMAGE_BASE = "http://127.0.0.1:8000";
+
+
+// 响应式：窄屏时分栏布局切换为上下结构
+function useIsMobile(breakpoint = 640) {
+    const [isMobile, setIsMobile] = useState(
+        typeof window !== "undefined" ? window.innerWidth <= breakpoint : false
+    );
+    useEffect(() => {
+        const onResize = () => setIsMobile(window.innerWidth <= breakpoint);
+        window.addEventListener("resize", onResize);
+        return () => window.removeEventListener("resize", onResize);
+    }, [breakpoint]);
+    return isMobile;
+}
 
 // DB crops have relative paths like /media/..., scraped crops have full URLs
-function getImageSrc(imagePath) {
+function getImageSrc(imagePath, cropName) {
+    if (cropImages[cropName]) return cropImages[cropName];
     if (!imagePath) return null;
     if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) {
         return imagePath;
     }
-    return `${API_IMAGE_BASE}${imagePath}`;
+    if (imagePath.startsWith("/crops/")) {
+        return imagePath; // 本地打包的作物图片
+    }
+    return mediaUrl(imagePath);
 }
 
 // 本地作物图片：专属 emoji + 类别渐变底色（后端返回真实图片时优先用真实图片）
@@ -49,14 +67,11 @@ function CropList() {
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [imgErrors, setImgErrors] = useState({});
 
-    useEffect(() => {
-        fetchCrops();
-    }, []);
 
     const fetchCrops = (query = "") => {
         setLoading(true);
         const url = query
-            ? `${API_BASE_URL}/education/crops/?search=${query}`
+            ? `${API_BASE_URL}/education/crops/?search=${encodeURIComponent(query)}`
             : `${API_BASE_URL}/education/crops/`;
 
         fetch(url)
@@ -78,6 +93,27 @@ function CropList() {
             })
             .finally(() => setLoading(false));
     };
+
+    useEffect(() => {
+        let cancelled = false;
+        const loadInitialCrops = async () => {
+            setLoading(true);
+            try {
+                const response = await fetch(`${API_BASE_URL}/education/crops/`);
+                if (!response.ok) throw new Error(`API unavailable`);
+                const data = await response.json();
+                if (!cancelled) setCrops(Array.isArray(data) && data.length > 0 ? data : searchLocalCrops(""));
+            } catch {
+                if (!cancelled) setCrops(searchLocalCrops(""));
+            } finally {
+                if (!cancelled) setLoading(false);
+            }
+        };
+        loadInitialCrops();
+        return () => {
+            cancelled = true;
+        };
+    }, []);
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -107,31 +143,22 @@ function CropList() {
     return (
         <div style={pageStyle}>
             <Navbar />
-
             <div style={containerStyle}>
-
                 {/* ── Header ── */}
-                <div style={{ marginBottom: "32px" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "14px", marginBottom: "6px" }}>
-                        <div style={{
-                            width: "48px", height: "48px", borderRadius: "14px",
-                            background: "linear-gradient(135deg, #4caf50, #2e7d32)",
-                            display: "flex", alignItems: "center", justifyContent: "center",
-                            fontSize: "22px", boxShadow: "0 4px 12px rgba(76,175,80,0.3)"
-                        }}>
-                            🌾
-                        </div>
-                        <div>
-                            <h1 style={{ margin: 0, fontSize: "26px", fontWeight: 700, color: "#1b5e20", letterSpacing: "-0.3px" }}>
-                                <TranslateText>作物百科</TranslateText>
-                            </h1>
-                            <p style={{ margin: 0, fontSize: "13px", color: "#6a9a6a", marginTop: "2px" }}>
-                                <TranslateText>浏览或搜索作物，了解种植详情</TranslateText>
-                            </p>
-                        </div>
+                <div style={{ marginBottom: "32px", padding: "28px 32px", borderRadius: "20px", background: "linear-gradient(135deg, #f1f9f1 0%, #eaf6ec 50%, #f7faf7 100%)", border: "1px solid #d8e8d8" }}>
+                    <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "6px 14px", borderRadius: "100px", background: "#ffffff", border: "1px solid #d8e8d8", marginBottom: "14px" }}>
+                        <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#4caf50", display: "inline-block" }} />
+                        <span style={{ fontSize: "12px", color: "#388e3c", fontWeight: 500 }}>
+                            <TranslateText>作物知识库</TranslateText>
+                        </span>
                     </div>
+                    <h1 style={{ margin: 0, fontSize: "32px", fontWeight: 800, color: "#1b5e20", letterSpacing: "-0.5px" }}>
+                        <TranslateText>作物百科</TranslateText>
+                    </h1>
+                    <p style={{ margin: "8px 0 0", fontSize: "15px", color: "#5f8a5f", lineHeight: 1.6 }}>
+                        <TranslateText>浏览或搜索作物，了解种植详情</TranslateText>
+                    </p>
                 </div>
-
                 {/* ── Search Bar ── */}
                 <form onSubmit={handleSearch} style={{ marginBottom: "32px", position: "relative", maxWidth: "480px" }}>
                     <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
@@ -149,7 +176,7 @@ function CropList() {
                                     const value = e.target.value;
                                     setSearch(value);
                                     if (value.length > 0) {
-                                        fetch(`${API_BASE_URL}/education/crops/?search=${value}`)
+                                        fetch(`${API_BASE_URL}/education/crops/?search=${encodeURIComponent(value)}`)
                                             .then((res) => (res.ok ? res.json() : Promise.reject()))
                                             .then((data) => {
                                                 // 后端无结果时用本地知识库补全
@@ -279,7 +306,7 @@ function CropList() {
                     }}>
                         {crops.map((crop) => {
                             const imgKey = crop.id ?? crop.name;
-                            const imgSrc = getImageSrc(crop.image);
+                            const imgSrc = getImageSrc(crop.image, crop.name);
                             const hasImgError = imgErrors[imgKey];
 
                             return (
@@ -373,111 +400,301 @@ function CropList() {
                     </div>
                 )}
 
-                {/* ── Detail Modal (UNCHANGED FUNCTIONALITY, refined styles) ── */}
+                {/* ── Detail Panel: 左侧分栏布局（参考全国农产品成本收益资料汇编样式） ── */}
                 {selectedCrop && (
-                    <div style={overlayStyle}>
-                        <div style={modalStyle}>
-                            <button style={closeBtnStyle} onClick={() => setSelectedCrop(null)}>✖</button>
-
-                            <h2 style={{ margin: "0 0 4px", color: "#1b5e20", fontSize: "22px", fontWeight: 700 }}>
-                                {selectedCrop.name}
-                            </h2>
-
-                            {/* Source badge */}
-                            <div style={{ marginBottom: "16px" }}>
-                                <span style={{
-                                    fontSize: "11px", fontWeight: 600,
-                                    background: selectedCrop.scraped ? "#fff8e1" : "#e8f5e9",
-                                    color: selectedCrop.scraped ? "#f57f17" : "#2e7d32",
-                                    border: `1px solid ${selectedCrop.scraped ? "#ffe082" : "#a5d6a7"}`,
-                                    borderRadius: "20px", padding: "3px 10px",
-                                }}>
-                                    {selectedCrop.source === "database"
-                                        ? <TranslateText>📚 本地数据库</TranslateText>
-                                        : selectedCrop.scraped
-                                            ? <><TranslateText>🔍 网络抓取：</TranslateText> {selectedCrop.source}</>
-                                            : <TranslateText>{selectedCrop.source || "📚 本地知识库"}</TranslateText>}
-                                </span>
-                            </div>
-
-                            {/* IMAGES */}
-                            <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
-                                {selectedCrop.image && !imgErrors[selectedCrop.id ?? selectedCrop.name] ? (
-                                    <img
-                                        src={getImageSrc(selectedCrop.image)}
-                                        alt={selectedCrop.name}
-                                        style={{ width: "220px", height: "160px", objectFit: "cover", borderRadius: "12px", boxShadow: "0 4px 16px rgba(0,0,0,0.12)" }}
-                                        onError={() => handleImgError(selectedCrop.id ?? selectedCrop.name)}
-                                    />
-                                ) : (
-                                    <div style={{
-                                        width: "220px", height: "160px", borderRadius: "12px",
-                                        background: getCategoryGradient(selectedCrop.category),
-                                        display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-                                    }}>
-                                        <span style={{ fontSize: "56px" }}>{getCropEmoji(selectedCrop.name)}</span>
-                                        <span style={{ fontSize: "12px", fontWeight: 600, color: "#33691e", marginTop: "4px" }}>{selectedCrop.name}</span>
-                                    </div>
-                                )}
-                            </div>
-
-                            {/* Detail fields */}
-                            <div style={{ display: "grid", gap: "8px" }}>
-                                {selectedCrop.category && <DetailRow icon="🏷️" label="类别" value={selectedCrop.category} />}
-                                {selectedCrop.season && <DetailRow icon="📅" label="季节" value={selectedCrop.season} />}
-                                {selectedCrop.soil && (
-                                    <DetailRow icon="🪱" label="土壤"
-                                        value={Array.isArray(selectedCrop.soil) ? selectedCrop.soil.join(", ") : selectedCrop.soil}
-                                    />
-                                )}
-                                {selectedCrop.climate && <DetailRow icon="🌤️" label="气候" value={selectedCrop.climate} />}
-                                {selectedCrop.water && <DetailRow icon="💧" label="需水量" value={selectedCrop.water} />}
-                                {selectedCrop.duration && <DetailRow icon="⏱️" label="生长周期" value={selectedCrop.duration} />}
-                                {selectedCrop.sowing_time && <DetailRow icon="🗓️" label="播种时间" value={selectedCrop.sowing_time} />}
-                            </div>
-
-                            {selectedCrop.description && (
-                                <>
-                                    <hr style={{ margin: "16px 0", borderColor: "#e8f5e9" }} />
-                                    <p style={{ margin: 0, fontSize: "13px", color: "#444", lineHeight: 1.7 }}>
-                                        <b style={{ color: "#1b5e20" }}><TranslateText>简介：</TranslateText></b>{" "}
-                                        <TranslateText>{selectedCrop.description}</TranslateText>
-                                    </p>
-                                </>
-                            )}
-
-                            {(selectedCrop.fertilizer || selectedCrop.irrigation || selectedCrop.yield_info) && (
-                                <hr style={{ margin: "16px 0", borderColor: "#e8f5e9" }} />
-                            )}
-                            {selectedCrop.fertilizer && <DetailRow icon="🧪" label="施肥" value={selectedCrop.fertilizer} />}
-                            {selectedCrop.irrigation && <DetailRow icon="🚿" label="灌溉" value={selectedCrop.irrigation} />}
-                            {selectedCrop.yield_info && <DetailRow icon="📦" label="预期产量" value={selectedCrop.yield_info} />}
-
-                            {selectedCrop.steps && selectedCrop.steps.length > 0 && (
-                                <>
-                                    <h3 style={{ color: "#2e7d32", margin: "16px 0 8px" }}><TranslateText>🌱 种植步骤</TranslateText></h3>
-                                    <ul style={{ paddingLeft: "20px", color: "#333", lineHeight: 1.8, fontSize: "13px" }}>
-                                        {selectedCrop.steps.map((step, idx) => <li key={idx}><TranslateText>{step}</TranslateText></li>)}
-                                    </ul>
-                                </>
-                            )}
-
-                            {selectedCrop.common_mistakes && selectedCrop.common_mistakes.length > 0 && (
-                                <>
-                                    <h3 style={{ color: "#e65100", margin: "16px 0 8px" }}><TranslateText>⚠️ 常见错误</TranslateText></h3>
-                                    <ul style={{ paddingLeft: "20px", color: "#333", lineHeight: 1.8, fontSize: "13px" }}>
-                                        {selectedCrop.common_mistakes.map((m, idx) => <li key={idx}><TranslateText>{m}</TranslateText></li>)}
-                                    </ul>
-                                </>
-                            )}
-                        </div>
-                    </div>
+                    <CropDetailPanel crop={selectedCrop} onClose={() => setSelectedCrop(null)} imgErrors={imgErrors} onImgError={handleImgError} />
                 )}
             </div>
         </div>
     );
 }
 
+/**
+ * 作物详情面板 —— 左侧分栏导航 + 右侧内容
+ * 布局参考 https://ncpscxx.moa.gov.cn/product-web/#/sing
+ * 信息内容完全来自原数据，不做修改
+ */
+function CropDetailPanel({ crop, onClose, imgErrors, onImgError }) {
+    // 根据可用字段构建左侧分栏目录（内容不变，仅重新组织呈现）
+    const sections = [
+        {
+            id: "basic",
+            icon: "🌿",
+            label: "基本信息",
+            visible: !!(crop.season || crop.soil || crop.climate || crop.water || crop.duration || crop.sowing_time),
+        },
+        { id: "intro", icon: "📖", label: "作物简介", visible: !!crop.description },
+        {
+            id: "cultivation",
+            icon: "🧑‍🌾",
+            label: "栽培管理",
+            visible: !!(crop.fertilizer || crop.irrigation || crop.yield_info),
+        },
+        { id: "steps", icon: "🌱", label: "种植步骤", visible: Array.isArray(crop.steps) && crop.steps.length > 0 },
+        {
+            id: "mistakes",
+            icon: "⚠️",
+            label: "常见错误",
+            visible: Array.isArray(crop.common_mistakes) && crop.common_mistakes.length > 0,
+        },
+    ].filter((s) => s.visible);
+
+    const [activeSection, setActiveSection] = useState(sections[0]?.id ?? "basic");
+    const isMobile = useIsMobile(640);
+
+    const scrollToSection = (id) => {
+        setActiveSection(id);
+        const el = document.getElementById(`crop-section-${id}`);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+
+    const imgSrc = getImageSrc(crop.image, crop.name);
+    const imgKey = crop.id ?? crop.name;
+
+    return (
+        <div style={overlayStyle} onClick={onClose}>
+            <div
+                style={{
+                    backgroundColor: "#fff",
+                    borderRadius: "18px",
+                    width: "92%",
+                    maxWidth: "900px",
+                    height: "min(640px, 88vh)",
+                    position: "relative",
+                    boxShadow: "0 24px 64px rgba(0,0,0,0.25)",
+                    display: "flex",
+                    flexDirection: "column",
+                    overflow: "hidden",
+                }}
+                onClick={(e) => e.stopPropagation()}
+            >
+                {/* ── 顶部标题栏 ── */}
+                <div style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "14px",
+                    padding: "16px 24px",
+                    borderBottom: "1px solid #e8f5e9",
+                    background: "linear-gradient(135deg, #f4fbf1 0%, #e8f5e9 100%)",
+                    flexShrink: 0,
+                }}>
+                    <span style={{ fontSize: "28px" }}>{crop.emoji || getCropEmoji(crop.name)}</span>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                        <h2 style={{ margin: 0, color: "#1b5e20", fontSize: "20px", fontWeight: 800, lineHeight: 1.2 }}>
+                            {crop.name}
+                        </h2>
+                        <span style={{
+                            display: "inline-block",
+                            marginTop: "4px",
+                            fontSize: "11px", fontWeight: 600,
+                            background: crop.scraped ? "#fff8e1" : "#e8f5e9",
+                            color: crop.scraped ? "#f57f17" : "#2e7d32",
+                            border: `1px solid ${crop.scraped ? "#ffe082" : "#a5d6a7"}`,
+                            borderRadius: "20px", padding: "2px 10px",
+                        }}>
+                            {crop.source === "database"
+                                ? <TranslateText>📚 本地数据库</TranslateText>
+                                : crop.scraped
+                                    ? <><TranslateText>🔍 网络抓取：</TranslateText> {crop.source}</>
+                                    : <TranslateText>{crop.source || "📚 本地知识库"}</TranslateText>}
+                        </span>
+                    </div>
+                    <button style={closeBtnStyle} onClick={onClose} aria-label="关闭">✖</button>
+                </div>
+
+                {/* ── 主体：左侧分栏 + 右侧内容 ── */}
+                <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", flex: 1, minHeight: 0 }}>
+
+                    {/* 左侧分栏导航 */}
+                    <aside style={{
+                        width: "188px",
+                        flexShrink: 0,
+                        borderRight: "1px solid #e8f5e9",
+                        background: "#fbfef9",
+                        display: "flex",
+                        flexDirection: "column",
+                        padding: "14px 10px",
+                        gap: "6px",
+                        overflowY: "auto",
+                    }}>
+                        {/* 作物缩略图 */}
+                        {imgSrc && !imgErrors[imgKey] ? (
+                            <img
+                                src={imgSrc}
+                                alt={crop.name}
+                                style={{
+                                    width: "100%", height: "110px", objectFit: "cover",
+                                    borderRadius: "10px", marginBottom: "10px",
+                                    boxShadow: "0 3px 10px rgba(0,0,0,0.1)",
+                                }}
+                                onError={() => onImgError(imgKey)}
+                            />
+                        ) : (
+                            <div style={{
+                                width: "100%", height: "90px", borderRadius: "10px",
+                                background: getCategoryGradient(crop.category),
+                                display: "flex", alignItems: "center", justifyContent: "center",
+                                fontSize: "40px", marginBottom: "10px",
+                            }}>
+                                {crop.emoji || getCropEmoji(crop.name)}
+                            </div>
+                        )}
+
+                        <p style={{
+                            margin: "0 0 8px 6px", fontSize: "11px", fontWeight: 700,
+                            color: "#81a581", letterSpacing: "1px",
+                        }}>
+                            <TranslateText>目录</TranslateText>
+                        </p>
+
+                        {sections.map((s, idx) => {
+                            const active = activeSection === s.id;
+                            return (
+                                <button
+                                    key={s.id}
+                                    onClick={() => scrollToSection(s.id)}
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        gap: "8px",
+                                        width: "100%",
+                                        padding: "9px 12px",
+                                        border: "none",
+                                        borderRadius: "9px",
+                                        cursor: "pointer",
+                                        textAlign: "left",
+                                        fontSize: "13px",
+                                        fontWeight: active ? 700 : 500,
+                                        color: active ? "#fff" : "#2e4a2e",
+                                        background: active
+                                            ? "linear-gradient(135deg, #4caf50, #2e7d32)"
+                                            : "transparent",
+                                        boxShadow: active ? "0 3px 10px rgba(76,175,80,0.3)" : "none",
+                                        transition: "all 0.2s",
+                                    }}
+                                    onMouseEnter={(e) => {
+                                        if (!active) e.currentTarget.style.background = "#eef8ee";
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        if (!active) e.currentTarget.style.background = "transparent";
+                                    }}
+                                >
+                                    <span style={{
+                                        fontSize: "11px",
+                                        fontWeight: 700,
+                                        width: "20px",
+                                        height: "20px",
+                                        borderRadius: "6px",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        background: active ? "rgba(255,255,255,0.22)" : "#e8f5e9",
+                                        color: active ? "#fff" : "#4caf50",
+                                        flexShrink: 0,
+                                    }}>
+                                        {idx + 1}
+                                    </span>
+                                    <span style={{ flex: 1 }}>{s.icon} <TranslateText>{s.label}</TranslateText></span>
+                                </button>
+                            );
+                        })}
+                    </aside>
+
+                    {/* 右侧内容区 */}
+                    <main style={{
+                        flex: 1,
+                        overflowY: "auto",
+                        padding: "20px 26px 28px",
+                        scrollBehavior: "smooth",
+                    }}>
+                        {/* 基本信息 */}
+                        {sections.some((s) => s.id === "basic") && (
+                            <section id="crop-section-basic" style={{ scrollMarginTop: "8px" }}>
+                                <SectionHeading icon="🌿" title="基本信息" />
+                                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))", gap: "8px" }}>
+                                    {crop.season && <DetailRow icon="📅" label="季节" value={crop.season} />}
+                                    {crop.soil && (
+                                        <DetailRow
+                                            icon="🌱"
+                                            label="土壤"
+                                            value={Array.isArray(crop.soil) ? crop.soil.join(", ") : crop.soil}
+                                        />
+                                    )}
+                                    {crop.climate && <DetailRow icon="🌤️" label="气候" value={crop.climate} />}
+                                    {crop.water && <DetailRow icon="💧" label="需水量" value={crop.water} />}
+                                    {crop.duration && <DetailRow icon="⏱️" label="生长周期" value={crop.duration} />}
+                                    {crop.sowing_time && <DetailRow icon="🗓️" label="播种时间" value={crop.sowing_time} />}
+                                </div>
+                            </section>
+                        )}
+
+                        {/* 作物简介 */}
+                        {crop.description && (
+                            <section id="crop-section-intro" style={{ scrollMarginTop: "8px" }}>
+                                <SectionHeading icon="📖" title="作物简介" />
+                                <p style={{ margin: 0, fontSize: "13px", color: "#444", lineHeight: 1.8 }}>
+                                    <TranslateText>{crop.description}</TranslateText>
+                                </p>
+                            </section>
+                        )}
+
+                        {/* 栽培管理 */}
+                        {(crop.fertilizer || crop.irrigation || crop.yield_info) && (
+                            <section id="crop-section-cultivation" style={{ scrollMarginTop: "8px" }}>
+                                <SectionHeading icon="🧑‍🌾" title="栽培管理" />
+                                <div style={{ display: "grid", gap: "8px" }}>
+                                    {crop.fertilizer && <DetailRow icon="🧪" label="施肥" value={crop.fertilizer} />}
+                                    {crop.irrigation && <DetailRow icon="🚿" label="灌溉" value={crop.irrigation} />}
+                                    {crop.yield_info && <DetailRow icon="📦" label="预期产量" value={crop.yield_info} />}
+                                </div>
+                            </section>
+                        )}
+
+                        {/* 种植步骤 */}
+                        {crop.steps && crop.steps.length > 0 && (
+                            <section id="crop-section-steps" style={{ scrollMarginTop: "8px" }}>
+                                <SectionHeading icon="🌱" title="种植步骤" />
+                                <ol style={{ margin: 0, paddingLeft: "22px", color: "#333", lineHeight: 1.9, fontSize: "13px" }}>
+                                    {crop.steps.map((step, idx) => <li key={idx}><TranslateText>{step}</TranslateText></li>)}
+                                </ol>
+                            </section>
+                        )}
+
+                        {/* 常见错误 */}
+                        {crop.common_mistakes && crop.common_mistakes.length > 0 && (
+                            <section id="crop-section-mistakes" style={{ scrollMarginTop: "8px" }}>
+                                <SectionHeading icon="⚠️" title="常见错误" color="#e65100" />
+                                <ul style={{ margin: 0, paddingLeft: "22px", color: "#333", lineHeight: 1.9, fontSize: "13px" }}>
+                                    {crop.common_mistakes.map((m, idx) => <li key={idx}><TranslateText>{m}</TranslateText></li>)}
+                                </ul>
+                            </section>
+                        )}
+                    </main>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+// 分栏标题
+function SectionHeading({ icon, title, color = "#2e7d32" }) {
+    return (
+        <h3 style={{
+            color,
+            margin: "22px 0 10px",
+            fontSize: "15px",
+            fontWeight: 800,
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            paddingBottom: "8px",
+            borderBottom: `2px solid ${color === "#e65100" ? "#ffcc80" : "#c8e6c9"}`,
+        }}>
+            <span>{icon}</span>
+            <TranslateText>{title}</TranslateText>
+        </h3>
+    );
+}
 // Small helper component for detail rows in the modal
 function DetailRow({ icon, label, value }) {
     return (
@@ -508,23 +725,9 @@ const overlayStyle = {
     backdropFilter: "blur(2px)",
 };
 
-const modalStyle = {
-    backgroundColor: "#fff",
-    padding: "28px 28px 24px",
-    borderRadius: "16px",
-    width: "90%",
-    maxWidth: "600px",
-    maxHeight: "90vh",
-    overflowY: "auto",
-    position: "relative",
-    boxShadow: "0 20px 60px rgba(0,0,0,0.2)",
-};
-
 const closeBtnStyle = {
-    position: "absolute",
-    top: "14px",
-    right: "14px",
     padding: "0",
+    flexShrink: 0,
     backgroundColor: "#ef5350",
     color: "#fff",
     border: "none",
@@ -540,3 +743,6 @@ const closeBtnStyle = {
 };
 
 export default CropList;
+
+
+

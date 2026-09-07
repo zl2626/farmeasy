@@ -41,4 +41,3 @@ const cardStyle = {
     borderRadius:"16px",
     color:"#fff",
 };
-

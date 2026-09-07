@@ -16,6 +16,14 @@ import imgLotus from "../assets/gallery/lotus.jpg";
 import imgBamboo from "../assets/gallery/bamboo.jpg";
 import imgRapeseed from "../assets/gallery/rapeseed.jpg";
 import imgMarket from "../assets/gallery/market.jpg";
+import imgTerracedRice from "../assets/gallery/terraced-rice.jpg";
+import imgTeaHarvest from "../assets/gallery/tea-harvest.jpg";
+import imgRapeseedVillage from "../assets/gallery/rapeseed-village.jpg";
+import imgWheatCombine from "../assets/gallery/wheat-combine.jpg";
+import imgHarvestDrying from "../assets/gallery/harvest-drying.jpg";
+import imgCottonHarvest from "../assets/gallery/cotton-harvest.jpg";
+import imgTractorSeeding from "../assets/gallery/tractor-seeding.jpg";
+import imgRiceHarvest from "../assets/gallery/rice-harvest.jpg";
 
 const DEFAULT_IMAGES = [
   {
@@ -49,6 +57,38 @@ const DEFAULT_IMAGES = [
   {
     src: imgMarket,
     alt: "热闹的农贸市场",
+  },
+  {
+    src: imgTerracedRice,
+    alt: "云雾缭绕的水稻梯田",
+  },
+  {
+    src: imgTeaHarvest,
+    alt: "茶农在梯垄茶园采茶",
+  },
+  {
+    src: imgRapeseedVillage,
+    alt: "皖南古村与油菜花海",
+  },
+  {
+    src: imgWheatCombine,
+    alt: "联合收割机收获小麦",
+  },
+  {
+    src: imgHarvestDrying,
+    alt: "篁岭晒秋五彩斑斓",
+  },
+  {
+    src: imgCottonHarvest,
+    alt: "新疆棉田机械采收",
+  },
+  {
+    src: imgTractorSeeding,
+    alt: "拖拉机田间精量播种",
+  },
+  {
+    src: imgRiceHarvest,
+    alt: "金秋稻田开镰收割",
   },
 ];
 
@@ -138,7 +178,6 @@ export default function DomeGallery({
   maxRadius = Infinity,
   padFactor = 0.25,
   overlayBlurColor = "#060010",
-  maxVerticalRotationDeg = DEFAULTS.maxVerticalRotationDeg,
   dragSensitivity = DEFAULTS.dragSensitivity,
   enlargeTransitionMs = DEFAULTS.enlargeTransitionMs,
   segments = DEFAULTS.segments,
@@ -368,7 +407,7 @@ export default function DomeGallery({
       stopInertia();
       inertiaRAF.current = requestAnimationFrame(step);
     },
-    [dragDampening, maxVerticalRotationDeg, stopInertia]
+    [dragDampening, stopInertia]
   );
 
   useGesture(

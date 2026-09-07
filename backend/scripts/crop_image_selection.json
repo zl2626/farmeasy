@@ -1,0 +1,51 @@
+[
+ {"slug":"potato","file":"File:Potatoes.jpg","taxon":"Solanum tuberosum"},
+ {"slug":"sweet-potato","file":"File:Sweet potatoes.JPG","taxon":"Ipomoea batatas"},
+ {"slug":"tomato","file":"File:Tomatoes plain and sliced.jpg","taxon":"Solanum lycopersicum"},
+ {"slug":"cucumber","file":"File:CDC cuke2.jpg","taxon":"Cucumis sativus"},
+ {"slug":"chili","file":"File:Jalapeno rot.jpg","taxon":"Capsicum annuum"},
+ {"slug":"mandarin","file":"File:Mandarin tree closeup.JPG","taxon":"Citrus reticulata"},
+ {"slug":"oats","file":"File:AvenaSativa2.jpg","taxon":"Avena sativa"},
+ {"slug":"broad-bean","file":"File:Tuinboon zaden in peul.jpg","taxon":"Vicia faba"},
+ {"slug":"flax","file":"File:Linum usitatissimum - Seeds.jpg","taxon":"Linum usitatissimum"},
+ {"slug":"cotton","file":"File:Cotton boll nearly ready for harvest.jpg","taxon":"Gossypium hirsutum"},
+ {"slug":"radish","file":"File:Daikon.jpg","taxon":"Raphanus sativus"},
+ {"slug":"eggplant","file":"File:Eggplant.JPG","taxon":"Solanum melongena"},
+ {"slug":"celery","file":"File:Bleekselderij groen (Apium graveolens var. dulce green).jpg","taxon":"Apium graveolens"},
+ {"slug":"green-onion","file":"File:Shimonitanegi.jpg","taxon":"Allium fistulosum"},
+ {"slug":"onion","file":"File:YellowOnions.jpg","taxon":"Allium cepa"},
+ {"slug":"ginger","file":"File:ARS ginger.jpg","taxon":"Zingiber officinale"},
+ {"slug":"spinach","file":"File:Spinach.jpg","taxon":"Spinacia oleracea"},
+ {"slug":"broccoli","file":"File:Broccoli and cross section edit.jpg","taxon":"Brassica oleracea Italica Group"},
+ {"slug":"luffa","file":"File:Luffa aegyptiaca fruits 02.jpg","taxon":"Luffa aegyptiaca"},
+ {"slug":"okra","file":"File:Bucket of raw okra pods.jpg","taxon":"Abelmoschus esculentus"},
+ {"slug":"chrysanthemum-greens","file":"File:Salatchrysantheme.jpg","taxon":"Glebionis coronaria"},
+ {"slug":"amaranth","file":"File:Amaranth or Red Spinach.jpg","taxon":"Amaranthus tricolor"},
+ {"slug":"perilla","file":"File:Perilla frutescens' foliage.jpg","taxon":"Perilla frutescens"},
+ {"slug":"water-chestnut","file":"File:Wasserkastanien.jpg","taxon":"Eleocharis dulcis"},
+ {"slug":"watermelon","file":"File:Watermelon seedless.jpg","taxon":"Citrullus lanatus"},
+ {"slug":"pear","file":"File:Nashi pear.jpg","taxon":"Pyrus pyrifolia"},
+ {"slug":"walnut","file":"File:Two English Walnuts edit.jpg","taxon":"Juglans regia"},
+ {"slug":"loquat","file":"File:Eriobotrya japonica3.jpg","taxon":"Eriobotrya japonica"},
+ {"slug":"oil-tea","file":"File:Camellia oleifera.jpg","taxon":"Camellia oleifera"},
+ {"slug":"sugar-beet","file":"File:Harvested and cleaned sugar beet.jpg","taxon":"Beta vulgaris Altissima Group"},
+ {"slug":"yam","file":"File:Iron-rod yam.jpg","taxon":"Dioscorea polystachya"},
+ {"slug":"taro","file":"File:Asian Taro Root.jpg","taxon":"Colocasia esculenta"},
+ {"slug":"cowpea","file":"File:Achinga - asparagus bean.jpg","taxon":"Vigna unguiculata subsp. sesquipedalis"},
+ {"slug":"leaf-lettuce","file":"File:油麥菜 Lactuca sativa v longifoliaf -香港北區花鳥蟲魚展 North District Flower Show, Hong Kong- (23876401200).jpg","taxon":"Lactuca sativa"},
+ {"slug":"coconut","file":"File:Coconut on white background.jpg","taxon":"Cocos nucifera"},
+ {"slug":"oyster-mushroom","file":"File:Austernpilze 03-smy.jpg","taxon":"Pleurotus ostreatus"},
+ {"slug":"millet","file":"File:Foxtailmillet.jpg","taxon":"Setaria italica"}
+ ,{"slug":"lotus-root","file":"File:Lotus root.jpg","taxon":"Nelumbo nucifera"}
+ ,{"slug":"chives","file":"File:Allium tuberosum 1zz.jpg","taxon":"Allium tuberosum"}
+ ,{"slug":"chinese-kale","file":"File:95 - CIMG2751.jpg","taxon":"Brassica oleracea Alboglabra Group"}
+ ,{"slug":"snow-peas","file":"File:Snow peas.jpg","taxon":"Pisum sativum"}
+ ,{"slug":"strawberry","file":"File:Garden strawberry (Fragaria × ananassa) single2.jpg","taxon":"Fragaria × ananassa"}
+ ,{"slug":"chestnut","file":"File:Castanea mollissima (Chinese Chestnut) (28337969952).jpg","taxon":"Castanea mollissima"}
+ ,{"slug":"bayberry","file":"File:Chinese Bayberry (Myrica rubra) (19011153788).jpg","taxon":"Morella rubra"}
+ ,{"slug":"pomegranate","file":"File:Pomegranate fruit - whole and piece with arils.jpg","taxon":"Punica granatum"}
+ ,{"slug":"dragon-fruit","file":"File:Dragon fruit Hylocereus Undatus (Vietnam White).jpg","taxon":"Selenicereus undatus"}
+ ,{"slug":"wood-ear","file":"File:Wood ear mushroom.jpg","taxon":"Auricularia heimuer"}
+ ,{"slug":"highland-barley","file":"File:Chorten and barley fields.jpg","taxon":"Hordeum vulgare var. nudum"}
+ ,{"slug":"coix-seed","file":"File:HK Food 薏米.jpg","taxon":"Coix lacryma-jobi"}
+]

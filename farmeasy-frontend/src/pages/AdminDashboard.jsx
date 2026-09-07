@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/useAuth";
 import Navbar from "../components/Navbar.jsx";
 import API_BASE_URL from "../services/api";
 import TranslateText from "../components/TranslateText";
@@ -576,7 +576,7 @@ function CropModal({ initial, onSave, onClose }) {
                     <textarea className="ad-input" rows={2} value={form.irrigation || ""} onChange={e => f("irrigation", e.target.value)} />
                 </label>
                 <label className="ad-label" style={{ gridColumn: "1/-1" }}>
-                    土壤 <span className="ad-hint">（JSON 数组，如 ["Loamy","Clay"]）</span>
+                    土壤 <span className="ad-hint">（JSON 数组，如 [&quot;Loamy&quot;,&quot;Clay&quot;]）</span>
                     <textarea className="ad-input" rows={2} value={form.soil} onChange={e => f("soil", e.target.value)} />
                 </label>
                 <label className="ad-label" style={{ gridColumn: "1/-1" }}>

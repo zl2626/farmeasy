@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import API_BASE_URL from "../services/api";
 import TranslateText from "../components/TranslateText";
@@ -5,6 +6,7 @@ import { User, Mail, Lock, Phone, ArrowRight, Loader } from "lucide-react";
 import { Snackbar, Alert } from "@mui/material";
 
 function Register({ onBackToLogin }) {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -48,7 +50,11 @@ function Register({ onBackToLogin }) {
       if (response.ok) {
         setSnackbar({ open: true, message: "注册成功！", severity: "success" });
         setTimeout(() => {
-          onBackToLogin();
+          if (typeof onBackToLogin === "function") {
+            onBackToLogin();
+          } else {
+            navigate("/login");
+          }
         }, 1500);
       } else {
         setErrors(data);
@@ -164,7 +170,7 @@ function Register({ onBackToLogin }) {
         <p className="text-sm text-gray-500">
           <TranslateText>已有账号？</TranslateText>{" "}
           <span
-            onClick={onBackToLogin}
+            onClick={() => (typeof onBackToLogin === "function" ? onBackToLogin() : navigate("/login"))}
             className="text-green-600 hover:text-green-700 font-bold cursor-pointer transition-colors ml-1"
           >
             <TranslateText>登录</TranslateText>
@@ -182,3 +188,4 @@ function Register({ onBackToLogin }) {
 }
 
 export default Register;
+

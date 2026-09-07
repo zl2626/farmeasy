@@ -1,3 +1,4 @@
+import { motion, AnimatePresence } from "framer-motion";
 'use client';
 
 import React, {
@@ -9,7 +10,6 @@ import React, {
 } from 'react';
 
 import equal from 'fast-deep-equal';
-import { AnimatePresence, motion } from 'framer-motion';
 import { Loader2 as LoaderIcon, X as XIcon } from 'lucide-react';
 
 // Utility Functions
@@ -26,7 +26,7 @@ const Button = React.forwardRef(({ className, variant = 'default', size = 'defau
         destructive: 'border border-green-700 text-green-700 hover:bg-green-50',
         outline: 'border border-green-400 bg-white hover:bg-green-50 hover:text-green-800',
         secondary: 'bg-green-200 text-green-900 hover:bg-green-300',
-        ghost: 'text-green-800 hover:bg-green-100 hover:text-green-900',
+        ghost: 'bg-white text-gray-900 hover:bg-gray-50',
         link: 'text-green-700 underline-offset-4 hover:underline',
     };
 
@@ -124,24 +124,24 @@ const ArrowUpIcon = ({ size = 16 }) => {
 function PureSuggestedActions({ onSelectAction }) {
     const suggestedActions = [
         {
-            title: 'What are the best ',
-            label: 'practices for wheat farming?',
-            action: 'What are the best practices for wheat farming?',
+            title: '小麦',
+            label: '种植有哪些最佳实践？',
+            action: '小麦种植有哪些最佳实践？',
         },
         {
-            title: 'How do I prevent ',
-            label: 'pests in my crops?',
-            action: 'How do I prevent pests in my crops?',
+            title: '作物病虫害',
+            label: '应该如何科学预防？',
+            action: '作物病虫害应该如何科学预防？',
         },
         {
-            title: 'Tell me about ',
-            label: 'soil health management',
-            action: 'Tell me about soil health management',
+            title: '土壤健康',
+            label: '如何长期管理？',
+            action: '土壤健康应该如何长期管理？',
         },
         {
-            title: 'What fertilizers ',
-            label: 'should I use for rice?',
-            action: 'What fertilizers should I use for rice?',
+            title: '水稻施肥',
+            label: '应该怎么选？',
+            action: '水稻施肥应该怎么选？',
         },
     ];
 
@@ -164,10 +164,10 @@ function PureSuggestedActions({ onSelectAction }) {
                             variant="ghost"
                             onClick={() => onSelectAction(suggestedAction.action)}
                             className="text-left border rounded-xl px-4 py-3.5 text-sm flex-1 gap-2 sm:flex-col w-full h-auto justify-start items-start
-                         border-green-600 bg-green-600 hover:bg-green-700 text-white shadow-md transition-all hover:shadow-lg"
+                         border-green-200 bg-white hover:border-green-400 hover:bg-green-50 text-gray-900 shadow-sm transition-all hover:shadow-md"
                         >
-                            <span className="font-medium text-white">{suggestedAction.title}</span>
-                            <span className="text-white opacity-90">
+                            <span className="font-medium text-green-800">{suggestedAction.title}</span>
+                            <span className="text-gray-600">
                                 {suggestedAction.label}
                             </span>
                         </Button>
@@ -531,7 +531,7 @@ function PureMultimodalInput({
                 onChange={handleInput}
                 className={cn(
                     'min-h-[24px] max-h-[calc(75dvh)] overflow-y-auto resize-none rounded-2xl !text-base pb-10',
-                    'bg-green-50 border border-green-300',
+                    'bg-white border border-gray-200 shadow-sm',
                     className,
                 )}
                 style={{ color: 'black' }}

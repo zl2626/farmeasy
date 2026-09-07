@@ -1,11 +1,11 @@
-import * as motion from "motion/react-client";
 import leaf from "../assets/leaves.svg";
+import { motion } from "framer-motion";
 
 function random(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-export default function FallingLeaves({ mode }) {
+export default function FallingLeaves() {
   return (
     <div style={container}>
       {Array.from({ length: 22 }).map((_, index) => (

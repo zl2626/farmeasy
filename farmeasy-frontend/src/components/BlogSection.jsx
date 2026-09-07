@@ -1,24 +1,27 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import TranslateText from "./TranslateText";
+import imgWheatCombine from "../assets/gallery/wheat-combine.jpg";
+import imgTerracedRice from "../assets/gallery/terraced-rice.jpg";
+import imgTractorSeeding from "../assets/gallery/tractor-seeding.jpg";
 
 const blogs = [
     {
-        image: "https://images.unsplash.com/photo-1574943320219-553eb213f72d?q=80&w=600&auto=format&fit=crop",
+        image: imgWheatCombine,
         tag: "作物教育",
         title: "如何用智慧技术提高小麦产量",
         description:
             "学习实用的、有 AI 支持的策略：土壤准备、选种和病虫害防治，助力本季小麦增产。",
     },
     {
-        image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?q=80&w=600&auto=format&fit=crop",
+        image: imgTerracedRice,
         tag: "惠农政策",
         title: "读懂耕地地力保护补贴等惠农政策",
         description:
             "一份简明指南：耕地地力保护补贴、农机购置补贴等主要惠农政策的申请条件、补贴内容和申请流程。",
     },
     {
-        image: "https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?q=80&w=600&auto=format&fit=crop",
+        image: imgTractorSeeding,
         tag: "灌溉",
         title: "节水灌溉的最佳实践",
         description:
@@ -114,3 +117,4 @@ export default function BlogSection() {
         </section>
     );
 }
+

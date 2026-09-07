@@ -1,5 +1,6 @@
 // 本地作物知识库：后端接口不可用或无数据时，作物百科页将使用这份数据展示和搜索。
 // 内容为常见中国农作物的种植知识要点，仅供参考。
+import cropImages from "./cropImages.json";
 
 const DETAILED_CROPS = [
   {
@@ -1308,7 +1309,7 @@ function buildCrop(seed, id) {
 export const CROP_KNOWLEDGE = [
   ...DETAILED_CROPS,
   ...EXTRA_SEEDS.map((s, i) => buildCrop(s, 100 + i)),
-];
+].map((c) => ({ ...c, image: cropImages[c.name] || c.image || null }));
 
 // 本地搜索：按名称、别名、类别和简介匹配；query 为空时返回全部
 export function searchLocalCrops(query) {

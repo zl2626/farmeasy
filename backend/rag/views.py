@@ -37,16 +37,16 @@ def farmer_chat(request):
             session = ChatSession.objects.create(
                 user=request.user,
                 session_id=session_id,
-                title="New Chat",
+                title="新对话",
             )
     else:
         session = ChatSession.objects.create(
             user=request.user,
             session_id=str(uuid.uuid4()),
-            title="New Chat",
+            title="新对话",
         )
 
-    if session.title == "New Chat":
+    if session.title == "新对话":
         session.title = question[:80]
         session.save(update_fields=["title"])
 
@@ -300,7 +300,7 @@ def analyze_pdf(request):
             session_id=str(uuid.uuid4()),
             title=f"文档分析：{pdf_file.name[:60]}",
         )
-    if session.title == "New Chat":
+    if session.title == "新对话":
         session.title = f"Analysis: {pdf_file.name[:60]}"
         session.save(update_fields=["title"])
 
@@ -324,7 +324,7 @@ def analyze_pdf(request):
 # Helpers: session + message persistence
 # ─────────────────────────────────────────────
 
-def _get_or_create_session(request, session_id, title="New Chat"):
+def _get_or_create_session(request, session_id, title="新对话"):
     """Find existing session or create a new one."""
     session = None
     if session_id:
@@ -338,7 +338,7 @@ def _get_or_create_session(request, session_id, title="New Chat"):
             session_id=str(uuid.uuid4()),
             title=title,
         )
-    if session.title == "New Chat":
+    if session.title == "新对话":
         session.title = title
         session.save(update_fields=["title"])
     return session
@@ -578,7 +578,7 @@ def session_detail(request, session_id):
         new_title = request.data.get("title", "").strip()
         if new_title:
             session.title = new_title[:200]
-            session.save(update_fields=["title"])
+            session.save(update_fields=["title", "updated_at"])
         return Response({"session_id": session.session_id, "title": session.title})
 
     # GET — return all messages
@@ -593,16 +593,16 @@ def session_detail(request, session_id):
                 "timestamp": msg.timestamp.isoformat(),
             }
             # Detect image uploads
-            if content.startswith("[图片上传："):
-                bracket_end = content.index("]")
+            if content.startswith("[图片上传：") and "]\n" in content:
+                bracket_end = content.index("]\n")
                 entry["isImageUpload"] = True
                 entry["imageName"] = content[len("[图片上传："):bracket_end]
                 entry["content"] = content[bracket_end + 2:]  # text after "]\n"
                 if msg.attachment_url:
                     entry["imagePreviewUrl"] = msg.attachment_url
             # Detect PDF uploads
-            elif content.startswith("[PDF 文件："):
-                bracket_end = content.index("]")
+            elif content.startswith("[PDF 文件：") and "]\n" in content:
+                bracket_end = content.index("]\n")
                 entry["isPdfUpload"] = True
                 entry["pdfName"] = content[len("[PDF 文件："):bracket_end]
                 entry["content"] = content[bracket_end + 2:]  # text after "]\n"

@@ -207,4 +207,3 @@ def get_answer(question, chat_history=None):
     ]
 
     return answer, retrieved, confidence, web_supplemented
-

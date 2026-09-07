@@ -91,16 +91,9 @@ def crop_details(request, crop_name):
 
         crop = Crop.objects.get(name__iexact=crop_name)
 
-        return Response({
-            "name": crop.name,
-            "scientific_name": crop.scientific_name,
-            "soil": crop.soil,
-            "climate": crop.climate,
-            "season": crop.season,
-            "water": crop.water,
-            "description": crop.description,
-            "source": "database"
-        })
+        data = dict(CropSerializer(crop, context={"request": request}).data)
+        data["source"] = "database"
+        return Response(data)
 
     except Crop.DoesNotExist:
 
@@ -292,7 +285,7 @@ def admin_crop_detail(request, pk):
         return Response({"message": "Crop deleted"})
 
     partial = request.method == "PATCH"
-    serializer = CropSerializer(crop, data=request.data, partial=partial)
+    serializer = CropSerializer(crop, data=request.data, partial=partial, context={"request": request})
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)

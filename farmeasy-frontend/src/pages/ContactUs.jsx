@@ -1,6 +1,6 @@
+import { motion, AnimatePresence } from "framer-motion";
 import React, { useState } from 'react';
 import API_BASE_URL from '../services/api';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import TranslateText from '../components/TranslateText';
 
@@ -44,7 +44,7 @@ const FeedbackForm = () => {
                     message: '提交失败，请稍后再试。'
                 });
             }
-        } catch (error) {
+        } catch {
             setStatus({
                 type: 'error',
                 message: '网络错误，请稍后再试。'

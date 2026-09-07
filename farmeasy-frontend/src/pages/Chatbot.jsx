@@ -1,8 +1,8 @@
+import { motion, AnimatePresence } from "framer-motion";
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
 import { PureMultimodalInput } from '../components/ui/multimodal-ai-chat-input';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 import TranslateText from '../components/TranslateText';
 import {
     MessageSquare, Plus, Trash2, Menu, X, Copy, Check,
@@ -64,7 +64,6 @@ export default function Chatbot() {
     const [loadingHistory, setLoadingHistory] = useState(false);
     const [sidebarOpen, setSidebarOpen] = useState(true);
     const [copiedMessageId, setCopiedMessageId] = useState(null);
-    const [expandedSources, setExpandedSources] = useState({});
     // Edit state
     const [editingMessageId, setEditingMessageId] = useState(null);
     const [editText, setEditText] = useState('');
@@ -152,7 +151,9 @@ export default function Chatbot() {
                 setCurrentSessionId(null);
                 setMessages([]);
             }
-        } catch { }
+        } catch {
+            // Ignore cancellation; sidebar state remains unchanged.
+        }
     }, [currentSessionId]);
 
     const handleCopyMessage = useCallback((content, messageId) => {
@@ -442,7 +443,7 @@ export default function Chatbot() {
     return (
         <>
             <Navbar />
-            <div style={{ paddingTop: '72px', height: '100vh', backgroundColor: '#ffffc5', display: 'flex', overflow: 'hidden' }}>
+            <div style={{ paddingTop: '72px', height: '100vh', backgroundColor: '#ffffff', display: 'flex', overflow: 'hidden' }}>
 
                 {/* ── Sidebar ── */}
                 <AnimatePresence>
@@ -459,9 +460,9 @@ export default function Chatbot() {
                                 <button
                                     onClick={handleNewChat}
                                     className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-colors"
-                                    style={{ backgroundColor: '#16a34a', color: 'white' }}
-                                    onMouseEnter={e => e.currentTarget.style.backgroundColor = '#15803d'}
-                                    onMouseLeave={e => e.currentTarget.style.backgroundColor = '#16a34a'}
+                                    style={{ backgroundColor: '#ffffff', color: '#15803d', border: '1px solid #bbf7d0' }}
+                                    onMouseEnter={e => e.currentTarget.style.backgroundColor = '#f0fdf4'}
+                                    onMouseLeave={e => e.currentTarget.style.backgroundColor = '#ffffff'}
                                 >
                                     <Plus size={20} /> <TranslateText>新对话</TranslateText>
                                 </button>
@@ -478,8 +479,8 @@ export default function Chatbot() {
                                         onClick={() => handleSwitchChat(chat.session_id)}
                                         className="group relative p-3 mb-2 rounded-lg cursor-pointer transition-all"
                                         style={{
-                                            backgroundColor: chat.session_id === currentSessionId ? '#f0fdf4' : 'transparent',
-                                            border: chat.session_id === currentSessionId ? '1px solid #4ade80' : '1px solid transparent',
+                                            backgroundColor: chat.session_id === currentSessionId ? '#ffffff' : 'transparent',
+                                            border: chat.session_id === currentSessionId ? '1px solid #86efac' : '1px solid #e5e7eb',
                                         }}
                                         onMouseEnter={e => { if (chat.session_id !== currentSessionId) e.currentTarget.style.backgroundColor = '#f9fafb'; }}
                                         onMouseLeave={e => { if (chat.session_id !== currentSessionId) e.currentTarget.style.backgroundColor = 'transparent'; }}
@@ -527,10 +528,7 @@ export default function Chatbot() {
                     <div
                         ref={chatContainerRef}
                         className="flex-1 overflow-y-auto"
-                        style={{
-                            backgroundColor: '#ffffc5',
-                            backgroundImage: 'radial-gradient(circle at 20% 30%, rgba(74,222,128,0.05) 0%,transparent 50%), radial-gradient(circle at 80% 70%, rgba(22,163,74,0.05) 0%,transparent 50%)',
-                        }}
+                        style={{ backgroundColor: '#ffffff' }}
                     >
                         <div className="max-w-4xl mx-auto px-4 py-6">
                             {loadingHistory && (
@@ -603,7 +601,7 @@ export default function Chatbot() {
                                                             <>
                                                                 <div
                                                                     className="rounded-3xl px-5 py-3 shadow-md"
-                                                                    style={{ backgroundColor: '#16a34a', color: '#ffffff' }}
+                                                                    style={{ backgroundColor: '#ffffff', color: '#15803d', border: '1px solid #bbf7d0' }}
                                                                 >
                                                                     {/* PDF badge */}
                                                                     {message.isPdfUpload && (

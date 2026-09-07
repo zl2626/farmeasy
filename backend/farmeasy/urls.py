@@ -27,7 +27,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 urlpatterns = [
-    # path("",home,name="home"),
+    path("", home, name="home"),
     path("admin/", admin.site.urls),
     # path("api/",include("chatbot.urls")),
     path("api/",include("farm_app.urls")),

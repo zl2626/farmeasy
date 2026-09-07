@@ -19,8 +19,9 @@ export const BoxesCore = ({ className, ...rest }) => {
         "rgb(76 167 80)",   // #4ca750
     ];
 
-    const getRandomColor = () => {
-        return colors[Math.floor(Math.random() * colors.length)];
+    const getHoverColor = (event) => {
+        event.currentTarget.style.backgroundColor =
+            colors[Number(event.currentTarget.dataset.cell || 0) % colors.length];
     };
 
     return (
@@ -41,10 +42,7 @@ export const BoxesCore = ({ className, ...rest }) => {
                 >
                     {cols.map((_, j) => (
                         <motion.div
-                            whileHover={{
-                                backgroundColor: getRandomColor(),
-                                transition: { duration: 0 },
-                            }}
+                            onMouseEnter={getHoverColor}
                             animate={{
                                 transition: { duration: 2 },
                             }}

@@ -19,7 +19,7 @@ const services = [
             </svg>
         ),
         title: "市场价格情报",
-        description: "实时采集各地批发市场行情数据，帮助农户以最理想的价格出售农产品，做出更明智的销售决策。",
+        description: "基于历史快照示例数据展示各地批发市场行情参考，帮助农户了解价格区间，做出更明智的销售决策。",
     },
     {
         icon: (
@@ -78,7 +78,7 @@ export default function ServicesSection() {
                         </span>
                     </h2>
                     <p className="text-gray-500 max-w-md mx-auto text-base">
-                        <TranslateText>从 AI 即时答疑到实时市场行情——农户需要的一切，触手可及。</TranslateText>
+                        <TranslateText>从 AI 即时答疑到历史行情参考——农户需要的一切，触手可及。</TranslateText>
                     </p>
                 </motion.div>
 

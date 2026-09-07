@@ -1,6 +1,9 @@
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { useState, useRef } from "react";
 import TranslateText from "./TranslateText";
+import imgTerracedRice from "../assets/gallery/terraced-rice.jpg";
+import imgRiceHarvest from "../assets/gallery/rice-harvest.jpg";
+import imgTractorSeeding from "../assets/gallery/tractor-seeding.jpg";
 
 const solutions = [
     {
@@ -9,7 +12,7 @@ const solutions = [
         title: "学习作物知识，种得更聪明",
         description:
             "获得清晰实用的指导：作物选择、土壤准备、季节规划、病虫害防治和产量优化。我们的 AI 平台把复杂的农业知识化繁为简，让您每个季节都能自信地做出决策。",
-        image: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=800&auto=format&fit=crop",
+        image: imgTerracedRice,
     },
     {
         id: "irrigation-education",
@@ -17,7 +20,7 @@ const solutions = [
         title: "智慧灌溉知识",
         description:
             "学习最适合您作物的灌溉技术——从滴灌、喷灌到水资源管理策略。智农 提供基于 AI 的高效用水建议，既节约用水，又提升作物长势。",
-        image: "https://images.unsplash.com/photo-1563514227147-6d2ff665a6a0?q=80&w=800&auto=format&fit=crop",
+        image: imgRiceHarvest,
     },
     {
         id: "smart-farming",
@@ -25,7 +28,7 @@ const solutions = [
         title: "数据驱动的种植决策",
         description:
             "借助 AI 的力量，根据您所在的地区、土壤类型和种植历史获得个性化种植建议。从最佳播种时间到施肥计划——智农 把复杂数据变成简单可行的建议。",
-        image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?q=80&w=800&auto=format&fit=crop",
+        image: imgTractorSeeding,
     },
 ];
 
@@ -136,3 +139,4 @@ export default function SolutionsSection() {
         </section>
     );
 }
+

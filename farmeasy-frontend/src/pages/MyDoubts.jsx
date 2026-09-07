@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import API_BASE_URL from "../services/api";
 import Navbar from "../components/Navbar";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/useAuth";
 import { useNavigate } from "react-router-dom";
 import { MessageCircle, Clock, CheckCircle, AlertCircle, Calendar } from "lucide-react";
 import TranslateText from "../components/TranslateText";
+import { formatDoubtDate } from "../lib/dateUtils";
 
 function MyDoubts() {
     const [doubts, setDoubts] = useState([]);
@@ -122,7 +123,7 @@ function MyDoubts() {
                                     <div className="flex items-center gap-4 text-xs text-gray-400 border-t border-gray-50 pt-4 mt-2">
                                         <span className="flex items-center gap-1">
                                             <Calendar size={14} />
-                                            {new Date(doubt.created_at || Date.now()).toLocaleDateString()}
+                                            {formatDoubtDate(doubt.created_at)}
                                         </span>
                                     </div>
 

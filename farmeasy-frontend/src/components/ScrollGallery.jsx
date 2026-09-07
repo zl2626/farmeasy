@@ -19,8 +19,6 @@ export default function ScrollGallery({ images = [] }) {
 
     if (!image) return;
 
-    const naturalWidth = image.offsetWidth;
-    const naturalHeight = image.offsetHeight;
 
     scroll(
       animate(
@@ -38,7 +36,7 @@ export default function ScrollGallery({ images = [] }) {
       }
     );
 
-    layers.forEach((layer, index) => {
+    layers.forEach((layer) => {
       scroll(
         animate(
           layer,

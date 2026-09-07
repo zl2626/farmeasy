@@ -24,11 +24,18 @@ export default function ScrollExpandMedia({
 
   const sectionRef = useRef(null);
 
-  useEffect(() => {
+  const resetMediaState = () => {
     setScrollProgress(0);
     setShowContent(false);
     setMediaFullyExpanded(false);
-  }, [mediaType]);
+  };
+
+  const mediaStateKey = `${mediaType}|${mediaSrc}|${posterSrc}|${bgImageSrc}`;
+  const [lastMediaStateKey, setLastMediaStateKey] = useState(mediaStateKey);
+  if (mediaStateKey !== lastMediaStateKey) {
+    setLastMediaStateKey(mediaStateKey);
+    resetMediaState();
+  }
 
   useEffect(() => {
     const handleWheel = (e) => {
@@ -271,4 +278,3 @@ export default function ScrollExpandMedia({
     </div>
   );
 }
-

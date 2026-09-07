@@ -7,6 +7,19 @@ class SchemeSerializer(serializers.ModelSerializer):
         fields="__all__"
 
 class CropSerializer(serializers.ModelSerializer):
+    def to_internal_value(self, data):
+        # JSON editors echo the existing URL; only an unchanged URL may be retained.
+        if self.instance and self.instance.image and isinstance(data.get("image"), str):
+            image_url = self.instance.image.url
+            request = self.context.get("request")
+            allowed = {image_url}
+            if request:
+                allowed.add(request.build_absolute_uri(image_url))
+            if data["image"] in allowed:
+                data = data.copy()
+                data.pop("image")
+        return super().to_internal_value(data)
+
     class Meta:
         model=Crop
         fields="__all__"

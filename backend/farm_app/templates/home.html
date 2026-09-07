@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>智农智慧农业平台</title>
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+        color: #1f2937;
+        background: #ffffff;
+      }
+      .card {
+        max-width: 620px;
+        width: calc(100% - 48px);
+        padding: 48px;
+        border: 1px solid #e5e7eb;
+        border-radius: 24px;
+        box-shadow: 0 18px 50px rgba(21, 128, 61, 0.08);
+        text-align: center;
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px;
+        border-radius: 999px;
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        color: #15803d;
+        font-size: 13px;
+        font-weight: 700;
+      }
+      h1 {
+        margin: 24px 0 12px;
+        font-size: 34px;
+        line-height: 1.25;
+        color: #14532d;
+      }
+      p { margin: 0; color: #4b5563; line-height: 1.8; }
+      .links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 32px;
+      }
+      a {
+        display: inline-block;
+        padding: 12px 22px;
+        border-radius: 14px;
+        background: #15803d;
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background 0.2s ease;
+      }
+      a:hover { background: #166534; }
+      a.secondary {
+        background: #ffffff;
+        color: #15803d;
+        border: 1px solid #bbf7d0;
+      }
+      a.secondary:hover { background: #f0fdf4; }
+      .status {
+        margin-top: 36px;
+        padding-top: 20px;
+        border-top: 1px solid #e5e7eb;
+        font-size: 13px;
+        color: #6b7280;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <span class="badge">🌾 智农后端服务运行中</span>
+      <h1>智农智慧农业平台</h1>
+      <p>这是 Django 后端服务页面。前端网站在本地开发环境中运行于 5199 端口，API 接口统一以 <strong>/api/</strong> 开头。</p>
+      <div class="links">
+        <a href="http://localhost:5199/">打开前台网站</a>
+        <a class="secondary" href="/admin/">后台管理</a>
+        <a class="secondary" href="/test/">接口测试</a>
+      </div>
+      <div class="status">Backend connected · API base path: /api/</div>
+    </main>
+  </body>
+</html>

@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import API_BASE_URL from "../services/api";
 import TranslateText from "../components/TranslateText";
 import { Lock, ArrowRight, Loader, AlertCircle } from "lucide-react";
 import { Snackbar, Alert } from "@mui/material";
 
 function ResetPassword({ onBackToLogin }) {
+  const navigate = useNavigate();
   const { uid, token } = useParams();
 
   const [password, setPassword] = useState("");
@@ -56,7 +57,11 @@ function ResetPassword({ onBackToLogin }) {
         setConfirm("");
 
         setTimeout(() => {
-          onBackToLogin();
+          if (typeof onBackToLogin === "function") {
+            onBackToLogin();
+          } else {
+            navigate("/login");
+          }
         }, 2000);
       } else {
         setError(data.error || "重置链接无效或已过期");
@@ -148,3 +153,4 @@ function ResetPassword({ onBackToLogin }) {
 }
 
 export default ResetPassword;
+

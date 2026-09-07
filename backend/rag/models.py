@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.utils import timezone
 
 
 class ChatSession(models.Model):
@@ -7,7 +8,7 @@ class ChatSession(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True
     )
     session_id = models.CharField(max_length=100, unique=True)
-    title = models.CharField(max_length=200, default="New Chat")
+    title = models.CharField(max_length=200, default="新对话")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -28,6 +29,12 @@ class ChatMessage(models.Model):
     confidence = models.CharField(max_length=20, null=True, blank=True)
     attachment_url = models.CharField(max_length=500, null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        is_new = self._state.adding
+        super().save(*args, **kwargs)
+        if is_new:
+            ChatSession.objects.filter(pk=self.session_id).update(updated_at=timezone.now())
 
     class Meta:
         ordering = ["timestamp"]

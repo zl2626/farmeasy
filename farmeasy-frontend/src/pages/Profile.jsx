@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/useAuth";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import { User, Mail, Phone, Shield, LogOut } from "lucide-react";
