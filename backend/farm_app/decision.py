@@ -2,6 +2,7 @@
 from datetime import date, timedelta
 
 from .models import FarmProfile
+from .calendar_rules import _region_calendar
 
 CROP_LABELS = dict(FarmProfile.CROP_CHOICES)
 GROWTH_LABELS = dict(FarmProfile.GROWTH_STAGE_CHOICES)
@@ -67,6 +68,8 @@ def build_farm_tasks(profile, days=15):
         "suggested_date": date.today() + timedelta(days=adjust_offset),
         "priority": "medium",
     })
+
+    tasks = _region_calendar(profile, tasks)
     return tasks[:days]
 
 
@@ -215,4 +218,3 @@ def match_subsidies(crop, area, needs_machine=False, contracted_land=False):
                 "note": "估算结果仅供申报准备参考，最终以当地当年政策为准。",
             })
     return matched
-

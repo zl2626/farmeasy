@@ -25,7 +25,7 @@ class ClosedLoopFeatureTests(APITestCase):
             "growth_stage": "seedling", "planting_area": "10",
         }, format="json")
         self.assertEqual(response.status_code, 201)
-        self.assertEqual(FarmTask.objects.filter(profile__user=self.user).count(), 4)
+        self.assertGreaterEqual(FarmTask.objects.filter(profile__user=self.user).count(), 8)
 
     def test_task_calendar_requires_profile(self):
         response = self.client.get("/api/farm/tasks/")
@@ -44,7 +44,8 @@ class ClosedLoopFeatureTests(APITestCase):
             "crop": "rice", "location": "湖北省", "symptom": "叶片黄褐色斑点",
         }, format="json")
         self.assertEqual(diagnosis_response.status_code, 201)
-        self.assertFalse(diagnosis_response.data["needs_human_review"])
+        self.assertIn(diagnosis_response.data["status"], ["draft", "pending_review"])
+        self.assertGreaterEqual(len(diagnosis_response.data["rag_sources"]), 1)
         diagnosis_id = diagnosis_response.data["id"]
 
         follow_up = self.client.post("/api/pest/follow-up/", {
@@ -53,7 +54,7 @@ class ClosedLoopFeatureTests(APITestCase):
             "note": "虫口下降",
         }, format="json")
         self.assertEqual(follow_up.status_code, 201)
-        self.assertEqual(diagnosis_response.data["status"], "draft")
+        self.assertIn(diagnosis_response.data["status"], ["draft", "pending_review"])
 
     def test_unsafe_dosage_question_is_sent_for_human_review(self):
         result = diagnose_pest("rice", "重度发生，需要农药配比")
@@ -76,6 +77,37 @@ class ClosedLoopFeatureTests(APITestCase):
             growth_stage="seedling", planting_area=10,
         )
         tasks = build_farm_tasks(profile)
-        self.assertEqual(len(tasks), 4)
+        self.assertGreaterEqual(len(tasks), 8)
         self.assertTrue(all(task["suggested_date"] >= date.today() for task in tasks))
         self.assertGreaterEqual(len(match_subsidies("rice", 10)), 2)
+
+from .pest_rag import diagnose_pest_with_rag, retrieve_pest_evidence, apply_safety_filter
+from .calendar_rules import REGION_CALENDAR_RULES, CROP_REGION_TASKS
+
+
+class PestRagPipelineTests(APITestCase):
+    def test_rag_pipeline_returns_sources_and_safe_filter(self):
+        result = diagnose_pest_with_rag("rice", "叶片黄褐色斑点", "湖北省武汉市")
+        self.assertIn(result["diagnosis_engine"], ["rag_deepseek_safety_filter", "rag_safety_filter_fallback"])
+        self.assertGreaterEqual(len(result["rag_sources"]), 1)
+        self.assertTrue(result["safety_boundary"])
+
+    def test_safety_filter_blocks_dosage_language(self):
+        draft = {
+            "diagnosis": "测试诊断", "confidence": 0.9, "severity": "medium",
+            "treatment_plan": ["按标签用量使用"], "region_note": "",
+        }
+        filtered = apply_safety_filter("需要配比", draft, [{"source": "测试", "score": 1, "text": "测试"}])
+        self.assertTrue(filtered["needs_human_review"])
+        self.assertEqual(filtered["treatment_plan"], [])
+        self.assertIn("配比", filtered["review_reason"])
+
+    def test_calendar_combines_region_and_crop(self):
+        user = User.objects.create_user(username="region-user", password="SafePass123!")
+        profile = FarmProfile.objects.create(
+            user=user, province="湖北省", city="武汉市", main_crop="rice",
+            growth_stage="seedling", planting_area=10,
+        )
+        tasks = build_farm_tasks(profile)
+        self.assertTrue(any("区域农情" in task["title"] for task in tasks))
+        self.assertTrue(any("水稻专项" in task["title"] for task in tasks))

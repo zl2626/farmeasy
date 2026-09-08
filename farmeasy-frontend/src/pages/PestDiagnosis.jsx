@@ -123,13 +123,13 @@ export default function PestDiagnosisPage() {
           <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-green-50 text-green-700"><Camera size={22} /></span>
           <div>
             <h1 className="text-2xl font-bold text-gray-900">病虫害诊断闭环</h1>
-            <p className="mt-1 text-sm text-gray-600">拍照诊断 → 防治建议 → 本地农资对接 → 效果回访。</p>
+            <p className="mt-1 text-sm text-gray-600">症状输入 → RAG 检索农业知识库 → DeepSeek 生成建议 → 安全规则过滤。</p>
           </div>
         </div>
 
         <div className="grid gap-5 lg:grid-cols-[380px_1fr]">
           <section className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-            <h2 className="flex items-center gap-2 text-lg font-semibold text-gray-900"><ClipboardList className="h-5 w-5 text-green-600" />上传诊断信息</h2>
+            <h2 className="flex items-center gap-2 text-lg font-semibold text-gray-900"><ClipboardList className="h-5 w-5 text-green-600" />输入症状并诊断</h2>
             <form onSubmit={submitDiagnosis} className="mt-5 space-y-4">
               <label className="block">
                 <span className="text-sm font-medium text-gray-700">现场照片</span>
@@ -150,7 +150,7 @@ export default function PestDiagnosisPage() {
               </label>
               <label className="block">
                 <span className="text-sm font-medium text-gray-700">症状描述</span>
-                <textarea rows={4} className={`${inputClass} mt-1.5`} value={form.symptom} onChange={(e) => setForm({ ...form, symptom: e.target.value })} placeholder="尽量描述病斑颜色、发生部位、范围和天气情况。" />
+                <textarea rows={4} className={`${inputClass} mt-1.5`} value={form.symptom} onChange={(e) => setForm({ ...form, symptom: e.target.value })} placeholder="例如：水稻叶片有黄褐色斑点，多雨后扩展，先从下部叶片发生。" />
               </label>
               {error && <p className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p>}
               <button type="submit" disabled={loading} className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-green-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-green-700 disabled:opacity-70">
@@ -168,6 +168,24 @@ export default function PestDiagnosisPage() {
                 </div>
                 <p className="mt-3 text-xl font-semibold text-gray-900">{result.diagnosis}</p>
                 <p className="mt-1 text-sm text-gray-600">严重程度：{SEVERITY_LABELS[result.severity] || result.severity}</p>
+                {result.region_note && (
+                  <p className="mt-3 rounded-2xl bg-gray-50 px-4 py-3 text-sm leading-6 text-gray-600">{result.region_note}</p>
+                )}
+                {result.rag_sources?.length > 0 && (
+                  <div className="mt-4">
+                    <p className="text-xs font-semibold text-gray-500">RAG 检索依据</p>
+                    <div className="mt-2 space-y-2">
+                      {result.rag_sources.map((source, index) => (
+                        <div key={`${source.source}-${index}`} className="rounded-2xl bg-gray-50 px-4 py-3">
+                          <p className="text-xs font-semibold text-gray-700">
+                            {source.source}{source.category ? ` · ${source.category}` : ""} · 相关度 {Math.round((source.score || 0) * 100)}%
+                          </p>
+                          <p className="mt-1 line-clamp-2 text-xs leading-5 text-gray-500">{source.text}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 {result.needs_human_review ? (
                   <div className="mt-5 rounded-2xl border border-amber-200 bg-amber-50 p-4">
                     <p className="flex items-center gap-2 text-sm font-semibold text-amber-800"><ShieldAlert className="h-4 w-4" />已转人工专家复核</p>
@@ -181,6 +199,14 @@ export default function PestDiagnosisPage() {
                       </li>
                     ))}
                   </ul>
+                )}
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <span className="rounded-full bg-gray-100 px-3 py-1 text-xs text-gray-600">引擎：{result.diagnosis_engine || "本地规则"}</span>
+                  {result.model_name && <span className="rounded-full bg-gray-100 px-3 py-1 text-xs text-gray-600">模型：{result.model_name}</span>}
+                  {result.safety_filter && <span className="rounded-full bg-green-50 px-3 py-1 text-xs text-green-700">安全过滤：{result.safety_filter}</span>}
+                </div>
+                {result.degradation_reason && (
+                  <p className="mt-3 rounded-2xl bg-amber-50 px-4 py-3 text-xs leading-5 text-amber-700">{result.degradation_reason}</p>
                 )}
                 <p className="mt-4 flex gap-2 rounded-2xl bg-gray-50 px-4 py-3 text-sm leading-6 text-gray-600">
                   <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />{result.safety_boundary}

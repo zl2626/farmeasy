@@ -14,8 +14,9 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 
-from .decision import build_farm_tasks, diagnose_pest, match_subsidies
+from .decision import build_farm_tasks, match_subsidies
 from .models import AgriProduct, FarmProfile, FarmTask
+from .pest_rag import diagnose_pest_with_rag
 from .serializers import (
     FarmProfileSerializer,
     FarmTaskSerializer,
@@ -115,7 +116,11 @@ def pest_diagnosis_view(request):
     if not serializer.is_valid():
         return Response(serializer.errors, status=400)
 
-    diagnosis = diagnose_pest(serializer.validated_data["crop"], serializer.validated_data["symptom"])
+    diagnosis = diagnose_pest_with_rag(
+        serializer.validated_data["crop"],
+        serializer.validated_data["symptom"],
+        serializer.validated_data["location"],
+    )
     instance = serializer.save(
         user=request.user,
         diagnosis=diagnosis["diagnosis"],
@@ -126,13 +131,21 @@ def pest_diagnosis_view(request):
         review_reason=diagnosis["review_reason"],
         status=diagnosis["status"],
     )
-    return Response({**PestDiagnosisSerializer(instance).data, "safety_boundary": diagnosis["safety_boundary"]}, status=201)
+    return Response({
+        **PestDiagnosisSerializer(instance).data,
+        "safety_boundary": diagnosis["safety_boundary"],
+        "rag_sources": diagnosis.get("rag_sources", []),
+        "diagnosis_engine": diagnosis.get("diagnosis_engine", ""),
+        "model_name": diagnosis.get("model_name", ""),
+        "region_note": diagnosis.get("region_note", ""),
+        "safety_filter": diagnosis.get("safety_filter", ""),
+        "degradation_reason": diagnosis.get("degradation_reason", ""),
+    }, status=201)
 
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def pest_diagnoses_view(request):
-    from .models import PestDiagnosis
     queryset = PestDiagnosis.objects.filter(user=request.user).order_by("-created_at")
     return Response(PestDiagnosisSerializer(queryset, many=True).data)
 

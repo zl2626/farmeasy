@@ -66,7 +66,7 @@ export default function FarmCalendarPage() {
               </span>
               <div>
                 <h1 className="text-2xl font-bold text-gray-900">农事日历</h1>
-                <p className="mt-1 text-sm text-gray-600">根据位置、作物和生育期生成的主动提醒。</p>
+                <p className="mt-1 text-sm text-gray-600">结合地区气候风险、作物种类和生育期生成的主动提醒。</p>
               </div>
             </div>
             <button
@@ -114,7 +114,7 @@ export default function FarmCalendarPage() {
               <section className="mt-8 space-y-6">
                 {groupedTasks.length === 0 && (
                   <p className="rounded-2xl border border-dashed border-gray-200 bg-white py-12 text-center text-sm text-gray-500">
-                    未来 15 天暂无待办农事。
+                    未来 15 天暂无待办农事。系统会持续结合你的地区、作物和生育期更新安排。
                   </p>
                 )}
                 {groupedTasks.map(([dateText, tasks]) => (
