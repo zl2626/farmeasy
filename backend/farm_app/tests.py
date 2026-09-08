@@ -1,4 +1,5 @@
 from datetime import date
+from unittest.mock import patch
 
 from django.contrib.auth.models import User
 from rest_framework.test import APITestCase
@@ -101,6 +102,28 @@ class PestRagPipelineTests(APITestCase):
         self.assertTrue(filtered["needs_human_review"])
         self.assertEqual(filtered["treatment_plan"], [])
         self.assertIn("配比", filtered["review_reason"])
+
+    def test_diagnosis_uses_farm_profile_location_when_blank(self):
+        user = User.objects.create_user(username="location-user", password="SafePass123!")
+        FarmProfile.objects.create(
+            user=user, province="湖北省", city="武汉市", main_crop="rice",
+            growth_stage="seedling", planting_area=10,
+        )
+        self.client.force_authenticate(user)
+        with patch("farm_app.views.diagnose_pest_with_rag") as diagnose:
+            diagnose.return_value = {
+                "diagnosis": "测试诊断", "confidence": 0.8, "severity": "mild",
+                "treatment_plan": [], "needs_human_review": False,
+                "review_reason": "", "status": "draft",
+                "safety_boundary": "安全边界", "rag_sources": [],
+            }
+            response = self.client.post("/api/pest/diagnosis/", {
+                "crop": "rice", "location": "", "symptom": "叶片有黄褐色斑点",
+            }, format="json")
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.data["location"], "湖北省 武汉市")
+        self.assertEqual(response.data["location_source"], "farm_profile")
+        diagnose.assert_called_once_with("rice", "叶片有黄褐色斑点", "湖北省 武汉市")
 
     def test_calendar_combines_region_and_crop(self):
         user = User.objects.create_user(username="region-user", password="SafePass123!")

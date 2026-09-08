@@ -45,6 +45,8 @@ export default function PestDiagnosisPage() {
         if (!active) return;
         setProfileProvince(profile?.province || "");
         setHistory(records || []);
+        const profileLocation = [profile?.province, profile?.city].filter(Boolean).join(" ");
+        setForm((current) => ({ ...current, location: current.location || profileLocation }));
         if (profile?.province) {
           const items = await getAgriProducts({ province: profile.province });
           if (active) setProducts(items || []);

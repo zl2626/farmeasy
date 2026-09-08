@@ -112,7 +112,26 @@ def agri_products_view(request):
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def pest_diagnosis_view(request):
-    serializer = PestDiagnosisSerializer(data=request.data)
+    # The calendar profile is the authoritative location unless the farmer
+    # deliberately types a more precise field location.
+    submitted_location = str(request.data.get("location") or "").strip()
+    profile = FarmProfile.objects.filter(user=request.user).only("province", "city").first()
+    profile_location = " ".join(
+        part for part in [profile.province, profile.city] if part
+    ).strip() if profile else ""
+
+    payload = request.data.copy()
+    location_source = "user_input"
+    if not submitted_location:
+        if not profile_location:
+            return Response(
+                {"location": "请填写诊断位置，或先完善农事档案中的省市信息。"},
+                status=400,
+            )
+        payload["location"] = profile_location
+        location_source = "farm_profile"
+
+    serializer = PestDiagnosisSerializer(data=payload)
     if not serializer.is_valid():
         return Response(serializer.errors, status=400)
 
@@ -140,6 +159,7 @@ def pest_diagnosis_view(request):
         "region_note": diagnosis.get("region_note", ""),
         "safety_filter": diagnosis.get("safety_filter", ""),
         "degradation_reason": diagnosis.get("degradation_reason", ""),
+        "location_source": location_source,
     }, status=201)
 
 
