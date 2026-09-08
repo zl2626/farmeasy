@@ -155,17 +155,15 @@ function Login({ OnRegisterClick, onForgotClick, onLoginSuccess }) {
         <button
           type="submit"
           disabled={loading}
-          className="relative w-full py-3 px-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl transition-all shadow-lg shadow-green-600/20 flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed mt-2"
+          className="auth-submit relative w-full py-3 px-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl transition-all shadow-lg shadow-green-600/20 flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed mt-2"
+          style={{ backgroundColor: "#16a34a", color: "#ffffff" }}
         >
           {loading ? (
             <Loader className="w-5 h-5 animate-spin" />
           ) : (
             <>
-              {/* Left Arrow */}
-              <ArrowRight className="w-5 h-5 absolute left-4" />
-
-              {/* Centered Text */}
-              <span className="mx-auto">
+              <ArrowRight className="w-5 h-5 absolute left-4" color="#ffffff" />
+              <span className="mx-auto" style={{ color: "#ffffff" }}>
                 <TranslateText>登录</TranslateText>
               </span>
             </>

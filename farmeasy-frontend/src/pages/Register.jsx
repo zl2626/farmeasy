@@ -152,15 +152,15 @@ function Register({ onBackToLogin }) {
         <button
           type="submit"
           disabled={loading}
-          className="relative w-full py-3 px-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl transition-all shadow-lg shadow-green-600/20 flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed mt-2"
+          className="auth-submit relative w-full py-3 px-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl transition-all shadow-lg shadow-green-600/20 flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed mt-2"
+          style={{ backgroundColor: "#16a34a", color: "#ffffff" }}
         >
           {loading ? (
             <Loader className="w-5 h-5 animate-spin" />
           ) : (
             <>
-              <ArrowRight className="w-5 h-5 absolute left-4" />
-              <span><TranslateText>注册</TranslateText></span>
-
+              <ArrowRight className="w-5 h-5 absolute left-4" color="#ffffff" />
+              <span style={{ color: "#ffffff" }}><TranslateText>注册</TranslateText></span>
             </>
           )}
         </button>

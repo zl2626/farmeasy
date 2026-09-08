@@ -1,0 +1,5 @@
+{
+  "installCommand": "cd farmeasy-frontend && npm ci --legacy-peer-deps",
+  "buildCommand": "cd farmeasy-frontend && npm run build",
+  "outputDirectory": "farmeasy-frontend/dist"
+}

@@ -75,14 +75,21 @@ main b {
   color: #17203a;
 }
 
-/* Legacy global button styling conflicts with Tailwind buttons; keep only the cursor behavior. */
-button {
-  border: 0;
-  background: transparent;
+/* Keep this unlayered so it beats Tailwind utilities that lost to the old
+   `button { background: transparent }` reset (white text on a white button). */
+button.auth-submit {
+  background: #16a34a !important;
+  color: #ffffff !important;
 }
 
-button:not(:disabled):hover {
-  border-color: inherit;
+button.auth-submit:hover:not(:disabled) {
+  background: #15803d !important;
+  color: #ffffff !important;
+}
+
+button.auth-submit span,
+button.auth-submit svg {
+  color: #ffffff !important;
 }
 
 /* ─── Navbar Responsive Rules ─── */

@@ -21,15 +21,21 @@ function useIsMobile(breakpoint = 640) {
     return isMobile;
 }
 
+function publicAsset(path) {
+    const base = import.meta.env.BASE_URL || "/";
+    const relative = String(path || "").replace(/^\//, "");
+    return `${base}${relative}`;
+}
+
 // DB crops have relative paths like /media/..., scraped crops have full URLs
 function getImageSrc(imagePath, cropName) {
-    if (cropImages[cropName]) return cropImages[cropName];
+    if (cropImages[cropName]) return publicAsset(cropImages[cropName]);
     if (!imagePath) return null;
     if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) {
         return imagePath;
     }
     if (imagePath.startsWith("/crops/")) {
-        return imagePath; // 本地打包的作物图片
+        return publicAsset(imagePath);
     }
     return mediaUrl(imagePath);
 }

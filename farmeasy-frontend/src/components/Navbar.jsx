@@ -259,7 +259,7 @@ export default function Navbar() {
             >
               <TranslateText>意见反馈</TranslateText>
             </motion.span>
-            {isAuthenticated && (
+            {isAuthenticated ? (
               <motion.span
                 style={linkStyle}
                 whileHover={linkHoverAnimation}
@@ -267,6 +267,15 @@ export default function Navbar() {
                 onClick={handleLogout}
               >
                 <TranslateText>退出登录</TranslateText>
+              </motion.span>
+            ) : (
+              <motion.span
+                style={loginNavButtonStyle}
+                whileHover={{ backgroundColor: "#f0fdf4", y: -1 }}
+                whileTap={{ scale: 0.96 }}
+                onClick={() => setOpenLogin(true)}
+              >
+                <TranslateText>登录</TranslateText>
               </motion.span>
             )}
           </div>
@@ -468,12 +477,22 @@ export default function Navbar() {
                   </div>
                 )}
 
-                {isAuthenticated && ( // Add Logout
+                {isAuthenticated ? (
                   <div
                     style={sidebarLinkStyle}
                     onClick={handleLogout}
                   >
                     <TranslateText>退出登录</TranslateText>
+                  </div>
+                ) : (
+                  <div
+                    style={{ ...sidebarLinkStyle, fontWeight: 700, background: "rgba(255,255,255,0.14)" }}
+                    onClick={() => {
+                      closeMobileMenu();
+                      setOpenLogin(true);
+                    }}
+                  >
+                    <TranslateText>登录</TranslateText>
                   </div>
                 )}
 
@@ -742,6 +761,20 @@ const linkStyle = {
 const linkHoverAnimation = {
   backgroundColor: "rgba(148,163,184,0.22)",
   y: -1,
+};
+
+const loginNavButtonStyle = {
+  color: "#166534",
+  backgroundColor: "#ffffff",
+  textDecoration: "none",
+  fontSize: "0.88rem",
+  fontWeight: 700,
+  padding: "0.4rem 0.9rem",
+  margin: "0 0 0 0.35rem",
+  cursor: "pointer",
+  borderRadius: 999,
+  whiteSpace: "nowrap",
+  boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
 };
 
 const loginCardStyle = {
