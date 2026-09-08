@@ -19,6 +19,10 @@ import AboutUs from "./pages/AboutUs.jsx";
 import Chatbot from "./pages/Chatbot.jsx";
 import FeedbackForm from "./pages/ContactUs.jsx";
 import AdminDashboard from "./pages/AdminDashboard.jsx";
+import FarmProfile from "./pages/FarmProfile.jsx";
+import FarmCalendar from "./pages/FarmCalendar.jsx";
+import PestDiagnosis from "./pages/PestDiagnosis.jsx";
+import SubsidyMatch from "./pages/SubsidyMatch.jsx";
 
 const withNavbar = (Page) => (
   <>
@@ -44,6 +48,10 @@ function AnimatedRoutes({ location }) {
           path="/reset-password/:uid/:token"
           element={withNavbar(ResetPassword)}
         />
+        <Route path="/farm-profile" element={<FarmProfile />} />
+        <Route path="/farm-calendar" element={<FarmCalendar />} />
+        <Route path="/pest-diagnosis" element={<PestDiagnosis />} />
+        <Route path="/subsidy-match" element={<SubsidyMatch />} />
         <Route path="/market-prices" element={<MarketPrices />} />
         <Route path="/agri-schemes" element={<AgriSchemes />} />
         <Route path="/crops" element={<CropList />} />

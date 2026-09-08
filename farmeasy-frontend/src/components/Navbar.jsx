@@ -138,6 +138,27 @@ export default function Navbar() {
                   >
                     惠农政策
                   </motion.div>
+                  <motion.div
+                    style={dropdownItemStyle}
+                    whileHover={dropdownHoverAnimation}
+                    onClick={() => navigate("/farm-calendar")}
+                  >
+                    农事日历
+                  </motion.div>
+                  <motion.div
+                    style={dropdownItemStyle}
+                    whileHover={dropdownHoverAnimation}
+                    onClick={() => navigate("/pest-diagnosis")}
+                  >
+                    病虫诊断
+                  </motion.div>
+                  <motion.div
+                    style={dropdownItemStyle}
+                    whileHover={dropdownHoverAnimation}
+                    onClick={() => navigate("/subsidy-match")}
+                  >
+                    补贴匹配
+                  </motion.div>
                 </div>
               )}
             </div>
@@ -343,6 +364,15 @@ export default function Navbar() {
                           市场价格
                         </div>
                         <div style={sidebarSubLinkStyle} onClick={() => handleNavClick("/agri-schemes")}>
+                        <div style={sidebarSubLinkStyle} onClick={() => handleNavClick("/farm-calendar")}>
+                          农事日历
+                        </div>
+                        <div style={sidebarSubLinkStyle} onClick={() => handleNavClick("/pest-diagnosis")}>
+                          病虫诊断
+                        </div>
+                        <div style={sidebarSubLinkStyle} onClick={() => handleNavClick("/subsidy-match")}>
+                          补贴匹配
+                        </div>
                           惠农政策
                         </div>
                       </motion.div>

@@ -57,6 +57,15 @@ function Login({ OnRegisterClick, onForgotClick, onLoginSuccess }) {
 
         if (profileResp.ok) {
           const userData = await profileResp.json();
+          let userHasFarmProfile = false;
+          try {
+            const farmProfileResp = await fetch(`${API_BASE_URL}/farm/profile/`, {
+              headers: { "Authorization": `Bearer ${accessToken}` }
+            });
+            userHasFarmProfile = farmProfileResp.ok && Boolean(await farmProfileResp.json());
+          } catch {
+            userHasFarmProfile = false;
+          }
           login(userData, accessToken);
           localStorage.setItem("refresh", refreshToken);
           setSnackbar({ open: true, message: "登录成功！", severity: "success" });
@@ -64,11 +73,11 @@ function Login({ OnRegisterClick, onForgotClick, onLoginSuccess }) {
           setTimeout(() => {
             if (onLoginSuccess) onLoginSuccess();
 
-            // Redirect admin to admin dashboard, regular users to home
+            // Redirect admin to admin dashboard, regular users to their farm workspace
             if (userData.is_staff) {
               navigate("/admin-dashboard");
             } else {
-              navigate("/home");
+              navigate(userHasFarmProfile ? "/farm-calendar" : "/farm-profile");
             }
             setFormData({ username: "", password: "" });
           }, 1500);
@@ -195,4 +204,7 @@ function Login({ OnRegisterClick, onForgotClick, onLoginSuccess }) {
 }
 
 export default Login;
+
+
+
 

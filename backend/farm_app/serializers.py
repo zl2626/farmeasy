@@ -1,7 +1,7 @@
 import re
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Profile
+from .models import Profile, FarmProfile, FarmTask, PestDiagnosis, TreatmentFollowUp
 
 class RegisterSerializer(serializers.ModelSerializer):
     password=serializers.CharField(write_only=True)
@@ -49,3 +49,37 @@ class RegisterSerializer(serializers.ModelSerializer):
             role="FARMER"
         )
         return user
+
+
+class FarmProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FarmProfile
+        fields = ["id", "province", "city", "main_crop", "growth_stage", "planting_area", "updated_at"]
+        read_only_fields = ["id", "updated_at"]
+
+
+class FarmTaskSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FarmTask
+        fields = ["id", "task_type", "title", "description", "suggested_date", "priority", "completed", "created_at", "updated_at"]
+        read_only_fields = ["created_at", "updated_at"]
+
+
+class TreatmentFollowUpSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TreatmentFollowUp
+        fields = ["diagnosis", "treatment_date", "product_name", "effect_score", "loss_avoided", "note", "created_at"]
+        read_only_fields = ["created_at"]
+
+
+class PestDiagnosisSerializer(serializers.ModelSerializer):
+    follow_up = TreatmentFollowUpSerializer(read_only=True)
+
+    class Meta:
+        model = PestDiagnosis
+        fields = [
+            "id", "crop", "location", "image", "symptom", "diagnosis", "confidence",
+            "severity", "treatment_plan", "needs_human_review", "review_reason",
+            "status", "created_at", "updated_at", "follow_up",
+        ]
+        read_only_fields = ["diagnosis", "confidence", "severity", "treatment_plan", "needs_human_review", "review_reason", "status", "created_at", "updated_at"]
