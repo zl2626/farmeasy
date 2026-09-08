@@ -4,13 +4,14 @@ RAG pipeline: retrieval, re-ranking, and LLM answer generation.
 All heavy resources (DeepSeek client, VectorStore) are lazy-loaded
 on first use to avoid slow server startup.
 """
-from rag.vector_store import VectorStore
 from rag.prompts import FARMER_SYSTEM_PROMPT, FARMER_USER_PROMPT, get_season_info
 from rag.web_search import web_search
 from rag.crop_kb import find_crop_context
 from rag.llm import get_client, DEEPSEEK_TEXT_MODEL
 import re
 import logging
+import os
+from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
@@ -33,8 +34,12 @@ def _get_vector_store():
     """Return (and cache) the loaded VectorStore."""
     global _vector_store
     if _vector_store is None:
-        _vector_store = VectorStore()
-        _vector_store.load()
+        if os.getenv("VERCEL") or not (Path(__file__).resolve().parent.parent / "data/processed/faiss.index").exists():
+            raise FileNotFoundError("Vector index is unavailable in this deployment")
+        from rag.vector_store import VectorStore
+        store = VectorStore()
+        store.load()
+        _vector_store = store
     return _vector_store
 
 
@@ -97,11 +102,14 @@ def get_answer(question, chat_history=None):
     5. Inject conversation history (if any) for follow-up awareness
     6. Return answer, retrieved chunks with metadata, and confidence level
     """
-    vs = _get_vector_store()
     client = get_client()
 
     # --- Retrieve & re-rank ---
-    results = vs.search(question, k=RETRIEVE_K)
+    try:
+        results = _get_vector_store().search(question, k=RETRIEVE_K)
+    except (OSError, ImportError, RuntimeError):
+        logger.warning("Vector retrieval unavailable; using crop knowledge and web context")
+        results = []
 
     # Take the top-N (already sorted by score from FAISS)
     top_results = results[:TOP_N]

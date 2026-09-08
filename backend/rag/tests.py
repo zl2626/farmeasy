@@ -9,6 +9,54 @@ from rest_framework.test import APIClient
 from .models import ChatMessage, ChatSession
 
 
+class ChatAvailabilityTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(username="availability-test", password="test-password-123")
+        self.client = APIClient()
+
+    def test_login_profile_and_expired_access_refresh(self):
+        from rest_framework_simplejwt.tokens import AccessToken
+        login = self.client.post("/api/auth/login/", {
+            "username": "availability-test", "password": "test-password-123",
+        }, format="json")
+        self.assertEqual(login.status_code, 200)
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {login.data['access']}")
+        self.assertEqual(self.client.get("/api/education/profile/").status_code, 200)
+        expired = AccessToken.for_user(self.user)
+        expired.set_exp(lifetime=timedelta(seconds=-1))
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {expired}")
+        self.assertEqual(self.client.get("/api/chat/sessions/").status_code, 401)
+        refresh = self.client.post("/api/auth/refresh/", {"refresh": login.data["refresh"]}, format="json")
+        self.assertEqual(refresh.status_code, 200)
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {refresh.data['access']}")
+        self.assertEqual(self.client.get("/api/chat/sessions/").status_code, 200)
+
+    def test_ai_timeout_returns_actionable_json_without_saving_fake_answer(self):
+        from openai import APITimeoutError
+        import httpx
+        self.client.force_authenticate(self.user)
+        error = APITimeoutError(request=httpx.Request("POST", "https://api.deepseek.com"))
+        with patch("rag.views.get_answer", side_effect=error):
+            response = self.client.post("/api/chat/", {"question": "How to water rice?"}, format="json")
+        self.assertEqual(response.status_code, 504)
+        self.assertEqual(response.data["code"], "ai_timeout")
+        self.assertFalse(ChatMessage.objects.filter(role="assistant").exists())
+
+    def test_missing_vector_index_keeps_crop_knowledge_and_ai_available(self):
+        from rag.rag_pipeline import get_answer
+        from unittest.mock import MagicMock
+        llm = MagicMock()
+        llm.chat.completions.create.return_value.choices[0].message.content = "Watering advice"
+        with patch("rag.rag_pipeline._get_vector_store", side_effect=FileNotFoundError("index")), \
+             patch("rag.rag_pipeline.get_client", return_value=llm), \
+             patch("rag.rag_pipeline.find_crop_context", return_value="Rice crop knowledge"):
+            answer, retrieved, confidence, web = get_answer("Rice watering")
+        self.assertEqual(answer, "Watering advice")
+        self.assertEqual(retrieved, [])
+        self.assertEqual(confidence, "HIGH")
+        self.assertIn("Rice crop knowledge", llm.chat.completions.create.call_args.kwargs["messages"][-1]["content"])
+
+
 class ChatHistoryTests(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username="chat-test")

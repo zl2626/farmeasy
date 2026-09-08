@@ -5,10 +5,11 @@ import os
 import faiss
 import numpy as np
 import pickle
+from pathlib import Path
 from rag.embeddings import embed_text
 
-VECTOR_PATH = "data/processed/faiss.index"
-META_PATH = "data/processed/meta.pkl"
+VECTOR_PATH = str(Path(__file__).resolve().parent.parent / "data/processed/faiss.index")
+META_PATH = str(Path(__file__).resolve().parent.parent / "data/processed/meta.pkl")
 
 # Minimum cosine similarity score to consider a result relevant
 SCORE_THRESHOLD = 0.25

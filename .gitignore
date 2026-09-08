@@ -54,3 +54,4 @@ Thumbs.db
 
 # Local runtime logs
 logs/
+.vercel/

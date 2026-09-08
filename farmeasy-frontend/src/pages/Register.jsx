@@ -42,7 +42,6 @@ function Register({ onBackToLogin }) {
       try {
         data = JSON.parse(text);
       } catch {
-        console.error("Server returned HTML:", text);
         setErrors({ detail: "服务器响应异常，请确认后端服务已启动。" });
         return;
       }
@@ -61,7 +60,7 @@ function Register({ onBackToLogin }) {
       }
     } catch (err) {
       console.error("Network error:", err);
-      setErrors({ detail: "无法连接服务器，请确认后端服务已启动（127.0.0.1:8000）。" });
+      setErrors({ detail: "无法连接注册服务，请检查网络或联系管理员。" });
     } finally {
       setLoading(false);
     }
@@ -188,4 +187,3 @@ function Register({ onBackToLogin }) {
 }
 
 export default Register;
-

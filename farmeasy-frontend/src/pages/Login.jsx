@@ -41,8 +41,7 @@ function Login({ OnRegisterClick, onForgotClick, onLoginSuccess }) {
       try {
         data = JSON.parse(text);
       } catch {
-        console.error("Server returned HTML:", text);
-        setErrors({ detail: "服务器错误，请重试。" });
+        setErrors({ detail: "登录服务尚未正确连接，请联系管理员。" });
         setLoading(false);
         return;
       }
@@ -62,7 +61,8 @@ function Login({ OnRegisterClick, onForgotClick, onLoginSuccess }) {
             const farmProfileResp = await fetch(`${API_BASE_URL}/farm/profile/`, {
               headers: { "Authorization": `Bearer ${accessToken}` }
             });
-            userHasFarmProfile = farmProfileResp.ok && Boolean(await farmProfileResp.json());
+            const profileText = await farmProfileResp.text();
+            userHasFarmProfile = farmProfileResp.ok && Boolean(profileText && JSON.parse(profileText));
           } catch {
             userHasFarmProfile = false;
           }
@@ -202,7 +202,3 @@ function Login({ OnRegisterClick, onForgotClick, onLoginSuccess }) {
 }
 
 export default Login;
-
-
-
-

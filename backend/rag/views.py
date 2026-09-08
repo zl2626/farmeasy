@@ -6,6 +6,8 @@ from rag.models import ChatSession, ChatMessage
 from rag.rag_pipeline import get_answer, _get_vector_store
 from rag.web_search import web_search
 from rag.llm import get_client, DEEPSEEK_TEXT_MODEL, DEEPSEEK_VISION_MODEL
+from rag.llm import AIConfigurationError
+from openai import APIError, APITimeoutError, AuthenticationError, RateLimitError
 from django.conf import settings
 import pdfplumber
 import uuid
@@ -66,7 +68,20 @@ def farmer_chat(request):
         elif msg.role == "assistant" and msg.output_text:
             chat_history.append({"role": "assistant", "content": msg.output_text})
 
-    answer, retrieved, confidence, web_supplemented = get_answer(question, chat_history=chat_history)
+    try:
+        answer, retrieved, confidence, web_supplemented = get_answer(question, chat_history=chat_history)
+        if not answer:
+            return Response({"error": "AI 未返回有效回答，请重试。", "code": "ai_empty_response"}, status=502)
+    except (AIConfigurationError, AuthenticationError):
+        logger.warning("AI credentials missing or rejected")
+        return Response({"error": "AI 服务尚未配置完成，请联系管理员。", "code": "ai_not_configured"}, status=503)
+    except APITimeoutError:
+        return Response({"error": "AI 回答超时，请稍后重试。", "code": "ai_timeout"}, status=504)
+    except RateLimitError:
+        return Response({"error": "AI 服务繁忙或额度不足，请稍后重试。", "code": "ai_rate_limited"}, status=503)
+    except APIError:
+        logger.warning("AI upstream request failed")
+        return Response({"error": "AI 服务调用失败，请稍后重试或联系管理员。", "code": "ai_unavailable"}, status=502)
 
     ChatMessage.objects.create(
         session=session,

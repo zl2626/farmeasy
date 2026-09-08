@@ -10,12 +10,21 @@ import {
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import axios from 'axios';
-
-const API = 'http://localhost:8000/api';
+import API, { mediaUrl } from '../services/api';
 
 // 带 401 自动刷新 token 重试的 axios 实例：
 // access token 有效期 60 分钟，过期后用 refresh token 换新并重放原请求
 const apiAxios = axios.create();
+let refreshRequest = null;
+
+function chatError(error) {
+    if (error.response?.status === 401) return '登录已过期，请重新登录后再试。';
+    if (!error.response) return '无法连接服务，请检查网络或稍后重试。';
+    if (error.response.status === 404 || typeof error.response.data === 'string') {
+        return '服务尚未正确连接，请联系管理员。';
+    }
+    return error.response.data?.error || '回答失败，请稍后重试。';
+}
 
 apiAxios.interceptors.response.use(
     (res) => res,
@@ -31,15 +40,23 @@ apiAxios.interceptors.response.use(
         ) {
             original._retried = true;
             try {
-                const r = await axios.post(`${API}/auth/refresh/`, { refresh: refreshToken });
+                if (!refreshRequest) {
+                    refreshRequest = axios.post(`${API}/auth/refresh/`, { refresh: refreshToken })
+                        .finally(() => { refreshRequest = null; });
+                }
+                const r = await refreshRequest;
                 const newAccess = r.data.access;
                 localStorage.setItem('token', newAccess);
                 original.headers.Authorization = `Bearer ${newAccess}`;
                 return apiAxios(original);
-            } catch {
+            } catch (refreshError) {
                 // refresh token 也过期了，清除凭证让用户重新登录
-                localStorage.removeItem('token');
-                localStorage.removeItem('refresh');
+                if ([400, 401].includes(refreshError.response?.status)) {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('refresh');
+                    localStorage.removeItem('user');
+                    window.dispatchEvent(new Event('auth-expired'));
+                }
             }
         }
         return Promise.reject(error);
@@ -75,7 +92,7 @@ export default function Chatbot() {
     // Load sessions on mount
     useEffect(() => {
         if (!isAuthenticated) return;
-        axios.get(`${API}/chat/sessions/`, { headers: authHeaders() })
+        apiAxios.get(`${API}/chat/sessions/`, { headers: authHeaders() })
             .then(res => {
                 setChatSessions(res.data);
                 if (res.data.length > 0) loadSession(res.data[0].session_id);
@@ -110,9 +127,7 @@ export default function Chatbot() {
                     m.imageName = msg.imageName || '';
                     if (msg.imagePreviewUrl) {
                         // Convert relative media path to absolute URL
-                        m.imagePreviewUrl = msg.imagePreviewUrl.startsWith('http')
-                            ? msg.imagePreviewUrl
-                            : `http://localhost:8000${msg.imagePreviewUrl}`;
+                        m.imagePreviewUrl = mediaUrl(msg.imagePreviewUrl);
                     }
                 }
                 if (msg.isPdfUpload) {
@@ -207,11 +222,10 @@ export default function Chatbot() {
                 timestamp: new Date().toISOString(),
             }]);
         } catch (err) {
-            const expired = err.response?.status === 401;
             setMessages(prev => [...prev, {
                 id: `msg-${Date.now()}-error`,
                 role: 'assistant',
-                content: expired ? '登录已过期，请退出后重新登录再试。' : '抱歉，我遇到了一些问题，请重试。',
+                content: chatError(err),
                 isError: true,
                 timestamp: new Date().toISOString(),
             }]);
@@ -290,7 +304,7 @@ export default function Chatbot() {
                         timestamp: new Date().toISOString(),
                     }]);
                 } catch (err) {
-                    const errMsg = err.response?.data?.error || '无法分析 PDF，请重试。';
+                    const errMsg = chatError(err);
                     setMessages(prev => [...prev, {
                         id: `msg-${Date.now()}-pdf-error`,
                         role: 'assistant',
@@ -422,11 +436,10 @@ export default function Chatbot() {
                     timestamp: new Date().toISOString(),
                 }]);
             } catch (err) {
-                const expired = err.response?.status === 401;
                 setMessages(prev => [...prev, {
                     id: `msg-${Date.now()}-error`,
                     role: 'assistant',
-                    content: expired ? '登录已过期，请退出后重新登录再试。' : '抱歉，我遇到了一些问题，请重试。',
+                    content: chatError(err),
                     isError: true,
                     timestamp: new Date().toISOString(),
                 }]);

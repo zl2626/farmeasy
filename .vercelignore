@@ -1,0 +1,13 @@
+.git
+.worktrees
+logs
+**/venv
+**/__pycache__
+**/node_modules
+**/.env
+**/.env.*
+**/*.sqlite3
+backend/data/processed
+backend/data/raw
+backend/media
+farmeasy-frontend/.vercel

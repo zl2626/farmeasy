@@ -13,8 +13,11 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 from datetime import timedelta
+from django.core.exceptions import ImproperlyConfigured
 
-load_dotenv()
+BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / ".env")
+ON_VERCEL = bool(os.getenv("VERCEL"))
 SCHEMES_API_KEY = os.getenv("SCHEMES_API_KEY")
 # OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 # GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
@@ -33,7 +36,6 @@ SIMPLE_JWT={
     "AUTH_HEADER_TYPES":("Bearer",),
 }
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -46,9 +48,14 @@ SECRET_KEY = os.getenv(
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+DEBUG = os.getenv("DJANGO_DEBUG", "false" if ON_VERCEL else "true").lower() == "true"
+ALLOWED_HOSTS = [host.strip() for host in os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,[::1]").split(",") if host.strip()]
+if ON_VERCEL:
+    for variable in ("VERCEL_URL", "VERCEL_PROJECT_PRODUCTION_URL"):
+        if os.getenv(variable):
+            ALLOWED_HOSTS.append(os.environ[variable])
+    if not os.getenv("DJANGO_SECRET_KEY"):
+        raise ImproperlyConfigured("Set DJANGO_SECRET_KEY before deploying")
 
 
 # Application definition
@@ -110,6 +117,14 @@ DATABASES = {
     }
 }
 
+if os.getenv("DATABASE_URL"):
+    import dj_database_url
+    DATABASES["default"] = dj_database_url.parse(
+        os.environ["DATABASE_URL"], conn_max_age=0, ssl_require=ON_VERCEL,
+    )
+elif ON_VERCEL:
+    raise ImproperlyConfigured("Set DATABASE_URL to a persistent PostgreSQL database before deploying")
+
 MONGO_URI = os.getenv("MONGO_URI")
 
 
@@ -163,4 +178,11 @@ STATICFILES_DIRS=[
 
 MEDIA_URL="/media/"
 MEDIA_ROOT=BASE_DIR/"media"
-CORS_ALLOW_ALL_ORIGINS=True
+CORS_ALLOW_ALL_ORIGINS = DEBUG
+CORS_ALLOWED_ORIGINS = [origin.strip() for origin in os.getenv(
+    "DJANGO_CORS_ALLOWED_ORIGINS",
+    "https://zl2626.github.io,https://temporary-rapid-nitrogen-zijimrx.vercel.app",
+).split(",") if origin.strip()]
+CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
+if ON_VERCEL:
+    MEDIA_ROOT = Path("/tmp/farmeasy-media")

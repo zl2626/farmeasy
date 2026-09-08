@@ -1,5 +1,18 @@
 {
+  "framework": null,
+  "regions": ["sin1"],
   "installCommand": "cd farmeasy-frontend && npm ci --legacy-peer-deps",
   "buildCommand": "cd farmeasy-frontend && npm run build",
-  "outputDirectory": "farmeasy-frontend/dist"
+  "outputDirectory": "farmeasy-frontend/dist",
+  "functions": {
+    "api/index.py": {
+      "maxDuration": 120,
+      "includeFiles": "backend/**",
+      "excludeFiles": "{backend/{venv,media,static,data/processed,data/raw}/**,farmeasy-frontend/**,docs/**,logs/**,.worktrees/**,**/.env,**/.env.*,**/*.sqlite3}"
+    }
+  },
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/index.py" },
+    { "handle": "filesystem" }
+  ]
 }
