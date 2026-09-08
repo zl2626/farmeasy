@@ -1,3 +1,5 @@
+import API_BASE_URL from "./api";
+
 // Translation cache: key = "from|to|text" → translated string
 const cache = new Map();
 
@@ -32,7 +34,7 @@ function flushBatch() {
         const { from, to } = items[0];
         const texts = items.map((i) => i.text);
 
-        const promise = fetch("http://localhost:8000/api/translate/", {
+        const promise = fetch(`${API_BASE_URL}/translate/`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

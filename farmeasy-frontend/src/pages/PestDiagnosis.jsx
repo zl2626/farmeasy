@@ -125,7 +125,7 @@ export default function PestDiagnosisPage() {
           <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-green-50 text-green-700"><Camera size={22} /></span>
           <div>
             <h1 className="text-2xl font-bold text-gray-900">病虫害诊断闭环</h1>
-            <p className="mt-1 text-sm text-gray-600">症状输入 → RAG 检索农业知识库 → DeepSeek 生成建议 → 安全规则过滤。</p>
+            <p className="mt-1 text-sm text-gray-600">拍照或输入症状，获取防治建议并对接本地农资服务。</p>
           </div>
         </div>
 

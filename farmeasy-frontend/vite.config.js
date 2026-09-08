@@ -4,8 +4,13 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
+// GitHub Pages serves project sites under /<repository-name>/.
+// Set VITE_BASE_PATH=/ when deploying a user/organization site (username.github.io).
+const base = process.env.VITE_BASE_PATH || "/farmeasy/";
+
 // https://vite.dev/config/
 export default defineConfig({
+  base,
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
