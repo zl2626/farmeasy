@@ -28,7 +28,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: farmeasy-frontend
-        run: npm ci
+        run: npm ci --legacy-peer-deps
 
       - name: Build site
         working-directory: farmeasy-frontend
