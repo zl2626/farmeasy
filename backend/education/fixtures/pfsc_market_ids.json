@@ -1,0 +1,2410 @@
+[
+  {
+    "province": "北京市",
+    "provinceCode": "110000",
+    "cityCode": "110100",
+    "name": "北京京丰岳各庄农副产品批发市场",
+    "id": "76E4F160BFCE936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "北京市",
+    "provinceCode": "110000",
+    "cityCode": "110100",
+    "name": "北京新发地农副产品批发市场信息中心",
+    "id": "76E4F160BFCF936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "北京市",
+    "provinceCode": "110000",
+    "cityCode": "110100",
+    "name": "北京八里桥农产品中心批发市场有限公司",
+    "id": "76E4F160BFE5936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "北京市",
+    "provinceCode": "110000",
+    "cityCode": "110100",
+    "name": "北京顺鑫石门国际农产品批发市场集团有限公司",
+    "id": "76E4F160BFE9936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "北京市",
+    "provinceCode": "110000",
+    "cityCode": "110100",
+    "name": "北京朝阳区大洋路综合市场",
+    "id": "76E4F160BFEA936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "北京市",
+    "provinceCode": "110000",
+    "cityCode": "110100",
+    "name": "北京水屯农副产品批发市场中心",
+    "id": "76E4F160BFEC936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "北京市",
+    "provinceCode": "110000",
+    "cityCode": "110100",
+    "name": "北京锦绣大地农副产品批发市场",
+    "id": "76E4F160BFED936CE040A8C020017257",
+    "state": "0"
+  },
+  {
+    "province": "北京市",
+    "provinceCode": "110000",
+    "cityCode": "110100",
+    "name": "北京锦绣大地玉泉路粮油经营有限公司",
+    "id": "76E4F160BFEE936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "北京市",
+    "provinceCode": "110000",
+    "cityCode": "110100",
+    "name": "北京菜篮子鲜活农产品批发市场有限公司",
+    "id": "3dc9f697-8555-4f44-9ce2-f3517c8e3331",
+    "state": "1"
+  },
+  {
+    "province": "天津市",
+    "provinceCode": "120000",
+    "cityCode": "120100",
+    "name": "天津何庄子农产品批发市场",
+    "id": "76E4F160BFF4936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "天津市",
+    "provinceCode": "120000",
+    "cityCode": "120100",
+    "name": "天津武清大沙河批发市场",
+    "id": "76E4F160BFF5936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "天津市",
+    "provinceCode": "120000",
+    "cityCode": "120100",
+    "name": "天津市金钟河蔬菜贸易中心",
+    "id": "76E4F160BFF6936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "天津市",
+    "provinceCode": "120000",
+    "cityCode": "120100",
+    "name": "天津市红旗农贸综合批发市场有限公司",
+    "id": "76E4F160BFFB936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "天津市",
+    "provinceCode": "120000",
+    "cityCode": "120100",
+    "name": "天津碧城农产品批发市场",
+    "id": "76E4F160BFFC936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "天津市",
+    "provinceCode": "120000",
+    "cityCode": "120100",
+    "name": "天津韩家墅海吉星农产品物流有限公司",
+    "id": "76E4F160C1C0936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "河北省",
+    "provinceCode": "130000",
+    "cityCode": "130100",
+    "name": "石家庄桥西蔬菜中心批发市场有限公司",
+    "id": "76E4F160BFFF936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "河北省",
+    "provinceCode": "130000",
+    "cityCode": "130100",
+    "name": "河北无极县王村鲜活农产品交易市场",
+    "id": "76E4F160C018936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "河北省",
+    "provinceCode": "130000",
+    "cityCode": "130100",
+    "name": "河北石家庄新乐花生米批发市场",
+    "id": "76E4F160BFDA936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "河北省",
+    "provinceCode": "130000",
+    "cityCode": "130100",
+    "name": "石家庄国际农产品批发交易中心",
+    "id": "30eacce3-753e-47ad-90c4-c63ce745a4fd",
+    "state": "1"
+  },
+  {
+    "province": "河北省",
+    "provinceCode": "130000",
+    "cityCode": "130200",
+    "name": "乐亭县冀东果菜批发市场",
+    "id": "76E4F160C004936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "河北省",
+    "provinceCode": "130000",
+    "cityCode": "130200",
+    "name": "河北唐山市荷花坑市场经营管理有限公司",
+    "id": "76E4F160C011936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "河北省",
+    "provinceCode": "130000",
+    "cityCode": "130200",
+    "name": "河北唐山市滦南县姚王庄青河沿果菜批发市场",
+    "id": "76E4F160C014936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "河北省",
+    "provinceCode": "130000",
+    "cityCode": "130300",
+    "name": "河北秦皇岛海阳农副产品批发市场",
+    "id": "76E4F160C002936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "河北省",
+    "provinceCode": "130000",
+    "cityCode": "130300",
+    "name": "河北秦皇岛昌黎农副产品批发市场",
+    "id": "76E4F160C007936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "河北省",
+    "provinceCode": "130000",
+    "cityCode": "130400",
+    "name": "邯郸市(馆陶)金凤禽蛋农贸批发市场",
+    "id": "76E4F160C005936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "河北省",
+    "provinceCode": "130000",
+    "cityCode": "130400",
+    "name": "魏县现代农业产业发展服务中心",
+    "id": "76E4F160C00B936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "河北省",
+    "provinceCode": "130000",
+    "cityCode": "130400",
+    "name": "邯郸市经开区南大堡蔬菜批发市场",
+    "id": "ccdcc869-f3f3-4289-a147-c21ccc021be7",
+    "state": "1"
+  },
+  {
+    "province": "河北省",
+    "provinceCode": "130000",
+    "cityCode": "130500",
+    "name": "威县冀南瓜菜有限公司",
+    "id": "76E4F160C012936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "河北省",
+    "provinceCode": "130000",
+    "cityCode": "130600",
+    "name": "鑫源蔬菜市场",
+    "id": "b2616bc7-f424-4249-ab99-8295c8433ae6",
+    "state": "1"
+  },
+  {
+    "province": "河北省",
+    "provinceCode": "130000",
+    "cityCode": "130600",
+    "name": "首衡高碑店国际农产品交易中心",
+    "id": "A8F387370A02082301F68572FB98C6C3",
+    "state": "1"
+  },
+  {
+    "province": "河北省",
+    "provinceCode": "130000",
+    "cityCode": "130700",
+    "name": "河北省怀来县京西果菜批发市场有限责任公司",
+    "id": "76E4F160C00F936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "河北省",
+    "provinceCode": "130000",
+    "cityCode": "130700",
+    "name": "河北张家口市京北农产品综合市场",
+    "id": "76E4F160BFE3936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "河北省",
+    "provinceCode": "130000",
+    "cityCode": "130900",
+    "name": "中国沧州红枣批发市场",
+    "id": "76E4F160C1B3936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "河北省",
+    "provinceCode": "130000",
+    "cityCode": "131000",
+    "name": "河北三河市建兴农副产品批发市场",
+    "id": "76E4F160C010936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山西省",
+    "provinceCode": "140000",
+    "cityCode": "140100",
+    "name": "山西省太原市河西农产品有限公司",
+    "id": "76E4F160C019936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山西省",
+    "provinceCode": "140000",
+    "cityCode": "140100",
+    "name": "山西太原丈子头农产品物流园（原城东利民）",
+    "id": "76E4F160C02E936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山西省",
+    "provinceCode": "140000",
+    "cityCode": "140200",
+    "name": "山西省大同市振华蔬菜批发市场有限责任公司",
+    "id": "76E4F160C01B936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山西省",
+    "provinceCode": "140000",
+    "cityCode": "140300",
+    "name": "阳泉农产品批发市场有限公司",
+    "id": "76E4F160C02B936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山西省",
+    "provinceCode": "140000",
+    "cityCode": "140400",
+    "name": "长治市紫坊农产品综合交易市场有限公司",
+    "id": "76E4F160C01E936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山西省",
+    "provinceCode": "140000",
+    "cityCode": "140400",
+    "name": "长治市金鑫瓜果批发市场",
+    "id": "253CA83ECA7F2D7C00CC518C5030652F",
+    "state": "1"
+  },
+  {
+    "province": "山西省",
+    "provinceCode": "140000",
+    "cityCode": "140500",
+    "name": "山西省晋城市绿欣农产品贸易有限公司",
+    "id": "76E4F160C024936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山西省",
+    "provinceCode": "140000",
+    "cityCode": "140500",
+    "name": "晋城市绿盛农工商实业有限公司农副产品批发市场",
+    "id": "76E4F160C1AC936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山西省",
+    "provinceCode": "140000",
+    "cityCode": "140600",
+    "name": "山西右玉玉羊批发市场",
+    "id": "76E4F160C026936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山西省",
+    "provinceCode": "140000",
+    "cityCode": "140600",
+    "name": "山西省朔州大运果菜批发市场有限公司",
+    "id": "76E4F160C02C936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山西省",
+    "provinceCode": "140000",
+    "cityCode": "140800",
+    "name": "山西新绛县蔬菜批发市场",
+    "id": "76E4F160C01D936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山西省",
+    "provinceCode": "140000",
+    "cityCode": "140800",
+    "name": "运城蔬菜批发市场有限公司",
+    "id": "76E4F160C01F936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山西省",
+    "provinceCode": "140000",
+    "cityCode": "140800",
+    "name": "山西运城果品中心市场",
+    "id": "76E4F160C021936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山西省",
+    "provinceCode": "140000",
+    "cityCode": "140900",
+    "name": "山西五台县东冶镇蔬菜瓜果批发市场",
+    "id": "76E4F160C028936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山西省",
+    "provinceCode": "140000",
+    "cityCode": "141000",
+    "name": "山西省临汾市尧都区奶牛场尧丰农副产品批发市场",
+    "id": "76E4F160C022936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山西省",
+    "provinceCode": "140000",
+    "cityCode": "141000",
+    "name": "山西襄汾县农副产品批发市场",
+    "id": "76E4F160C023936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山西省",
+    "provinceCode": "140000",
+    "cityCode": "141181",
+    "name": "孝义市绿海蔬菜批发销售有限公司",
+    "id": "76E4F160C025936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山西省",
+    "provinceCode": "140000",
+    "cityCode": "141182",
+    "name": "山西汾阳市晋阳农副产品批发市场",
+    "id": "76E4F160C02A936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "内蒙古自治区",
+    "provinceCode": "150000",
+    "cityCode": "150100",
+    "name": "内蒙古呼和浩特市东瓦窑农副产品批发市场有限责任公司",
+    "id": "76E4F160C02F936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "内蒙古自治区",
+    "provinceCode": "150000",
+    "cityCode": "150100",
+    "name": "呼和浩特市美通首府无公害农产品批发市场",
+    "id": "76E4F160C035936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "内蒙古自治区",
+    "provinceCode": "150000",
+    "cityCode": "150100",
+    "name": "内蒙古呼和浩特保全庄农副产品批发市场",
+    "id": "bd298759-7579-4ead-958e-e1e53859a832",
+    "state": "1"
+  },
+  {
+    "province": "内蒙古自治区",
+    "provinceCode": "150000",
+    "cityCode": "150200",
+    "name": "内蒙包头市友谊蔬菜批发市场",
+    "id": "76E4F160C031936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "内蒙古自治区",
+    "provinceCode": "150000",
+    "cityCode": "150400",
+    "name": "内蒙赤峰西城市场",
+    "id": "76E4F160C030936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "内蒙古自治区",
+    "provinceCode": "150000",
+    "cityCode": "150600",
+    "name": "内蒙古鄂尔多斯市富兴商贸有限公司",
+    "id": "76E4F160C03A936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "内蒙古自治区",
+    "provinceCode": "150000",
+    "cityCode": "150600",
+    "name": "鄂尔多斯市万家惠农贸市场有限公司",
+    "id": "5EF52A480A020824009D75BE3B58F614",
+    "state": "1"
+  },
+  {
+    "province": "内蒙古自治区",
+    "provinceCode": "150000",
+    "cityCode": "150700",
+    "name": "内蒙满州里五兴经贸有限责任公司出口",
+    "id": "76E4F160C039936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "内蒙古自治区",
+    "provinceCode": "150000",
+    "cityCode": "152800",
+    "name": "内蒙古五原县鸿鼎农贸有限责任公司",
+    "id": "76E4F160C03B936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "辽宁省",
+    "provinceCode": "210000",
+    "cityCode": "210100",
+    "name": "辽宁沈阳十二线蔬菜批发市场",
+    "id": "76E4F160C03F936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "辽宁省",
+    "provinceCode": "210000",
+    "cityCode": "210100",
+    "name": "辽宁沈阳南五农副产品批发市场",
+    "id": "76E4F160C048936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "辽宁省",
+    "provinceCode": "210000",
+    "cityCode": "210100",
+    "name": "沈阳盛发菜果批发有限公司",
+    "id": "D7F1BFAA0A02082400BD630E3C849CE0",
+    "state": "1"
+  },
+  {
+    "province": "辽宁省",
+    "provinceCode": "210000",
+    "cityCode": "210200",
+    "name": "大连双兴商品城有限公司",
+    "id": "76E4F160C043936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "辽宁省",
+    "provinceCode": "210000",
+    "cityCode": "210300",
+    "name": "辽宁海城市南台镇禽蛋专业批发市场",
+    "id": "76E4F160C040936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "辽宁省",
+    "provinceCode": "210000",
+    "cityCode": "210300",
+    "name": "辽宁鞍山宁远农产品批发市场",
+    "id": "76E4F160C04A936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "辽宁省",
+    "provinceCode": "210000",
+    "cityCode": "210700",
+    "name": "辽宁北宁市窟窿台蔬菜批发市场",
+    "id": "76E4F160C041936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "辽宁省",
+    "provinceCode": "210000",
+    "cityCode": "210800",
+    "name": "辽宁大石桥博洛铺蔬菜果品批发市场",
+    "id": "76E4F160C04B936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "辽宁省",
+    "provinceCode": "210000",
+    "cityCode": "210900",
+    "name": "阜新市瑞轩实业发展有限公司",
+    "id": "76E4F160C1BD936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "辽宁省",
+    "provinceCode": "210000",
+    "cityCode": "211300",
+    "name": "辽宁省凌源市八里堡蔬菜果品批发市场有限公司",
+    "id": "76E4F160C047936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "辽宁省",
+    "provinceCode": "210000",
+    "cityCode": "211300",
+    "name": "辽宁北票蔬菜批发市场",
+    "id": "76E4F160C049936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "辽宁省",
+    "provinceCode": "210000",
+    "cityCode": "211300",
+    "name": "辽宁朝阳市果菜批发市场",
+    "id": "76E4F160C04F936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "吉林省",
+    "provinceCode": "220000",
+    "cityCode": "220100",
+    "name": "长春蔬菜中心批发市场集团有限公司",
+    "id": "76E4F160C050936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "吉林省",
+    "provinceCode": "220000",
+    "cityCode": "220100",
+    "name": "吉林长春江山绿特优农产品储运批发市场",
+    "id": "76E4F160C053936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "吉林省",
+    "provinceCode": "220000",
+    "cityCode": "220100",
+    "name": "长春果品中心批发市场",
+    "id": "76E4F160BFE1936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "吉林省",
+    "provinceCode": "220000",
+    "cityCode": "220100",
+    "name": "长春海吉星农产品物流有限公司",
+    "id": "b5cb419d-0094-40c9-b0e3-a598bab2798a",
+    "state": "1"
+  },
+  {
+    "province": "吉林省",
+    "provinceCode": "220000",
+    "cityCode": "220400",
+    "name": "吉林省辽源市仙城物流园区有限公司",
+    "id": "76E4F160C056936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "吉林省",
+    "provinceCode": "220000",
+    "cityCode": "220600",
+    "name": "白山市星泰批发市场有限公司",
+    "id": "4FBFD5FE0A020824009D75BE47460960",
+    "state": "1"
+  },
+  {
+    "province": "吉林省",
+    "provinceCode": "220000",
+    "cityCode": "220700",
+    "name": "扶余市三井子园区市场建设运营有限公司",
+    "id": "76E4F160BFD1936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "黑龙江省",
+    "provinceCode": "230000",
+    "cityCode": "230100",
+    "name": "哈尔滨哈达农副产品有限公司",
+    "id": "76E4F160C060936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "黑龙江省",
+    "provinceCode": "230000",
+    "cityCode": "230100",
+    "name": "中俄国际农产品交易中心",
+    "id": "8eaa9d01-feb3-42b4-9c72-e6434dee5b19",
+    "state": "1"
+  },
+  {
+    "province": "黑龙江省",
+    "provinceCode": "230000",
+    "cityCode": "230200",
+    "name": "齐齐哈尔农副产品中心批发市场有限公司",
+    "id": "76E4F160C058936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "黑龙江省",
+    "provinceCode": "230000",
+    "cityCode": "230200",
+    "name": "黑龙江省华博农产品市场有限公司",
+    "id": "5AD8CD1B0A020824009D75BE865150C6",
+    "state": "1"
+  },
+  {
+    "province": "黑龙江省",
+    "provinceCode": "230000",
+    "cityCode": "230400",
+    "name": "黑龙江鹤岗市万圃源蔬菜有限责任公司",
+    "id": "76E4F160C19C936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "黑龙江省",
+    "provinceCode": "230000",
+    "cityCode": "230800",
+    "name": "黑龙江省佳木斯市蔬菜副食品批发市场",
+    "id": "76E4F160C05B936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "黑龙江省",
+    "provinceCode": "230000",
+    "cityCode": "231000",
+    "name": "牡丹江牡达农副产品有限公司",
+    "id": "76E4F160C05A936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "上海市",
+    "provinceCode": "310000",
+    "cityCode": "310100",
+    "name": "上海曹安菜篮子股份有限公司",
+    "id": "76E4F160BFEF936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "上海市",
+    "provinceCode": "310000",
+    "cityCode": "310100",
+    "name": "上海农产品中心批发市场经营管理有限公司",
+    "id": "76E4F160BFF2936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "上海市",
+    "provinceCode": "310000",
+    "cityCode": "310100",
+    "name": "上海市江桥批发市场经营管理有限公司",
+    "id": "EF0D9BA90A0208240051DDD23F699D2E",
+    "state": "1"
+  },
+  {
+    "province": "上海市",
+    "provinceCode": "310000",
+    "cityCode": "310100",
+    "name": "上海西郊国际农产品交易有限公司",
+    "id": "90fd4e00-d3bc-46b6-bcee-27383fd62c43",
+    "state": "1"
+  },
+  {
+    "province": "江苏省",
+    "provinceCode": "320000",
+    "cityCode": "320100",
+    "name": "江苏南京应天水产有限公司",
+    "id": "76E4F160BFDD936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "江苏省",
+    "provinceCode": "320000",
+    "cityCode": "320100",
+    "name": "江苏南京农贸中心股份有限公司",
+    "id": "76E4F160BFDE936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "江苏省",
+    "provinceCode": "320000",
+    "cityCode": "320100",
+    "name": "南京农副产品物流配送中心有限公司",
+    "id": "12288FEA0A020824019A894266DC52C3",
+    "state": "1"
+  },
+  {
+    "province": "江苏省",
+    "provinceCode": "320000",
+    "cityCode": "320200",
+    "name": "江苏宜兴市瑞德蔬菜果品批发市场有限公司",
+    "id": "76E4F160C0AF936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "江苏省",
+    "provinceCode": "320000",
+    "cityCode": "320200",
+    "name": "江苏无锡朝阳农产品大市场",
+    "id": "76E4F160C0B7936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "江苏省",
+    "provinceCode": "320000",
+    "cityCode": "320200",
+    "name": "无锡天鹏菜篮子工程有限公司",
+    "id": "76E4F160BFDC936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "江苏省",
+    "provinceCode": "320000",
+    "cityCode": "320300",
+    "name": "徐州农副产品中心批发市场",
+    "id": "76E4F160C0B0936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "江苏省",
+    "provinceCode": "320000",
+    "cityCode": "320300",
+    "name": "江苏丰县农业农村局",
+    "id": "76E4F160C0B1936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "江苏省",
+    "provinceCode": "320000",
+    "cityCode": "320300",
+    "name": "徐州东高农产品市场管理有限公司",
+    "id": "2fe75bd9-947b-4d34-a429-60695ec8a0f9",
+    "state": "1"
+  },
+  {
+    "province": "江苏省",
+    "provinceCode": "320000",
+    "cityCode": "320400",
+    "name": "江苏凌家塘市场发展有限公司",
+    "id": "76E4F160C0B3936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "江苏省",
+    "provinceCode": "320000",
+    "cityCode": "320400",
+    "name": "江苏苏浙皖边界市场发展有限公司",
+    "id": "1cc6f5ed-cd0c-43d3-bbaa-d544098c5d86",
+    "state": "1"
+  },
+  {
+    "province": "江苏省",
+    "provinceCode": "320000",
+    "cityCode": "320500",
+    "name": "江苏苏州南环桥农副产品批发市场",
+    "id": "76E4F160C0B5936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "江苏省",
+    "provinceCode": "320000",
+    "cityCode": "320500",
+    "name": "常熟市农副产品交易城有限公司",
+    "id": "7fd5f937-c91a-468f-9bf0-506b29652d2d",
+    "state": "1"
+  },
+  {
+    "province": "江苏省",
+    "provinceCode": "320000",
+    "cityCode": "320600",
+    "name": "江苏省苏中农副产品交易中心有限公司",
+    "id": "8dc90354-b8fb-4d71-a68a-fa65954bbb7a",
+    "state": "1"
+  },
+  {
+    "province": "江苏省",
+    "provinceCode": "320000",
+    "cityCode": "320800",
+    "name": "江苏淮安市清江农副产品批发市场有限公司",
+    "id": "76E4F160C0BD936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "江苏省",
+    "provinceCode": "320000",
+    "cityCode": "321000",
+    "name": "江苏联谊农副产品批发市场",
+    "id": "76E4F160C0B8936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "江苏省",
+    "provinceCode": "320000",
+    "cityCode": "321200",
+    "name": "江苏泰兴市苏中蔬菜批发市场",
+    "id": "76E4F160C0BC936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "浙江省",
+    "provinceCode": "330000",
+    "cityCode": "330100",
+    "name": "浙江良渚蔬菜市场开发有限公司",
+    "id": "76E4F160C0C0936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "浙江省",
+    "provinceCode": "330000",
+    "cityCode": "330100",
+    "name": "浙江农都农副产品批发交易市场",
+    "id": "76E4F160C0C9936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "浙江省",
+    "provinceCode": "330000",
+    "cityCode": "330100",
+    "name": "浙江杭州果品有限公司艮山门批发市场",
+    "id": "76E4F160C0CF936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "浙江省",
+    "provinceCode": "330000",
+    "cityCode": "330100",
+    "name": "杭州农副产品物流中心南庄兜农产品批发市场",
+    "id": "BA5F4CF60A02082400BD630E6B7742F6",
+    "state": "1"
+  },
+  {
+    "province": "浙江省",
+    "provinceCode": "330000",
+    "cityCode": "330200",
+    "name": "宁波蔬菜批发市场有限公司",
+    "id": "76E4F160C0BF936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "浙江省",
+    "provinceCode": "330000",
+    "cityCode": "330300",
+    "name": "温州菜篮子农副产品批发市场",
+    "id": "76E4F160C0C4936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "浙江省",
+    "provinceCode": "330000",
+    "cityCode": "330400",
+    "name": "嘉善绿洲市场建设有限公司",
+    "id": "76E4F160C0C1936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "浙江省",
+    "provinceCode": "330000",
+    "cityCode": "330400",
+    "name": "浙江嘉兴蔬菜批发交易市场",
+    "id": "76E4F160C0C6936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "浙江省",
+    "provinceCode": "330000",
+    "cityCode": "330600",
+    "name": "绍兴市蔬菜果品批发交易市场有限公司",
+    "id": "76E4F160C0C7936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "浙江省",
+    "provinceCode": "330000",
+    "cityCode": "330600",
+    "name": "浙江嵊州市浙东农副产品批发市场",
+    "id": "76E4F160C0CE936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "浙江省",
+    "provinceCode": "330000",
+    "cityCode": "330700",
+    "name": "浙江金华农产品批发市场",
+    "id": "76E4F160C0C5936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "浙江省",
+    "provinceCode": "330000",
+    "cityCode": "330700",
+    "name": "浙江义乌农村经济发展有限公司",
+    "id": "76E4F160C0C8936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "浙江省",
+    "provinceCode": "330000",
+    "cityCode": "330700",
+    "name": "义乌市市场发展集团有限公司农批管理分公司",
+    "id": "38A4DA4D0A02082401A62F8075387A80",
+    "state": "1"
+  },
+  {
+    "province": "浙江省",
+    "provinceCode": "330000",
+    "cityCode": "330700",
+    "name": "金华水果批发市场",
+    "id": "F780A9040A02082300BE552BEABF4861",
+    "state": "1"
+  },
+  {
+    "province": "安徽省",
+    "provinceCode": "340000",
+    "cityCode": "340100",
+    "name": "安徽合肥周谷堆农产品批发市场",
+    "id": "76E4F160C097936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "安徽省",
+    "provinceCode": "340000",
+    "cityCode": "340300",
+    "name": "蚌埠海吉星农产品物流有限公司",
+    "id": "AC24C4B30A02082300786B4FC592EF56",
+    "state": "1"
+  },
+  {
+    "province": "安徽省",
+    "provinceCode": "340000",
+    "cityCode": "340500",
+    "name": "马鞍山市安民农副产品贸易有限公司",
+    "id": "76E4F160C0A7936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "安徽省",
+    "provinceCode": "340000",
+    "cityCode": "340600",
+    "name": "安徽省淮北市中瑞农产品批发市场",
+    "id": "76E4F160C0A8936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "安徽省",
+    "provinceCode": "340000",
+    "cityCode": "340800",
+    "name": "安徽安庆市龙狮桥蔬菜批发市场",
+    "id": "76E4F160C09A936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "安徽省",
+    "provinceCode": "340000",
+    "cityCode": "341100",
+    "name": "天长市永福农副产品批发市场",
+    "id": "0C82FFE00A020823013A494DDB1BD0F7",
+    "state": "1"
+  },
+  {
+    "province": "安徽省",
+    "provinceCode": "340000",
+    "cityCode": "341200",
+    "name": "阜阳农产品中心批发市场",
+    "id": "76E4F160C09C936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "安徽省",
+    "provinceCode": "340000",
+    "cityCode": "341300",
+    "name": "北海果业砀山惠丰市场有限公司",
+    "id": "76E4F160C1B1936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "安徽省",
+    "provinceCode": "340000",
+    "cityCode": "341500",
+    "name": "安徽舒城蔬菜批发市场",
+    "id": "76E4F160C098936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "安徽省",
+    "provinceCode": "340000",
+    "cityCode": "341500",
+    "name": "安徽六安市裕安区紫竹林农产品批发市场",
+    "id": "76E4F160C0A5936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "安徽省",
+    "provinceCode": "340000",
+    "cityCode": "341500",
+    "name": "中国供销·大别山农产品批发市场（金寨中合兴业市场建设管理有限公司）",
+    "id": "59b70df9-52dc-40f4-8089-ca08367e05e6",
+    "state": "1"
+  },
+  {
+    "province": "安徽省",
+    "provinceCode": "340000",
+    "cityCode": "341600",
+    "name": "亳州农产品有限责任公司",
+    "id": "76E4F160C095936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "福建省",
+    "provinceCode": "350000",
+    "cityCode": "350100",
+    "name": "福建省福州市海峡蔬菜批发市场",
+    "id": "76E4F160C0D3936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "福建省",
+    "provinceCode": "350000",
+    "cityCode": "350100",
+    "name": "福州民天实业有限公司闽侯物流园分公司",
+    "id": "5bdb48af-5933-4a69-99be-a77b1699127c",
+    "state": "1"
+  },
+  {
+    "province": "福建省",
+    "provinceCode": "350000",
+    "cityCode": "350200",
+    "name": "福建厦门同安闽南果蔬批发市场",
+    "id": "76E4F160C0D5936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "福建省",
+    "provinceCode": "350000",
+    "cityCode": "350900",
+    "name": "福建省福鼎市商贸业服务中心",
+    "id": "76E4F160C0DA936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "江西省",
+    "provinceCode": "360000",
+    "cityCode": "360100",
+    "name": "南昌深圳农产品中心批发市场有限公司",
+    "id": "76E4F160C0E1936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "江西省",
+    "provinceCode": "360000",
+    "cityCode": "360200",
+    "name": "江西乐平蔬菜农产品批发大市场",
+    "id": "76E4F160C0DD936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "江西省",
+    "provinceCode": "360000",
+    "cityCode": "360300",
+    "name": "萍乡市城南农副产品批发市场",
+    "id": "6E22C9690A020824009D75BEEAA57917",
+    "state": "1"
+  },
+  {
+    "province": "江西省",
+    "provinceCode": "360000",
+    "cityCode": "360400",
+    "name": "江西九江琵琶湖农产品物流有限公司",
+    "id": "76E4F160C0DE936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "江西省",
+    "provinceCode": "360000",
+    "cityCode": "360400",
+    "name": "江西南方粮食交易市场",
+    "id": "76E4F160BFE0936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "江西省",
+    "provinceCode": "360000",
+    "cityCode": "360700",
+    "name": "江西赣州南北大市场",
+    "id": "76E4F160C0E5936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "江西省",
+    "provinceCode": "360000",
+    "cityCode": "360800",
+    "name": "江西永丰县蔬菜批发市场",
+    "id": "76E4F160C0E2936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "江西省",
+    "provinceCode": "360000",
+    "cityCode": "361100",
+    "name": "江西上饶市赣东北农产品批发大市场",
+    "id": "76E4F160C0EB936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山东省",
+    "provinceCode": "370000",
+    "cityCode": "370100",
+    "name": "山东章丘刁镇蔬菜批发市场",
+    "id": "76E4F160C062936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山东省",
+    "provinceCode": "370000",
+    "cityCode": "370100",
+    "name": "济南堤口果品批发发展有限责任公司",
+    "id": "76E4F160C19D936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山东省",
+    "provinceCode": "370000",
+    "cityCode": "370100",
+    "name": "济南曲堤蔬菜销售有限公司",
+    "id": "4a22db3e-701c-4a16-94f9-bf37cd243154",
+    "state": "1"
+  },
+  {
+    "province": "山东省",
+    "provinceCode": "370000",
+    "cityCode": "370200",
+    "name": "青岛抚顺路蔬菜副食品批发市场股份有限公司",
+    "id": "76E4F160C064936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山东省",
+    "provinceCode": "370000",
+    "cityCode": "370200",
+    "name": "青岛东庄头蔬菜批发市场有限公司",
+    "id": "76E4F160C06F936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山东省",
+    "provinceCode": "370000",
+    "cityCode": "370200",
+    "name": "山东青岛华中蔬菜批发市场",
+    "id": "76E4F160C07D936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山东省",
+    "provinceCode": "370000",
+    "cityCode": "370200",
+    "name": "青岛市城阳蔬菜水产品批发市场有限公司",
+    "id": "76E4F160C088936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山东省",
+    "provinceCode": "370000",
+    "cityCode": "370200",
+    "name": "山东青岛平度市南村蔬菜批发市场",
+    "id": "76E4F160C08F936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山东省",
+    "provinceCode": "370000",
+    "cityCode": "370200",
+    "name": "山东青岛黄河路农产品批发市场",
+    "id": "2A0EEE010A02082301C7378F8B1A9050",
+    "state": "1"
+  },
+  {
+    "province": "山东省",
+    "provinceCode": "370000",
+    "cityCode": "370300",
+    "name": "山东淄博市鲁中蔬菜批发市场",
+    "id": "76E4F160C07C936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山东省",
+    "provinceCode": "370000",
+    "cityCode": "370400",
+    "name": "滕州市农副产品物流中心有限公司",
+    "id": "76E4F160C083936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山东省",
+    "provinceCode": "370000",
+    "cityCode": "370700",
+    "name": "山东寿光蔬菜批发市场有限公司",
+    "id": "76E4F160C063936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山东省",
+    "provinceCode": "370000",
+    "cityCode": "370700",
+    "name": "寿光地利农产品物流园有限公司",
+    "id": "8493E07B04544142E0430A0207154142",
+    "state": "1"
+  },
+  {
+    "province": "山东省",
+    "provinceCode": "370000",
+    "cityCode": "370800",
+    "name": "山东凯盛国际农产品物流城",
+    "id": "B0A7FE8C0A02082401EDFAB8F9726975",
+    "state": "1"
+  },
+  {
+    "province": "山东省",
+    "provinceCode": "370000",
+    "cityCode": "370800",
+    "name": "山东金乡大蒜专业批发市场",
+    "id": "76E4F160C076936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山东省",
+    "provinceCode": "370000",
+    "cityCode": "370900",
+    "name": "山东泰安良庄镇蔬菜批发市场",
+    "id": "76E4F160C068936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山东省",
+    "provinceCode": "370000",
+    "cityCode": "370900",
+    "name": "山东肥城蔬菜批发市场",
+    "id": "76E4F160C06C936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山东省",
+    "provinceCode": "370000",
+    "cityCode": "370900",
+    "name": "山东宁阳县白马蔬菜批发市场",
+    "id": "76E4F160C07E936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山东省",
+    "provinceCode": "370000",
+    "cityCode": "371000",
+    "name": "山东威海市农副产品批发市场",
+    "id": "76E4F160C084936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山东省",
+    "provinceCode": "370000",
+    "cityCode": "371000",
+    "name": "山东威海水产品批发市场",
+    "id": "76E4F160C090936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山东省",
+    "provinceCode": "370000",
+    "cityCode": "371300",
+    "name": "鲁南蔬菜产业有限公司",
+    "id": "27A7B8A20A020824015E3F46B3AC07DD",
+    "state": "1"
+  },
+  {
+    "province": "山东省",
+    "provinceCode": "370000",
+    "cityCode": "371400",
+    "name": "山东德州黑马农贸水产批发市场",
+    "id": "76E4F160C06A936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山东省",
+    "provinceCode": "370000",
+    "cityCode": "371400",
+    "name": "山东宁津县东崔蔬菜批发市场",
+    "id": "76E4F160C08B936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山东省",
+    "provinceCode": "370000",
+    "cityCode": "371400",
+    "name": "山东临邑县临南蔬菜大市场",
+    "id": "76E4F160C091936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山东省",
+    "provinceCode": "370000",
+    "cityCode": "371500",
+    "name": "山东冠县社庄江北第一蔬菜批发市场",
+    "id": "76E4F160C080936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山东省",
+    "provinceCode": "370000",
+    "cityCode": "371600",
+    "name": "山东滨州(六街）鲁北蔬菜批发市场",
+    "id": "76E4F160C08E936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "山东省",
+    "provinceCode": "370000",
+    "cityCode": "371700",
+    "name": "山东喜地农产品市场管理有限公司",
+    "id": "2EEB669B0A020823008FEE262BB100E1",
+    "state": "1"
+  },
+  {
+    "province": "河南省",
+    "provinceCode": "410000",
+    "cityCode": "410100",
+    "name": "河南万邦国际农产品物流股份有限公司",
+    "id": "76E4F160C0FB936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "河南省",
+    "provinceCode": "410000",
+    "cityCode": "410300",
+    "name": "洛阳宏进农副产品批发市场有限公司",
+    "id": "4DDC710E0A02082400BD630EBCEF5794",
+    "state": "1"
+  },
+  {
+    "province": "河南省",
+    "provinceCode": "410000",
+    "cityCode": "410500",
+    "name": "河南安阳豫北蔬菜批发市场",
+    "id": "76E4F160C0F1936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "河南省",
+    "provinceCode": "410000",
+    "cityCode": "410500",
+    "name": "北关区蔬菜批发市场",
+    "id": "7f6379a4-7b31-4e02-91c6-7eea20282cb9",
+    "state": "1"
+  },
+  {
+    "province": "河南省",
+    "provinceCode": "410000",
+    "cityCode": "410500",
+    "name": "河南内黄果蔬城有限公司",
+    "id": "9ef099f2-200f-4e27-852c-671b216697f1",
+    "state": "1"
+  },
+  {
+    "province": "河南省",
+    "provinceCode": "410000",
+    "cityCode": "410700",
+    "name": "河南新乡农贸综合批发大市场",
+    "id": "76E4F160BFDB936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "河南省",
+    "provinceCode": "410000",
+    "cityCode": "410800",
+    "name": "河南沁阳市豫北黄牛毛驴交易大市场",
+    "id": "76E4F160C0FD936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "河南省",
+    "provinceCode": "410000",
+    "cityCode": "410800",
+    "name": "河南焦作市农副产品综合批发市场",
+    "id": "76E4F160C102936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "河南省",
+    "provinceCode": "410000",
+    "cityCode": "410900",
+    "name": "河南濮阳宏进农副产品批发市场有限公司（原河南濮阳蔬菜瓜果批发市场）",
+    "id": "76E4F160C0F3936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "河南省",
+    "provinceCode": "410000",
+    "cityCode": "411200",
+    "name": "三门峡金河农产品批发交易中心",
+    "id": "76E4F160C0F6936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "河南省",
+    "provinceCode": "410000",
+    "cityCode": "411200",
+    "name": "河南三门峡市苹果批发交易市场",
+    "id": "900F72F10A02082401C46BAB2F90CB6E",
+    "state": "1"
+  },
+  {
+    "province": "河南省",
+    "provinceCode": "410000",
+    "cityCode": "411300",
+    "name": "河南新野县蔬菜批发市场",
+    "id": "76E4F160C0EC936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "河南省",
+    "provinceCode": "410000",
+    "cityCode": "411300",
+    "name": "河南南阳果品批发交易中心",
+    "id": "76E4F160C105936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "河南省",
+    "provinceCode": "410000",
+    "cityCode": "411400",
+    "name": "河南商丘市农产品中心批发市场",
+    "id": "76E4F160C0F2936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "河南省",
+    "provinceCode": "410000",
+    "cityCode": "411400",
+    "name": "柘城县辣椒大市场有限公司",
+    "id": "DED1FAE60A0208240107464117AF9D67",
+    "state": "1"
+  },
+  {
+    "province": "河南省",
+    "provinceCode": "410000",
+    "cityCode": "411500",
+    "name": "河南金牛大别山农产品现代物流中心",
+    "id": "4DECFC360A02082400BD630E9B556EC2",
+    "state": "1"
+  },
+  {
+    "province": "河南省",
+    "provinceCode": "410000",
+    "cityCode": "411600",
+    "name": "黄淮农产品股份有限公司",
+    "id": "99E522020A02082400BC7A2306592518",
+    "state": "1"
+  },
+  {
+    "province": "湖北省",
+    "provinceCode": "420000",
+    "cityCode": "420100",
+    "name": "武汉白沙洲农副产品大市场有限公司",
+    "id": "76E4F160C116936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "湖北省",
+    "provinceCode": "420000",
+    "cityCode": "420200",
+    "name": "湖北黄石农产品中心批发市场",
+    "id": "76E4F160C10D936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "湖北省",
+    "provinceCode": "420000",
+    "cityCode": "420600",
+    "name": "湖北襄樊市蔬菜批发市场",
+    "id": "76E4F160BFD6936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "湖北省",
+    "provinceCode": "420000",
+    "cityCode": "420600",
+    "name": "湖北四季青农贸市场管理有限公司",
+    "id": "6D1C1E5B0A02082400BD630E93C3ACBB",
+    "state": "1"
+  },
+  {
+    "province": "湖北省",
+    "provinceCode": "420000",
+    "cityCode": "420700",
+    "name": "湖北鄂州市蟠龙农产品批发市场",
+    "id": "76E4F160C10F936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "湖北省",
+    "provinceCode": "420000",
+    "cityCode": "420900",
+    "name": "湖北省孝感市南大农产品批发市场",
+    "id": "76E4F160C113936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "湖北省",
+    "provinceCode": "420000",
+    "cityCode": "421000",
+    "name": "湖北省洪湖农贸市场",
+    "id": "76E4F160C115936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "湖北省",
+    "provinceCode": "420000",
+    "cityCode": "421000",
+    "name": "两湖绿谷物流股份有限公司",
+    "id": "95584D830A02082401C46BABFA69A003",
+    "state": "1"
+  },
+  {
+    "province": "湖北省",
+    "provinceCode": "420000",
+    "cityCode": "421100",
+    "name": "湖北黄商集团股份有限公司",
+    "id": "76E4F160C10E936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "湖北省",
+    "provinceCode": "420000",
+    "cityCode": "421100",
+    "name": "湖北浠水农产品批发市场",
+    "id": "76E4F160C111936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "湖北省",
+    "provinceCode": "420000",
+    "cityCode": "429005",
+    "name": "潜江市四季友农产品市场有限公司",
+    "id": "76E4F160C114936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "湖南省",
+    "provinceCode": "430000",
+    "cityCode": "430100",
+    "name": "长沙马王堆农产品股份有限公司",
+    "id": "76E4F160C118936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "湖南省",
+    "provinceCode": "430000",
+    "cityCode": "430100",
+    "name": "红星实业集团有限公司红星农副产品大市场",
+    "id": "76E4F160C11E936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "湖南省",
+    "provinceCode": "430000",
+    "cityCode": "430400",
+    "name": "湖南衡阳市西园农副产品批发大市场有限公司",
+    "id": "76E4F160C11F936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "湖南省",
+    "provinceCode": "430000",
+    "cityCode": "430500",
+    "name": "湖南邵阳市江北农产品批发有限责任公司",
+    "id": "76E4F160C123936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "湖南省",
+    "provinceCode": "430000",
+    "cityCode": "430700",
+    "name": "湖南常德甘露寺蔬菜批发市场",
+    "id": "76E4F160C11A936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "湖南省",
+    "provinceCode": "430000",
+    "cityCode": "430700",
+    "name": "常德首衡实业有限公司",
+    "id": "77669554-fd05-4601-a127-d1ac0d1e54dc",
+    "state": "1"
+  },
+  {
+    "province": "湖南省",
+    "provinceCode": "430000",
+    "cityCode": "430900",
+    "name": "益阳海吉星农产品物流有限公司",
+    "id": "76E4F160C121936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "湖南省",
+    "provinceCode": "430000",
+    "cityCode": "433100",
+    "name": "湖南吉首市蔬菜果品批发大市场",
+    "id": "76E4F160C120936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "广东省",
+    "provinceCode": "440000",
+    "cityCode": "440100",
+    "name": "广州江南果菜批发市场经营管理有限公司",
+    "id": "76E4F160C12C936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "广东省",
+    "provinceCode": "440000",
+    "cityCode": "440500",
+    "name": "广东汕头农副产品批发中心市场",
+    "id": "76E4F160C12B936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "广东省",
+    "provinceCode": "440000",
+    "cityCode": "440600",
+    "name": "佛山中南农产品批发市场",
+    "id": "BB25A6310A0208240157F388814B8C3E",
+    "state": "1"
+  },
+  {
+    "province": "广东省",
+    "provinceCode": "440000",
+    "cityCode": "440600",
+    "name": "佛山市中富长顺农产品市场有限公司",
+    "id": "3708e0c3-0470-4b14-9307-0152b7b28237",
+    "state": "1"
+  },
+  {
+    "province": "广东省",
+    "provinceCode": "440000",
+    "cityCode": "440700",
+    "name": "广东江门水产冻品副食批发市场",
+    "id": "76E4F160C12A936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "广东省",
+    "provinceCode": "440000",
+    "cityCode": "440700",
+    "name": "广东江门市新会区水果食品批发市场有限公司",
+    "id": "76E4F160C133936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "广东省",
+    "provinceCode": "440000",
+    "cityCode": "441900",
+    "name": "广东东莞市果菜公司",
+    "id": "76E4F160C128936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "广东省",
+    "provinceCode": "440000",
+    "cityCode": "441900",
+    "name": "广东东莞市大京九农副产品中心批发市场",
+    "id": "76E4F160BFDF936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "广西壮族自治区",
+    "provinceCode": "450000",
+    "cityCode": "450200",
+    "name": "广西新柳邕农产品批发市场有限公司",
+    "id": "76E4F160C13B936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "广西壮族自治区",
+    "provinceCode": "450000",
+    "cityCode": "451000",
+    "name": "广西田阳农副产品综合批发市场",
+    "id": "76E4F160C13A936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "广西壮族自治区",
+    "provinceCode": "450000",
+    "cityCode": "450100",
+    "name": "南宁农产品中心有限责任公司",
+    "id": "BB369CC90A020823005DB088FE790290",
+    "state": "1"
+  },
+  {
+    "province": "海南省",
+    "provinceCode": "460000",
+    "cityCode": "460100",
+    "name": "海南凤翔蔬菜批发市场管理有限公司",
+    "id": "5257A0F10A020824011C9FCC6F4C954B",
+    "state": "1"
+  },
+  {
+    "province": "海南省",
+    "provinceCode": "460000",
+    "cityCode": "460100",
+    "name": "海口市菜篮子江楠农产品批发市场有限公司",
+    "id": "0317E24D0A02082301FD3A3BB346F4DC",
+    "state": "1"
+  },
+  {
+    "province": "重庆市",
+    "provinceCode": "500000",
+    "cityCode": "500100",
+    "name": "重庆观音桥市场有限公司",
+    "id": "76E4F160C141936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "重庆市",
+    "provinceCode": "500000",
+    "cityCode": "500100",
+    "name": "龙门实业（集团）有限公司西三街农副水产品市场",
+    "id": "5EC86E0D0A020824009D75BEBFC70D84",
+    "state": "1"
+  },
+  {
+    "province": "重庆市",
+    "provinceCode": "500000",
+    "cityCode": "500100",
+    "name": "重庆市新大兴金色农业开发有限公司农副产品交易市场",
+    "id": "983358DA0A02082400BD630EF6E213B8",
+    "state": "1"
+  },
+  {
+    "province": "重庆市",
+    "provinceCode": "500000",
+    "cityCode": "500100",
+    "name": "重庆长途汽车运输（集团）有限公司潼南农副产品批发市场分公司",
+    "id": "3285134c-f755-4c17-a8d3-d94898d86dc6",
+    "state": "1"
+  },
+  {
+    "province": "重庆市",
+    "provinceCode": "500000",
+    "cityCode": "500100",
+    "name": "重庆双福国际农贸城",
+    "id": "3BD916AC0A020824008920DCD275D4A5",
+    "state": "1"
+  },
+  {
+    "province": "四川省",
+    "provinceCode": "510000",
+    "cityCode": "510100",
+    "name": "四川成都农产品中心批发市场",
+    "id": "76E4F160C149936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "四川省",
+    "provinceCode": "510000",
+    "cityCode": "510100",
+    "name": "四川成都龙泉聚和(国际)果蔬菜交易中心",
+    "id": "76E4F160C153936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "四川省",
+    "provinceCode": "510000",
+    "cityCode": "510100",
+    "name": "成都濛阳农副产品综合批发交易市场有限责任公司",
+    "id": "10261EEA0A02082400BD630E307476E4",
+    "state": "1"
+  },
+  {
+    "province": "四川省",
+    "provinceCode": "510000",
+    "cityCode": "510400",
+    "name": "攀枝花市仁和第一水果交易市场",
+    "id": "F41FC5480A02082400FAD969994184A4",
+    "state": "1"
+  },
+  {
+    "province": "四川省",
+    "provinceCode": "510000",
+    "cityCode": "510700",
+    "name": "绵阳市高水农副产品批发有限公司",
+    "id": "76E4F160C154936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "四川省",
+    "provinceCode": "510000",
+    "cityCode": "510700",
+    "name": "四川省江油仔猪批发市场",
+    "id": "76E4F160C1A1936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "四川省",
+    "provinceCode": "510000",
+    "cityCode": "511300",
+    "name": "南充川北农产品交易有限公司",
+    "id": "76E4F160C14B936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "四川省",
+    "provinceCode": "510000",
+    "cityCode": "511600",
+    "name": "四川广安市邻水县农产品交易中心",
+    "id": "76E4F160C1AF936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "四川省",
+    "provinceCode": "510000",
+    "cityCode": "511700",
+    "name": "达州市复兴市场管理有限责任公司",
+    "id": "76E4F160C157936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "四川省",
+    "provinceCode": "510000",
+    "cityCode": "511800",
+    "name": "四川雅安市汉源县九襄农产品批发市场",
+    "id": "76E4F160C14D936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "四川省",
+    "provinceCode": "510000",
+    "cityCode": "513400",
+    "name": "会东县堵格牲畜市场经营有限责任公司",
+    "id": "76E4F160C14C936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "四川省",
+    "provinceCode": "510000",
+    "cityCode": "513400",
+    "name": "凉山宏林农产品批发市场有限公司",
+    "id": "0B5ADA730A02082400BD630E03B95DA2",
+    "state": "1"
+  },
+  {
+    "province": "贵州省",
+    "provinceCode": "520000",
+    "cityCode": "520100",
+    "name": "贵阳地利农产品物流园有限公司",
+    "id": "76E4F160C159936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "贵州省",
+    "provinceCode": "520000",
+    "cityCode": "520100",
+    "name": "贵阳花溪云上大牲畜交易批发市场",
+    "id": "4137B6E20A020823002BBC83EF4B6E4B",
+    "state": "1"
+  },
+  {
+    "province": "贵州省",
+    "provinceCode": "520000",
+    "cityCode": "520100",
+    "name": "贵阳农产品物流园",
+    "id": "a9ec4b7c-5828-40ab-bc33-a6bbbb7232c1",
+    "state": "1"
+  },
+  {
+    "province": "贵州省",
+    "provinceCode": "520000",
+    "cityCode": "520300",
+    "name": "贵州遵义虾子辣椒批发市场",
+    "id": "76E4F160C15A936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "贵州省",
+    "provinceCode": "520000",
+    "cityCode": "520300",
+    "name": "遵义金土地绿色产品交易有限公司",
+    "id": "0EBDF5FD0A02082300CE717ACE89AA54",
+    "state": "1"
+  },
+  {
+    "province": "贵州省",
+    "provinceCode": "520000",
+    "cityCode": "522200",
+    "name": "贵州铜仁玉屏牲畜产地批发市场",
+    "id": "76E4F160C15E936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "云南省",
+    "provinceCode": "530000",
+    "cityCode": "530100",
+    "name": "云南昆明呈贡龙城农产品经营股份有限公司",
+    "id": "76E4F160C162936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "云南省",
+    "provinceCode": "530000",
+    "cityCode": "530100",
+    "name": "昆明景臻王旗营蔬菜批发市场",
+    "id": "90238B410A02082400BD630E77906355",
+    "state": "1"
+  },
+  {
+    "province": "云南省",
+    "provinceCode": "530000",
+    "cityCode": "530100",
+    "name": "云南华潮实业有限公司",
+    "id": "ff4f547d-8a9d-4d75-9a8b-e5e033563da6",
+    "state": "1"
+  },
+  {
+    "province": "云南省",
+    "provinceCode": "530000",
+    "cityCode": "530100",
+    "name": "云南海潮集团听牧肉牛产业股份有限公司畜禽交易分公司",
+    "id": "9425502c-495a-420f-be2f-50255ce973d7",
+    "state": "1"
+  },
+  {
+    "province": "云南省",
+    "provinceCode": "530000",
+    "cityCode": "530100",
+    "name": "昆明骏骐商贸有限公司",
+    "id": "c164485d-7391-4eef-af39-cc7420ee9477",
+    "state": "1"
+  },
+  {
+    "province": "云南省",
+    "provinceCode": "530000",
+    "cityCode": "530100",
+    "name": "昆明斗南国际花卉产业园区开发有限公司",
+    "id": "41e8d281-b376-4cc9-acf0-6dd228e651de",
+    "state": "1"
+  },
+  {
+    "province": "云南省",
+    "provinceCode": "530000",
+    "cityCode": "530300",
+    "name": "师宗县鼎禾物业服务有限公司",
+    "id": "31e84ba0-65a1-4d98-b459-68acc657c8bb",
+    "state": "1"
+  },
+  {
+    "province": "云南省",
+    "provinceCode": "530000",
+    "cityCode": "530400",
+    "name": "云南通海金山蔬菜批发市场",
+    "id": "76E4F160C163936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "云南省",
+    "provinceCode": "530000",
+    "cityCode": "532300",
+    "name": "云南元谋县蔬菜交易市场有限责任公司",
+    "id": "8493E07B04524142E0430A0207154142",
+    "state": "1"
+  },
+  {
+    "province": "云南省",
+    "provinceCode": "530000",
+    "cityCode": "530400",
+    "name": "云南云菜集团有限公司",
+    "id": "D70B10860A0208240016376930D521CE",
+    "state": "1"
+  },
+  {
+    "province": "云南省",
+    "provinceCode": "530000",
+    "cityCode": "532500",
+    "name": "云南天露高原果蔬有限公司",
+    "id": "511aa0a2-a3a8-43d9-9f1d-cef187e038d5",
+    "state": "1"
+  },
+  {
+    "province": "云南省",
+    "provinceCode": "530000",
+    "cityCode": "532600",
+    "name": "云南特安呐制药股份有限公司",
+    "id": "419cacf4-fc4d-4e51-a217-9ded8e64a582",
+    "state": "1"
+  },
+  {
+    "province": "西藏自治区",
+    "provinceCode": "540000",
+    "cityCode": "540100",
+    "name": "西藏领峰农副产品经营管理有限公司",
+    "id": "9B5EB81F0A02082400BD630EA8CB0D5B",
+    "state": "1"
+  },
+  {
+    "province": "陕西省",
+    "provinceCode": "610000",
+    "cityCode": "610100",
+    "name": "陕西朱雀实业集团有限公司",
+    "id": "76E4F160C1BA936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "陕西省",
+    "provinceCode": "610000",
+    "cityCode": "610400",
+    "name": "陕西泾云现代农业股份有限公司云阳蔬菜批发市场",
+    "id": "76E4F160C16D936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "陕西省",
+    "provinceCode": "610000",
+    "cityCode": "610400",
+    "name": "陕西咸阳新阳光农副产品有限公司",
+    "id": "76E4F160C172936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "陕西省",
+    "provinceCode": "610000",
+    "cityCode": "610600",
+    "name": "国家级洛川苹果批发市场",
+    "id": "FD56AFB20A02082300A0EB5123F5FFE1",
+    "state": "1"
+  },
+  {
+    "province": "甘肃省",
+    "provinceCode": "620000",
+    "cityCode": "620100",
+    "name": "兰州国际高原夏菜副食品采购中心",
+    "id": "E6C697DF0A0208240127D5A02D3551B9",
+    "state": "1"
+  },
+  {
+    "province": "甘肃省",
+    "provinceCode": "620000",
+    "cityCode": "620100",
+    "name": "首阳中药材交易市场",
+    "id": "4F6702E90A0208240127D5A0C9BEB850",
+    "state": "1"
+  },
+  {
+    "province": "甘肃省",
+    "provinceCode": "620000",
+    "cityCode": "620100",
+    "name": "甘肃陇国源市场管理有限公司",
+    "id": "3e9a6421-9552-4c6f-9803-720f0dba4bc4",
+    "state": "1"
+  },
+  {
+    "province": "甘肃省",
+    "provinceCode": "620000",
+    "cityCode": "620300",
+    "name": "金昌市金川天然农产品发展有限责任公司",
+    "id": "4F5842290A0208240127D5A0865C9EA0",
+    "state": "1"
+  },
+  {
+    "province": "甘肃省",
+    "provinceCode": "620000",
+    "cityCode": "620400",
+    "name": "甘肃靖远县瓜果蔬菜批发市场",
+    "id": "76E4F160C174936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "甘肃省",
+    "provinceCode": "620000",
+    "cityCode": "620400",
+    "name": "甘肃邦农农产品批发市场",
+    "id": "E6D78A770A0208240127D5A0058DC902",
+    "state": "1"
+  },
+  {
+    "province": "甘肃省",
+    "provinceCode": "620000",
+    "cityCode": "620500",
+    "name": "甘肃天水市瀛池果菜批发市场",
+    "id": "76E4F160C179936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "甘肃省",
+    "provinceCode": "620000",
+    "cityCode": "620500",
+    "name": "甘肃武山县蔬菜产业发展中心",
+    "id": "76E4F160C17A936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "甘肃省",
+    "provinceCode": "620000",
+    "cityCode": "620600",
+    "name": "武威昊天农产品交易市场暨仓储物流中心",
+    "id": "4F5106AF0A0208240127D5A06E198B4F",
+    "state": "1"
+  },
+  {
+    "province": "甘肃省",
+    "provinceCode": "620000",
+    "cityCode": "620900",
+    "name": "甘肃酒泉春光农产品市场有限责任公司",
+    "id": "8493E07B04554142E0430A0207154142",
+    "state": "1"
+  },
+  {
+    "province": "甘肃省",
+    "provinceCode": "620000",
+    "cityCode": "621100",
+    "name": "甘肃省定西市安定马铃薯综合交易中心",
+    "id": "76E4F160BFD2936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "甘肃省",
+    "provinceCode": "620000",
+    "cityCode": "621100",
+    "name": "陇西县清吉洋芋批发交易市场有限责任公司",
+    "id": "76E4F160C1AE936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "甘肃省",
+    "provinceCode": "620000",
+    "cityCode": "621100",
+    "name": "会川江能中药材综合贸易市场",
+    "id": "F60AEA6B0A020823004D80409F46E3B7",
+    "state": "1"
+  },
+  {
+    "province": "甘肃省",
+    "provinceCode": "620000",
+    "cityCode": "621100",
+    "name": "岷县当归城中药材交易市场",
+    "id": "4F6C9C3A0A0208240127D5A0220BB2BA",
+    "state": "1"
+  },
+  {
+    "province": "甘肃省",
+    "provinceCode": "620000",
+    "cityCode": "620800",
+    "name": "平凉新阳光农副产品有限公司",
+    "id": "4F3DD7270A0208240127D5A0839914D9",
+    "state": "1"
+  },
+  {
+    "province": "甘肃省",
+    "provinceCode": "620000",
+    "cityCode": "621000",
+    "name": "庆阳市西峰西郊瓜果蔬菜批发有限责任公司",
+    "id": "4F424D400A0208240127D5A0F5524B9E",
+    "state": "1"
+  },
+  {
+    "province": "甘肃省",
+    "provinceCode": "620000",
+    "cityCode": "622900",
+    "name": "临夏市富临农副产品批发市场有限责任公司",
+    "id": "4F6401A10A0208240127D5A0C2748FE3",
+    "state": "1"
+  },
+  {
+    "province": "青海省",
+    "provinceCode": "630000",
+    "cityCode": "630100",
+    "name": "青海西宁仁杰粮油批发市场有限公司",
+    "id": "8493E07B04534142E0430A0207154142",
+    "state": "1"
+  },
+  {
+    "province": "青海省",
+    "provinceCode": "630000",
+    "cityCode": "630100",
+    "name": "青藏高原农副产品集散中心",
+    "id": "E4F3D32F0A02082401EFA79F39DD0DF1",
+    "state": "1"
+  },
+  {
+    "province": "青海省",
+    "provinceCode": "630000",
+    "cityCode": "630100",
+    "name": "盛强农产品批发市场",
+    "id": "D71D45C20A02082300980484EEB56092",
+    "state": "1"
+  },
+  {
+    "province": "青海省",
+    "provinceCode": "630000",
+    "cityCode": "632100",
+    "name": "青海东部农副产品综合市场",
+    "id": "d24f1e68-3917-478a-af6b-fb2825ac0f2d",
+    "state": "1"
+  },
+  {
+    "province": "青海省",
+    "provinceCode": "630000",
+    "cityCode": "632100",
+    "name": "青海新发地农副产品管理有限公司",
+    "id": "26d0cc87-7d68-4085-8634-c0ef006dfeb0",
+    "state": "1"
+  },
+  {
+    "province": "青海省",
+    "provinceCode": "630000",
+    "cityCode": "632300",
+    "name": "西牧科技（青海）有限责任公司",
+    "id": "36dea0c4-2e36-4fb5-bdd6-4f85e82e5c7f",
+    "state": "1"
+  },
+  {
+    "province": "宁夏回族自治区",
+    "provinceCode": "640000",
+    "cityCode": "640100",
+    "name": "宁夏四季鲜农产品综合批发市场",
+    "id": "381716750A02082400BD630EA46AC038",
+    "state": "1"
+  },
+  {
+    "province": "宁夏回族自治区",
+    "provinceCode": "640000",
+    "cityCode": "640100",
+    "name": "宁夏海吉星国际农产品物流有限公司",
+    "id": "3DD284AF0A0208230081DB2582389097",
+    "state": "1"
+  },
+  {
+    "province": "宁夏回族自治区",
+    "provinceCode": "640000",
+    "cityCode": "640300",
+    "name": "吴忠市鑫鲜农副产品市场有限公司",
+    "id": "76E4F160C184936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "宁夏回族自治区",
+    "provinceCode": "640000",
+    "cityCode": "640500",
+    "name": "宁夏·中宁国际枸杞交易中心",
+    "id": "381AE6110A02082400BD630E8E3D386F",
+    "state": "1"
+  },
+  {
+    "province": "新疆维吾尔自治区",
+    "provinceCode": "650000",
+    "cityCode": "650100",
+    "name": "乌鲁木齐北园春果业经营管理有限责任公司",
+    "id": "76E4F160C18A936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "新疆维吾尔自治区",
+    "provinceCode": "650000",
+    "cityCode": "650100",
+    "name": "新疆乌鲁木齐凌庆蔬菜果品有限公司",
+    "id": "76E4F160C18B936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "新疆维吾尔自治区",
+    "provinceCode": "650000",
+    "cityCode": "650100",
+    "name": "新疆九鼎盛和果品经营管理有限公司",
+    "id": "C97346340A02082400374FD724792C28",
+    "state": "1"
+  },
+  {
+    "province": "新疆维吾尔自治区",
+    "provinceCode": "650000",
+    "cityCode": "650200",
+    "name": "新疆克拉玛依农副产品批发市场",
+    "id": "76E4F160C19A936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "新疆维吾尔自治区",
+    "provinceCode": "650000",
+    "cityCode": "650200",
+    "name": "新疆兵团第七师137团绿衡蔬菜瓜果批发市场",
+    "id": "76E4F160BFD3936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "新疆维吾尔自治区",
+    "provinceCode": "650000",
+    "cityCode": "652300",
+    "name": "新疆通汇市场有限公司",
+    "id": "76E4F160C18C936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "新疆维吾尔自治区",
+    "provinceCode": "650000",
+    "cityCode": "652700",
+    "name": "新疆兵团第五师三和农副产品综合批发市场",
+    "id": "76E4F160C199936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "新疆维吾尔自治区",
+    "provinceCode": "650000",
+    "cityCode": "652800",
+    "name": "新疆兵团农二师库尔勒市孔雀农副产品综合批发市场",
+    "id": "76E4F160BFD8936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "新疆维吾尔自治区",
+    "provinceCode": "650000",
+    "cityCode": "652800",
+    "name": "新疆焉耆县光明农副产品综合批发市场",
+    "id": "76E4F160BFD0936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "新疆维吾尔自治区",
+    "provinceCode": "650000",
+    "cityCode": "653100",
+    "name": "喀什曙光农业科技博览城",
+    "id": "6C03B05F0A02082400BD630EDC13F363",
+    "state": "1"
+  },
+  {
+    "province": "新疆维吾尔自治区",
+    "provinceCode": "650000",
+    "cityCode": "654000",
+    "name": "新疆伊兵团农四师62团农产品综合批发市场",
+    "id": "76E4F160BFD7936CE040A8C020017257",
+    "state": "1"
+  },
+  {
+    "province": "新疆维吾尔自治区",
+    "provinceCode": "650000",
+    "cityCode": "659001",
+    "name": "新疆绿珠九鼎农产品经营管理有限公司",
+    "id": "76E4F160C198936CE040A8C020017257",
+    "state": "1"
+  }
+]

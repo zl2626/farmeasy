@@ -15,10 +15,10 @@ from pathlib import Path
 from datetime import timedelta
 
 load_dotenv()
-DATA_GOV_API_KEY = os.getenv("DATA_GOV_API_KEY")
 SCHEMES_API_KEY = os.getenv("SCHEMES_API_KEY")
 # OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 # GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+FRONTEND_BASE_URL = os.getenv("FRONTEND_BASE_URL", "http://localhost:5199")
 DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
 HF_TOKEN = os.getenv("HF_TOKEN")
 
@@ -137,7 +137,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Shanghai"
 
 USE_I18N = True
 

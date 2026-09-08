@@ -1,70 +1,69 @@
 import requests
+import logging
+
 from rest_framework.response import Response
 from .models import Scheme,Crop,Doubt,Feedback
 from .serializers import SchemeSerializer,CropSerializer,DoubtSerializer,FeedbackSerializer
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated
 from django.http import JsonResponse
-from django.conf import settings
-from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry
 from .utils import load_crops_data
-import urllib.parse
-import pandas as pd
-from pathlib import Path
 from .crop_scraper import scrape_crop_info
-from .scheme_scraper import scrape_scheme_info as _scrape_scheme
+from .market_client import DATA_SOURCE, get_growth_ranking, get_market_prices, get_varieties
+
+logger = logging.getLogger(__name__)
 
 def market_prices(request):
-    url = "https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070"
-
-    params = {
-        "api-key": settings.DATA_GOV_API_KEY,
-        "format": "json",
-        "limit": request.GET.get("limit", 20),
-    }
-
-    if request.GET.get("state"):
-        params["filters[state]"] = request.GET["state"]
-
-    if request.GET.get("commodity"):
-        params["filters[commodity]"] = request.GET["commodity"]
-
+    """Return official China wholesale market prices from PFSC."""
     try:
-        response = requests.get(url, params=params, timeout=20)
+        commodity = request.GET.get("commodity", "猪肉(白条猪)")
+        result = get_market_prices(
+            commodity=commodity,
+            province=request.GET.get("province") or None,
+            market=request.GET.get("market") or None,
+            query=request.GET.get("query") or None,
+            limit=request.GET.get("limit") or None,
+        )
+        return JsonResponse(
+            {
+                **result,
+                "source": DATA_SOURCE["name"],
+                "source_url": DATA_SOURCE["url"],
+                "disclaimer": DATA_SOURCE["license"],
+                "data_mode": "official_realtime",
+            },
+            safe=False,
+        )
+    except ValueError as exc:
+        return JsonResponse({"error": str(exc)}, status=400)
+    except requests.exceptions.RequestException as exc:
+        logger.warning("PFSC market request failed: %s", exc)
+        return JsonResponse(
+            {"error": "官方行情接口暂时不可用，请稍后重试", "items": [], "unquoted": []},
+            status=503,
+        )
 
-        if response.status_code == 200:
-            data = response.json()
 
-            if data.get("records"):
-                print("Live API used")
-                data["source"] = "live"
-                return JsonResponse(data, safe=False)
+@api_view(["GET"])
+def market_overview(request):
+    """Return official national average prices and supported varieties."""
+    try:
+        ranking = get_growth_ranking()
+        varieties = get_varieties()
+        return JsonResponse(
+            {
+                "date": ranking["date"],
+                "items": varieties,
+                "source": DATA_SOURCE["name"],
+                "source_url": DATA_SOURCE["url"],
+                "disclaimer": DATA_SOURCE["license"],
+                "data_mode": "official_realtime",
+            }
+        )
+    except (requests.exceptions.RequestException, ValueError) as exc:
+        logger.warning("PFSC overview request failed: %s", exc)
+        return JsonResponse({"error": "官方行情接口暂时不可用，请稍后重试"}, status=503)
 
-    except requests.exceptions.RequestException as e:
-        print("API failed:", e)
-
-    # Fallback only if API truly failed
-    print("Using CSV fallback")
-
-    csv_path = Path(settings.BASE_DIR) / "farmeasy" / "data" / "market_price.csv"
-    df = pd.read_csv(csv_path)
-
-    df.columns = df.columns.str.strip()
-    df.columns = df.columns.str.lower().str.replace(" ", "_")
-
-    if request.GET.get("state"):
-        df = df[df["state"] == request.GET["state"]]
-
-    limit = int(request.GET.get("limit", 200))
-    df = df.head(limit)
-
-    data = {
-        "records": df.to_dict(orient="records"),
-        "source": "csv"
-    }
-
-    return JsonResponse(data, safe=False)
 
 
 @api_view(['GET'])
@@ -348,31 +347,6 @@ def scheme_details(request, scheme_id):
 
     except Scheme.DoesNotExist:
         return Response({"error": "Scheme not found"}, status=404)
-
-
-@api_view(["GET"])
-def scrape_scheme_details(request, scheme_id):
-    """
-    Live-scrape deadline, documents, how-to-apply and status for a scheme.
-    Called by the frontend AFTER the DB details panel has already loaded.
-    """
-    try:
-        scheme = Scheme.objects.get(id=scheme_id)
-    except Scheme.DoesNotExist:
-        return Response({"error": "Scheme not found"}, status=404)
-
-    try:
-        scraped = _scrape_scheme(
-            scheme_name=scheme.name,
-            official_link=scheme.official_link or None,
-        )
-        return Response(scraped)
-    except Exception as e:
-        return Response(
-            {"status": "unknown", "deadline": None,
-             "documents": None, "how_to_apply": None},
-            status=200,
-        )
 
 
 @api_view(["POST"])

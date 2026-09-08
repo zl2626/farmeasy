@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (
-    market_prices, agri_schemes, get_all_crops, create_doubt, my_doubts,
-    reply_doubt, user_profile, scheme_details, crop_details, scrape_scheme_details,
+    market_prices, market_overview, agri_schemes, get_all_crops, create_doubt, my_doubts,
+    reply_doubt, user_profile, scheme_details, crop_details,
     all_doubts, all_users,
     admin_delete_doubt, admin_delete_user,
     admin_crops, admin_crop_detail,
@@ -11,6 +11,7 @@ from .views import (
 
 urlpatterns = [
     path("market-prices/", market_prices),
+    path("market-overview/", market_overview),
     path("agri-schemes/", agri_schemes),
     path("crops/", get_all_crops),
     path("doubts/create/", create_doubt),
@@ -19,7 +20,6 @@ urlpatterns = [
     path("profile/", user_profile),
     path("agri-schemes/<int:scheme_id>/", scheme_details),
     path("crops/scrape/<str:crop_name>/", crop_details),
-    path("agri-schemes/<int:scheme_id>/scrape/", scrape_scheme_details),
     # Admin list endpoints
     path("admin/doubts/", all_doubts),
     path("admin/users/", all_users),

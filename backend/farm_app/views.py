@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.shortcuts import render
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
@@ -19,7 +20,7 @@ def register_user(request):
     if serializer.is_valid():
         serializer.save()
         return Response(
-            {"message":"User Registred successfully"},
+            {"message":"注册成功"},
             status=status.HTTP_201_CREATED
         )
     return Response(
@@ -37,26 +38,26 @@ def forgot_password(request):
 
     if not email:
         return Response(
-            {"error":"Email is required"},
+            {"error":"请输入邮箱"},
             status=status.HTTP_400_BAD_REQUEST
         )
     try:
         user=User.objects.get(email=email)
     except User.DoesNotExist:
         return Response(
-            {"error":"No user registred with this email"},
+            {"error":"该邮箱尚未注册"},
             status=status.HTTP_404_NOT_FOUND
         )
     uid=urlsafe_base64_encode(force_bytes(user.pk))
     token=default_token_generator.make_token(user)
 
-    reset_link=f"http://localhost:5173/reset-password/{uid}/{token}"
+    reset_link=f"{settings.FRONTEND_BASE_URL}/reset-password/{uid}/{token}"
 
     html_content = f"""
     <html>
     <body>
-        <p>Hello,</p>
-        <p>You requested to reset your password.</p>
+        <p>您好，</p>
+        <p>您正在申请重置 FarmEasy 密码。</p>
         <p>
         <a href="{reset_link}"
             style="padding:10px 15px;
@@ -64,24 +65,24 @@ def forgot_password(request):
                     color:white;
                     text-decoration:none;
                     border-radius:5px;">
-            Reset Password
+            重置密码
         </a>
         </p>
-        <p>If you didn’t request this, please ignore this email.</p>
+        <p>如非本人操作，请忽略这封邮件。</p>
         <br>
-        <p>— FarmEasy Team</p>
+        <p>— FarmEasy 团队</p>
     </body>
     </html>
     """
     send_mail(
-        subject="Password reset - FarmEasy",
+        subject="重置 FarmEasy 密码",
         message=f"Click the link to reset your password.",
         from_email=None,
         recipient_list=[email],
         html_message=html_content
     )
     return Response(
-        {"message":"Password reset link sent to you email"},
+        {"message":"密码重置链接已发送到邮箱"},
         status=status.HTTP_200_OK
     )
 
@@ -123,6 +124,6 @@ def reset_password(request):
         user.save(update_fields=["password"])
 
     return Response(
-        {"message":"Password reset successful"},
+        {"message":"密码重置成功"},
         status=status.HTTP_200_OK
     )

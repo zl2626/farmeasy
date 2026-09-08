@@ -1,0 +1,77 @@
+[
+  {
+    "name": "大白菜",
+    "varietyCode": "AE01001",
+    "id": "77"
+  },
+  {
+    "name": "油菜",
+    "varietyCode": "AE01003",
+    "id": "79"
+  },
+  {
+    "name": "韭菜",
+    "varietyCode": "AE01019",
+    "id": "95"
+  },
+  {
+    "name": "白萝卜",
+    "varietyCode": "AE02001002",
+    "id": "1234"
+  },
+  {
+    "name": "葱头",
+    "varietyCode": "AE02006",
+    "id": "104"
+  },
+  {
+    "name": "芹菜",
+    "varietyCode": "AE02011",
+    "id": "109"
+  },
+  {
+    "name": "莴笋",
+    "varietyCode": "AE02012",
+    "id": "110"
+  },
+  {
+    "name": "莲藕",
+    "varietyCode": "AE02014",
+    "id": "112"
+  },
+  {
+    "name": "黄瓜",
+    "varietyCode": "AE04005",
+    "id": "139"
+  },
+  {
+    "name": "豆角",
+    "varietyCode": "AE04016",
+    "id": "150"
+  },
+  {
+    "name": "香菇",
+    "varietyCode": "AE05001008",
+    "id": "1244"
+  },
+  {
+    "name": "鸭梨",
+    "varietyCode": "AF01002001",
+    "id": "1351"
+  },
+  {
+    "name": "菠萝",
+    "varietyCode": "AF06002",
+    "id": "210"
+  },
+  {
+    "name": "西瓜",
+    "varietyCode": "AF07001",
+    "id": "229"
+  },
+  {
+    "name": "猪肉(白条猪)",
+    "varietyCode": "AL01002001",
+    "id": "1492"
+  }
+]
