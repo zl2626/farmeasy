@@ -1,18 +1,11 @@
-import API_BASE_URL from "./api";
-
-function getToken() {
-  return localStorage.getItem("token");
-}
+import API_BASE_URL, { authFetch } from "./api";
 
 async function request(path, options = {}) {
   const headers = {
     ...(options.body instanceof FormData ? {} : { "Content-Type": "application/json" }),
     ...(options.headers || {}),
   };
-  const token = getToken();
-  if (token) headers.Authorization = `Bearer ${token}`;
-
-  const response = await fetch(`${API_BASE_URL}${path}`, { ...options, headers });
+  const response = await authFetch(`${API_BASE_URL}${path}`, { ...options, headers });
   const text = await response.text();
   let data = null;
   try {

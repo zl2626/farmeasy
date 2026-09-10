@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import API_BASE_URL from "../services/api";
+import API_BASE_URL, { publicRequest } from "../services/api";
 import TranslateText from "../components/TranslateText";
 import { useAuth } from "../context/useAuth";
 import { User, Lock, ArrowRight, Loader } from "lucide-react";
@@ -30,35 +30,30 @@ function Login({ OnRegisterClick, onForgotClick, onLoginSuccess }) {
     setLoading(true);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/login/`, {
+      const { ok, data } = await publicRequest("/auth/login/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
-      const text = await response.text();
-      let data = {};
-      try {
-        data = JSON.parse(text);
-      } catch {
-        setErrors({ detail: "登录服务尚未正确连接，请联系管理员。" });
-        setLoading(false);
-        return;
-      }
-
-      if (response.ok) {
+      if (ok) {
         const accessToken = data.access;
         const refreshToken = data.refresh;
+        if (typeof accessToken !== "string" || !accessToken || typeof refreshToken !== "string" || !refreshToken) {
+          throw new Error("登录服务响应异常，请稍后重试。");
+        }
 
-        const profileResp = await fetch(`${API_BASE_URL}/education/profile/`, {
+        const profileResp = await publicRequest("/education/profile/", {
           headers: { "Authorization": `Bearer ${accessToken}` }
         });
 
         if (profileResp.ok) {
-          const userData = await profileResp.json();
+          const userData = profileResp.data;
+          if (!userData.username) throw new Error("用户信息响应异常，请稍后重试。");
           let userHasFarmProfile = false;
           try {
             const farmProfileResp = await fetch(`${API_BASE_URL}/farm/profile/`, {
+              signal: AbortSignal.timeout(5000),
               headers: { "Authorization": `Bearer ${accessToken}` }
             });
             const profileText = await farmProfileResp.text();
@@ -90,7 +85,7 @@ function Login({ OnRegisterClick, onForgotClick, onLoginSuccess }) {
       }
     } catch (err) {
       console.error("Network error:", err);
-      setErrors({ detail: "网络错误，请检查您的网络连接。" });
+      setErrors({ detail: err.message || "登录失败，请稍后重试。" });
     } finally {
       setLoading(false);
     }

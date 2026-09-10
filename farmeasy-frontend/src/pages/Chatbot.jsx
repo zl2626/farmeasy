@@ -10,16 +10,15 @@ import {
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import axios from 'axios';
-import API, { mediaUrl } from '../services/api';
+import API, { mediaUrl, refreshAccessToken, expireSession } from '../services/api';
 
 // 带 401 自动刷新 token 重试的 axios 实例：
 // access token 有效期 60 分钟，过期后用 refresh token 换新并重放原请求
 const apiAxios = axios.create();
-let refreshRequest = null;
 
 function chatError(error) {
-    if (error.response?.status === 401) return '登录已过期，请重新登录后再试。';
-    if (!error.response) return '无法连接服务，请检查网络或稍后重试。';
+    if ((error.response?.status || error.status) === 401) return '登录已过期，请重新登录后再试。';
+    if (!error.response) return error.message || '无法连接服务，请检查网络或稍后重试。';
     if (error.response.status === 404 || typeof error.response.data === 'string') {
         return '服务尚未正确连接，请联系管理员。';
     }
@@ -30,34 +29,16 @@ apiAxios.interceptors.response.use(
     (res) => res,
     async (error) => {
         const original = error.config;
-        const refreshToken = localStorage.getItem('refresh');
-        if (
-            error.response?.status === 401 &&
-            refreshToken &&
-            original &&
-            !original._retried &&
-            !original.url.includes('/auth/')
-        ) {
-            original._retried = true;
-            try {
-                if (!refreshRequest) {
-                    refreshRequest = axios.post(`${API}/auth/refresh/`, { refresh: refreshToken })
-                        .finally(() => { refreshRequest = null; });
-                }
-                const r = await refreshRequest;
-                const newAccess = r.data.access;
-                localStorage.setItem('token', newAccess);
-                original.headers.Authorization = `Bearer ${newAccess}`;
-                return apiAxios(original);
-            } catch (refreshError) {
-                // refresh token 也过期了，清除凭证让用户重新登录
-                if ([400, 401].includes(refreshError.response?.status)) {
-                    localStorage.removeItem('token');
-                    localStorage.removeItem('refresh');
-                    localStorage.removeItem('user');
-                    window.dispatchEvent(new Event('auth-expired'));
-                }
+        if (error.response?.status === 401 && original && !original.url.includes('/auth/')) {
+            const failedToken = original.headers?.Authorization?.replace(/^Bearer /, '');
+            if (original._retried) {
+                if (localStorage.getItem('token') === failedToken) expireSession();
+                return Promise.reject(error);
             }
+            original._retried = true;
+            const newAccess = await refreshAccessToken(failedToken);
+            original.headers.Authorization = `Bearer ${newAccess}`;
+            return apiAxios(original);
         }
         return Promise.reject(error);
     }

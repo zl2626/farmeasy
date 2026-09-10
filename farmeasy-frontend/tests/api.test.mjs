@@ -12,9 +12,9 @@ test('production never defaults to the visitor computer', async () => {
   assert.equal(api.API_BASE_URL, '/api');
 });
 
-test('development keeps the local Django endpoint', async () => {
+test('development uses the same-origin Django proxy', async () => {
   const api = await loadApi({ PROD: false });
-  assert.equal(api.API_BASE_URL, 'http://127.0.0.1:8000/api');
+  assert.equal(api.API_BASE_URL, '/api');
 });
 
 test('configured API and uploaded images use the public backend', async () => {

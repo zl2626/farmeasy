@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
 import Navbar from "../components/Navbar.jsx";
-import API_BASE_URL from "../services/api";
+import API_BASE_URL, { authFetch as authenticatedFetch } from "../services/api";
 import TranslateText from "../components/TranslateText";
 import {
     Users, MessageSquare, Leaf, Wheat, LogOut, Send, CheckCircle,
@@ -12,14 +12,11 @@ import {
 } from "lucide-react";
 
 /* ─────────────────────────── helper ─────────────────────────── */
-const tok = () => localStorage.getItem("token");
-
 const authFetch = (url, opts = {}) =>
-    fetch(url, {
+    authenticatedFetch(url, {
         ...opts,
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${tok()}`,
             ...(opts.headers || {}),
         },
     });
@@ -57,7 +54,7 @@ export default function AdminDashboard() {
 
     /* ── Fetch all data ── */
     const fetchAll = useCallback(async () => {
-        if (!tok()) return;
+        if (!localStorage.getItem("token")) return;
         setLoading(true);
         try {
             // Admin doubts & users require the admin endpoints (is_staff check)

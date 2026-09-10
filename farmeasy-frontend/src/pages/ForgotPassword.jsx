@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import API_BASE_URL from "../services/api";
+import { publicRequest } from "../services/api";
 import TranslateText from "../components/TranslateText";
 import { Mail, ArrowRight, Loader, AlertCircle } from "lucide-react";
 import { Snackbar, Alert } from "@mui/material";
@@ -20,8 +20,8 @@ function ForgotPassword({ onBackToLogin }) {
     setLoading(true);
 
     try {
-      const response = await fetch(
-        `${API_BASE_URL}/auth/forgot-password/`,
+      const { ok, data } = await publicRequest(
+        "/auth/forgot-password/",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -29,26 +29,15 @@ function ForgotPassword({ onBackToLogin }) {
         }
       );
 
-      const text = await response.text();
-      let data = {};
-
-      try {
-        data = JSON.parse(text);
-      } catch {
-        setError("服务器错误，请稍后再试。");
-        setLoading(false);
-        return;
-      }
-
-      if (response.ok) {
+      if (ok) {
         setSnackbar({ open: true, message: "重置链接已发送到您的邮箱。", severity: "success" });
         setEmail("");
       } else {
-        setError(data.error || "出错了，请稍后再试。");
+        setError(data.error || data.detail || "出错了，请稍后再试。");
       }
     } catch (err) {
       console.error(err);
-      setError("网络错误，请重试。");
+      setError(err.message || "请求失败，请稍后重试。");
     } finally {
       setLoading(false);
     }

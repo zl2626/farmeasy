@@ -1,4 +1,5 @@
 import re
+from django.db import transaction
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from .models import Profile, FarmProfile, FarmTask, PestDiagnosis, TreatmentFollowUp
@@ -35,6 +36,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("密码至少 6 位")
         return value
 
+    @transaction.atomic
     def create(self,validated_data):
         mobile=validated_data.pop("mobile_number")
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import API_BASE_URL from "../services/api";
+import API_BASE_URL, { authFetch } from "../services/api";
 import Navbar from "../components/Navbar";
 import { useAuth } from "../context/useAuth";
 import { useNavigate } from "react-router-dom";
@@ -23,7 +23,7 @@ function MyDoubts() {
 
         const token = localStorage.getItem("token");
 
-        fetch(`${API_BASE_URL}/education/doubts/my/`, {
+        authFetch(`${API_BASE_URL}/education/doubts/my/`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

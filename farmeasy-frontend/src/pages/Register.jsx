@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import API_BASE_URL from "../services/api";
+import { publicRequest } from "../services/api";
 import TranslateText from "../components/TranslateText";
 import { User, Mail, Lock, Phone, ArrowRight, Loader } from "lucide-react";
 import { Snackbar, Alert } from "@mui/material";
@@ -30,23 +30,13 @@ function Register({ onBackToLogin }) {
     setLoading(true);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/register/`, {
+      const { ok, data } = await publicRequest("/auth/register/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
-      const text = await response.text();
-      let data = {};
-
-      try {
-        data = JSON.parse(text);
-      } catch {
-        setErrors({ detail: "服务器响应异常，请确认后端服务已启动。" });
-        return;
-      }
-
-      if (response.ok) {
+      if (ok) {
         setSnackbar({ open: true, message: "注册成功！", severity: "success" });
         setTimeout(() => {
           if (typeof onBackToLogin === "function") {
@@ -60,7 +50,7 @@ function Register({ onBackToLogin }) {
       }
     } catch (err) {
       console.error("Network error:", err);
-      setErrors({ detail: "无法连接注册服务，请检查网络或联系管理员。" });
+      setErrors({ detail: err.message || "注册失败，请稍后重试。" });
     } finally {
       setLoading(false);
     }
@@ -147,6 +137,12 @@ function Register({ onBackToLogin }) {
           </div>
           {errors.mobile_number && <p className="text-red-500 text-xs pl-1">{errors.mobile_number[0]}</p>}
         </div>
+
+        {(errors.detail || errors.non_field_errors) && (
+          <p role="alert" className="p-3 text-red-600 text-sm bg-red-50 rounded-lg">
+            {errors.detail || errors.non_field_errors?.join(" ")}
+          </p>
+        )}
 
         <button
           type="submit"

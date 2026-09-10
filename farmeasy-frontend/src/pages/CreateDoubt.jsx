@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import API_BASE_URL from "../services/api";
+import API_BASE_URL, { authFetch } from "../services/api";
 import Navbar from "../components/Navbar";
 import { useAuth } from "../context/useAuth";
 import { useNavigate } from "react-router-dom";
@@ -65,7 +65,7 @@ function CreateDoubt() {
         if (image) formData.append("image", image);
 
         try {
-            const response = await fetch(
+            const response = await authFetch(
                 `${API_BASE_URL}/education/doubts/create/`,
                 {
                     method: "POST",
